@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="container-fluid">
+        <div class="col-12">
+            <h1 class="text-center">Login Form</h1>
+            <form #userLoginForm="ngForm">
+                {{userLoginForm.value | json}}
+                <div class="form-group">
+                    <label for="std-code">รหัสนักศึกษา</label>
+                    <input ngModel class="form-control" type="text" name="std_code" placeholder="รหัสนักศึกษา" maxlength="10">
+                </div>                
+                <div class="form-group">
+                    <label for="std-code">ปีเกิด</label>
+                    <input ngModel class="form-control" type="text" name="birth_year" placeholder="ปีเกิด" maxlength="4">
+                </div>
+                <div class="form-group">
+                    <label for="std-code">เดือนเกิด</label>
+                    <input ngModel class="form-control" type="text" name="birth_month" placeholder="เดือนเกิด" maxlength="2">
+                </div>
+                <div class="form-group">
+                    <label for="std-code">วันเกิด</label>
+                    <input ngModel class="form-control" type="text" name="birth_day" placeholder="วันเกิด" maxlength="2">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
