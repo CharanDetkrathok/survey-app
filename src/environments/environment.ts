@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  _base_url: `http://uat.ru.ac.th/survey-api/`
 };
 
 /*

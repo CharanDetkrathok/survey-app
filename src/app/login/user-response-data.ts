@@ -1,13 +1,18 @@
 
-
-export interface userResponseData {
-    LAST_NAME_THAI: string;
-    error_message: string;
-    FIRST_NAME_THAI: string;
-    error_message_status: number;
-    SEX: string;
-    BIRTH_DATE: string;
-    STD_CODE: string;
-    PRENAME_NO: string;
-    AGE: string;
+export interface userResponseDataInterface {
+  LEV_ID: string;
+  STD_CODE: string;
+  PRENAME_NO: string;
+  FIRST_NAME_THAI: string;
+  LAST_NAME_THAI: string;
+  BIRTH_DATE: string;
+  MAJOR_NAME_THAI: string;
+  MAJOR_NO: string;
+  FACUTY_NO: string;
+  FACULTY_NAME_THAI: string;
+  YEAR_END: string;
+  AGE: string;
+  CURR_NO: string;
+  error_message: string;
+  error_message_status: number;
 }

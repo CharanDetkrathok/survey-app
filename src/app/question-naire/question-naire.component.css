@@ -1,0 +1,19 @@
+a {
+    cursor: pointer;
+}
+
+.double-under-line-section {
+    text-decoration-line: underline;
+    -moz-text-decoration-line: underline;
+    text-decoration-style: double;
+    -moz-text-decoration-style: double;
+}
+
+.single-under-line-section {
+    text-decoration-line: underline;
+    -moz-text-decoration-line: underline;
+}
+
+.textarea-full-width {
+    width: 30%;
+}

@@ -1,0 +1,416 @@
+<div>
+    <a (click)="logoutConfirmDialog()">Logout</a>
+</div>
+
+<div>
+    <div>
+        <!-- img พ่อขุน -->
+        <h1>{{QUIZ_HEADER}}</h1>
+    </div>
+    <form>
+        <div>
+            <div>
+                <div>
+                    <h2><span class="double-under-line-section">ตอนที่ 1 </span> {{SECTION_NAME_ID_1}}</h2>
+                </div>
+                <div>
+                    <h2>
+                        <div>
+                            <mat-label>1.</mat-label> &nbsp;&nbsp;
+                            <mat-form-field class="">
+                                <mat-label>ชื่อ</mat-label>
+                                <input matInput placeholder="กรุณากรอก ชื่อ" value="{{FIRST_NAME}}">
+                            </mat-form-field> &nbsp;&nbsp;
+                            <mat-form-field class="">
+                                <mat-label>นามสกุล</mat-label>
+                                <input matInput placeholder="กรุณากรอก นามสกุล" value="{{LAST_NAME}}">
+                            </mat-form-field>
+                        </div>
+                    </h2>
+                </div>
+                <div>
+                    <h2>
+                        <div>
+                            <mat-label>2.</mat-label> &nbsp;&nbsp;
+                            <mat-form-field class="">
+                                <mat-label>อายุ</mat-label>
+                                <input matInput placeholder="กรุณากรอก อายุ" value="{{AGE}}">
+                            </mat-form-field> <span> ปี</span>
+                        </div>
+                    </h2>
+                </div>
+                <div>
+                    <h2>
+                        <div>
+                            <section class="">
+                                <mat-label>3. {{QUESTION_DETAIL_ID_3}}</mat-label> &nbsp;&nbsp;
+                                <mat-radio-group>
+                                    <mat-radio-button class="" value="1">{{CHOICES_OF_QUESTION_ID_3_VALUE_1}}</mat-radio-button> &nbsp; &nbsp; &nbsp; &nbsp;
+                                    <mat-radio-button class="" value="2">{{CHOICES_OF_QUESTION_ID_3_VALUE_2}}</mat-radio-button> &nbsp; &nbsp; &nbsp; &nbsp;
+                                    <mat-radio-button class="" value="3">{{CHOICES_OF_QUESTION_ID_3_VALUE_3}}</mat-radio-button> &nbsp; &nbsp; &nbsp; &nbsp;
+                                </mat-radio-group>
+                            </section>
+                        </div>
+                    </h2>
+                </div>
+                <div>
+                    <h2>
+                        <div>
+                            <mat-label>4.</mat-label> &nbsp;&nbsp;
+                            <mat-form-field class="">
+                                <mat-label>รหัสประจำตัวนักศึกษา</mat-label>
+                                <input matInput placeholder="กรุณากรอก รหัสประจำตัวนักศึกษา" value="{{STD_CODE}}">
+                            </mat-form-field>
+                        </div>
+                    </h2>
+                </div>
+                <div>
+                    <h2>
+                        <div>
+                            <mat-label>5.</mat-label> &nbsp;&nbsp;
+                            <mat-form-field class="">
+                                <mat-label>คณะ</mat-label>
+                                <input matInput placeholder="กรุณากรอก คณะ" value="{{FACULTY_NAME_THAI}}">
+                            </mat-form-field> &nbsp;&nbsp;
+                            <mat-form-field class="">
+                                <mat-label>สาขาวิชา</mat-label>
+                                <input matInput placeholder="กรุณากรอก สาขาวิชา" value="{{MAJOR_NAME_THAI}}">
+                            </mat-form-field>
+                        </div>
+                    </h2>
+                </div>
+                <div>
+                    <h2>
+                        <div>
+                            <mat-label>6. {{QUESTION_DETAIL_ID_6}}</mat-label> &nbsp;&nbsp;
+                            <section class="">
+                                <mat-radio-group>
+                                    <mat-radio-button class="" value="1">{{CHOICES_OF_QUESTION_ID_6_VALUE_1}}</mat-radio-button>
+                                    &nbsp;&nbsp;
+                                    <mat-radio-button class="" value="2">{{CHOICES_OF_QUESTION_ID_6_VALUE_2}}</mat-radio-button>
+                                </mat-radio-group>
+                            </section>
+                        </div>
+                    </h2>
+                </div>
+                <div>
+                    <h2><span>7.</span>{{QUESTION_DETAIL_ID_7}}
+                        <div>
+                            <section class="">
+                                <mat-radio-group>
+                                    <mat-radio-button class="" value="1">{{CHOICES_OF_QUESTION_ID_7_VALUE_1}}</mat-radio-button><br>
+                                    <mat-radio-button class="" value="2">{{CHOICES_OF_QUESTION_ID_7_VALUE_2}}</mat-radio-button><br>
+                                    <mat-radio-button class="" value="3">{{CHOICES_OF_QUESTION_ID_7_VALUE_3}}</mat-radio-button><br>
+                                </mat-radio-group>
+                            </section>
+                        </div>
+                    </h2>
+                </div>
+                <div>
+                    <h2><span>8.</span>{{QUESTION_DETAIL_ID_8}}
+                        <div>
+                            <section class="">
+                                <mat-radio-group>
+                                    <mat-radio-button class="" value="1">{{CHOICES_OF_QUESTION_ID_8_VALUE_1}}</mat-radio-button><br>
+                                    <mat-radio-button class="" value="2">{{CHOICES_OF_QUESTION_ID_8_VALUE_2}}</mat-radio-button><br>
+                                    <mat-radio-button class="" value="3">{{CHOICES_OF_QUESTION_ID_8_VALUE_3}}</mat-radio-button><br>
+                                </mat-radio-group>
+                            </section>
+                        </div>
+                    </h2>
+                </div>
+                <div>
+                    <h2><span>9.</span>{{QUESTION_DETAIL_ID_9}}
+                        <div>
+                            <p>เลือกตอบเพียงข้อเดียว ระหว่าง 9.1 หรือ 9.2</p>
+                        </div>
+                        <div>
+                            <mat-label>9.1</mat-label>
+                            <section class="">
+                                <mat-radio-group [(ngModel)]="selected_9" [ngModelOptions]="{standalone: true}" #radioGroup="matRadioGroup">
+                                    <mat-radio-button class="" value="1.1" (click)="checkDisableChoice9_2()" [disabled]="selected_9_2_disabled_9_1">
+                                        {{CHOICES_OF_QUESTION_ID_9_VALUE_1_1}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="1.2" (click)="checkDisableChoice9_2()" [disabled]="selected_9_2_disabled_9_1">
+                                        {{CHOICES_OF_QUESTION_ID_9_VALUE_1_2}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="1.3" (click)="checkDisableChoice9_2()" [disabled]="selected_9_2_disabled_9_1">
+                                        {{CHOICES_OF_QUESTION_ID_9_VALUE_1_3}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="1.4" (click)="checkDisableChoice9_2()" [disabled]="selected_9_2_disabled_9_1">
+                                        {{CHOICES_OF_QUESTION_ID_9_VALUE_1_4}}
+                                    </mat-radio-button> &nbsp;
+                                    <mat-form-field class="">
+                                        <mat-label>ระบุเพิ่มเติม</mat-label>
+                                        <input matInput placeholder="กรุณาระบุเพิ่มเติม" value="" [disabled]="selected_9_2_disabled_9_1">
+                                    </mat-form-field>
+                                </mat-radio-group>
+                            </section>
+                            <mat-label>9.2</mat-label>
+                            <section class="">
+                                <mat-radio-group [(ngModel)]="selected_9" [ngModelOptions]="{standalone: true}" #radioGroup="matRadioGroup">
+                                    <mat-radio-button class="" value="2" (click)="checkDisableChoice9_1()" [disabled]="selected_9_1_disabled_9_2">
+                                        {{CHOICES_OF_QUESTION_ID_9_VALUE_2}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </section>
+                        </div>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <div>
+                    <h2><span class="double-under-line-section">ตอนที่ 2 </span> {{SECTION_NAME_ID_2}}</h2>
+                </div>
+                <div>
+                    <h2><span>10.</span> {{QUESTION_DETAIL_ID_10}}
+                        <div>
+                            <p>เลือกตอบเพียงข้อเดียว ระหว่าง 10.1 หรือ 10.2 หรือ 10.3</p>
+                        </div>
+                        <div>
+                            <mat-label>10.1</mat-label>
+                            <section class="">
+                                <mat-radio-group [(ngModel)]="selected_10" [ngModelOptions]="{standalone: true}" #radioGroup="matRadioGroup">
+                                    <mat-radio-button class="" value="1" (click)="checkDisableChoice10_1()" [disabled]="selected_10_1_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_1}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="2" (click)="checkDisableChoice10_1()" [disabled]="selected_10_1_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_2}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="3" (click)="checkDisableChoice10_1()" [disabled]="selected_10_1_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_3}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </section>
+                            <mat-label>10.2</mat-label>
+                            <section class="">
+                                <mat-radio-group [(ngModel)]="selected_10" [ngModelOptions]="{standalone: true}" #radioGroup="matRadioGroup">
+                                    <mat-radio-button class="" value="4.1" (click)="checkDisableChoice10_2()" [disabled]="selected_10_2_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_4_1}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="4.2" (click)="checkDisableChoice10_2()" [disabled]="selected_10_2_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_4_2}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="4.3" (click)="checkDisableChoice10_2()" [disabled]="selected_10_2_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_4_3}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="4.4" (click)="checkDisableChoice10_2()" [disabled]="selected_10_2_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_4_4}}
+                                    </mat-radio-button> &nbsp;
+                                    <mat-form-field class="">
+                                        <mat-label>ระบุเพิ่มเติม</mat-label>
+                                        <input matInput placeholder="กรุณาระบุเพิ่มเติม" value="" [disabled]="selected_10_2_disabled_all">
+                                    </mat-form-field>
+                                </mat-radio-group>
+                            </section>
+                            <mat-label>10.3</mat-label>
+                            <section class="">
+                                <mat-radio-group [(ngModel)]="selected_10" [ngModelOptions]="{standalone: true}" #radioGroup="matRadioGroup">
+                                    <mat-radio-button class="" value="5.1" (click)="checkDisableChoice10_3()" [disabled]="selected_10_3_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_5_1}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="5.2" (click)="checkDisableChoice10_3()" [disabled]="selected_10_3_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_5_2}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="5.3" (click)="checkDisableChoice10_3()" [disabled]="selected_10_3_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_5_3}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="5.4" (click)="checkDisableChoice10_3()" [disabled]="selected_10_3_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_5_4}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="5.5" (click)="checkDisableChoice10_3()" [disabled]="selected_10_3_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_5_5}}
+                                    </mat-radio-button> &nbsp;
+                                    <mat-form-field class="">
+                                        <mat-label>ระบุเพิ่มเติม</mat-label>
+                                        <input matInput placeholder="กรุณาระบุเพิ่มเติม" value="" [disabled]="selected_10_3_disabled_all">
+                                    </mat-form-field>
+                                </mat-radio-group>
+                            </section>
+                        </div>
+                    </h2>
+                </div>
+                <div>
+                    <h2><span>11.</span> {{QUESTION_DETAIL_ID_11}}
+                        <div>
+                            <mat-label>11.1</mat-label>
+                            <section class="">
+                                <mat-radio-group [(ngModel)]="selected_11" [ngModelOptions]="{standalone: true}" #radioGroup="matRadioGroup">
+                                    <mat-radio-button class="" value="1" (click)="checkDisableChoice11_1()" [disabled]="selected_11_1_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_11_VALUE_1}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="2" (click)="checkDisableChoice11_1()" [disabled]="selected_11_1_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_10_VALUE_2}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="3" (click)="checkDisableChoice11_1()" [disabled]="selected_11_1_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_11_VALUE_3}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="4" (click)="checkDisableChoice11_1()" [disabled]="selected_11_1_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_11_VALUE_4}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="5" (click)="checkDisableChoice11_1()" [disabled]="selected_11_1_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_11_VALUE_5}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </section>
+                            <mat-label>11.2</mat-label>
+                            <section class="">
+                                <mat-radio-group [(ngModel)]="selected_11" [ngModelOptions]="{standalone: true}" #radioGroup="matRadioGroup">
+                                    <mat-radio-button class="" value="6.1" (click)="checkDisableChoice11_2()" [disabled]="selected_11_2_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_11_VALUE_6_1}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="6.2" (click)="checkDisableChoice11_2()" [disabled]="selected_11_2_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_11_VALUE_6_2}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="6.3" (click)="checkDisableChoice11_2()" [disabled]="selected_11_2_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_11_VALUE_6_3}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="6.4" (click)="checkDisableChoice11_2()" [disabled]="selected_11_2_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_11_VALUE_6_4}}
+                                    </mat-radio-button><br>
+                                    <mat-radio-button class="" value="6.5" (click)="checkDisableChoice11_2()" [disabled]="selected_11_2_disabled_all">
+                                        {{CHOICES_OF_QUESTION_ID_11_VALUE_6_5}}
+                                    </mat-radio-button> &nbsp;
+                                    <mat-form-field class="">
+                                        <mat-label>ระบุเพิ่มเติม</mat-label>
+                                        <input matInput placeholder="กรุณาระบุเพิ่มเติม" value="" [disabled]="selected_11_2_disabled_all">
+                                    </mat-form-field>
+                                </mat-radio-group>
+                            </section>
+                        </div>
+                    </h2>
+                </div>
+            </div>
+            <div>
+                <h2>
+                    <div>
+                        <mat-label>12. {{QUESTION_DETAIL_ID_12}}</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="">
+                            <mat-label>รายได้ต่อเดือน</mat-label>
+                            <input matInput placeholder="กรุณากรอก รายได้ต่อเดือน">
+                        </mat-form-field> <span> บาท</span> &nbsp;
+                        <mat-label>รายได้พิเศษต่อเดือน</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="">
+                            <mat-label>รายได้พิเศษต่อเดือน</mat-label>
+                            <input matInput placeholder="กรุณากรอก รายได้พิเศษต่อเดือน">
+                        </mat-form-field> <span> บาท</span>
+                    </div>
+                </h2>
+            </div>
+            <div>
+                <h2>
+                    <div>
+                        <mat-label>13. {{QUESTION_DETAIL_ID_13}}</mat-label><br>
+                        <mat-label>ชื่อหน่วยงาน/สถานที่ประกอบการ</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก ชื่อหน่วยงาน">
+                        </mat-form-field><br>
+                        <mat-label>ที่ตั้งเลขที่</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก ที่ตั้งเลขที่">
+                        </mat-form-field><br>
+                        <mat-label>หมู่ที่</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก หมู่ที่">
+                        </mat-form-field><br>
+                        <mat-label>อาคาร/ตึก</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก ชื่ออาคาร/ตึก">
+                        </mat-form-field><br>
+                        <mat-label>ชั้น</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก ชั้น">
+                        </mat-form-field><br>
+                        <mat-label>ตรอก/ซอย</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก ตรอก/ซอย">
+                        </mat-form-field><br>
+                        <mat-label>ถนน</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก ถนน">
+                        </mat-form-field><br>
+                        <mat-label>ตำบล/แขวง</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก ตำบล/แขวง">
+                        </mat-form-field><br>
+                        <mat-label>อำเภอ/เขต</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก อำเภอ/เขต">
+                        </mat-form-field><br>
+                        <mat-label>จังหวัด/ประเทศ</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก จังหวัด/ประเทศ">
+                        </mat-form-field><br>
+                        <mat-label>รหัสไปรษณีย์</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก รหัสไปรษณีย์">
+                        </mat-form-field><br>
+                        <mat-label>โทรศัพท์ ที่ทำงาน</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก เบอร์โทรศัพท์ที่ทำงาน">
+                        </mat-form-field><br>
+                        <mat-label>โทรสาร ที่ทำงาน</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก โทรสารที่ทำงาน">
+                        </mat-form-field><br>
+                        <mat-label>เว็บไซต์ ที่ทำงาน(ถ้ามี)</mat-label> &nbsp;&nbsp;
+                        <mat-form-field class="textarea-full-width">
+                            <input matInput placeholder="กรุณากรอก เว็บไซต์ ที่ทำงาน(ถ้ามี)">
+                        </mat-form-field><br>
+                    </div>
+                </h2>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h2>
+                    <mat-label>14. {{QUESTION_DETAIL_ID_14}}</mat-label><br>
+                </h2>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h2>
+                    <mat-label>15. {{QUESTION_DETAIL_ID_15}}</mat-label><br>
+                </h2>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h2>
+                    <mat-label>16. {{QUESTION_DETAIL_ID_16}}</mat-label><br>
+                </h2>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h2>
+                    <mat-label>17. {{QUESTION_DETAIL_ID_17}}</mat-label><br>
+                </h2>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h2>
+                    <mat-label>18. {{QUESTION_DETAIL_ID_18}}</mat-label><br>
+                </h2>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h2>
+                    <mat-label>19. {{QUESTION_DETAIL_ID_19}}</mat-label><br>
+                </h2>
+            </div>
+        </div>
+        <div>
+            <div>
+                <div>
+                    <h2><span class="double-under-line-section">ตอนที่ 3 </span> {{SECTION_NAME_ID_3}}</h2>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
