@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionNaireService } from '../services/question-naire.service';
 import { userResponseDataInterface } from './../login/user-response-data';
 import { MatDialog } from '@angular/material/dialog';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-question-naire',
@@ -15,16 +16,67 @@ export class QuestionNaireComponent implements OnInit {
 
   preUserData: userResponseDataInterface;
 
-  dialog_confirm_result: string = '';
+  questionValueForm = this.formBuilder.group({
+    STD_CODE: ['', [Validators.required, Validators.minLength(10)]],
+    PRENAME_NO: [''],
+    FIRST_NAME_THAI: [''],
+    LAST_NAME_THAI: [''],
+    AGE: [''],
+    GENDER_NO: [''],
+    FACULTY_NO: [''],
+    MAJOR_NO: [''],
+    STD_TYPE: [''],
+    STD_STUDY_TIME: [''],
+    STD_FUND: [''],
+    BE_WORK_STATUS: [''],
+    BE_WORK_STATUS_TXT: [''],
+    QN_WORK_STATUS: [''],
+    QN_WORK_STATUS_NO_TXT: [''],
+    QN_WORK_STATUS_ED_TXT: [''],
+    QN_OCCUP_TYPE: [''],
+    QN_OCCUP_TYPE_TXT: [''],
+    QN_SALARY: [''],
+    QN_WORK_SALARY: [''],
+    QN_WORK_NAME: [''],
+    QN_WORK_NO: [''],
+    QN_WORK_MOO: [''],
+    QN_WORK_BUILDING: [''],
+    QN_WORK_FLOOR: [''],
+    QN_WORK_SOI: [''],
+    QN_WORK_STREET: [''],
+    QN_WORK_TAMBON: [''],
+    QN_WORK_AMPHUR: [''],
+    QN_WORK_PROVINCE_NO: [''],
+    QN_WORK_ZIPCODE: [''],
+    QN_WORK_TEL: [''],
+    QN_WORK_FAX: [''],
+    QN_WORK_URL: [''],
+    AF_FIND_WORK: [''],
+    QN_MATCH_EDU: [''],
+    QN_WORK_APPLY: [''],
+    QN_EMPLOYER: [''],
+    QN_AWARD: [''],
+    QN_AWARD_TXT: [''],
+    QN_AWARD_INSTITUTE: [''],
+    QN_AWARD_MMYYYY: [''],
+    QN_ADDPROGRAM2: [''],
+    QN_ADDPROGRAM1: [''],
+    QN_ADDPROGRAM3: [''],
+    QN_ADDPROGRAM4: [''],
+    QN_ADDPROGRAM5: [''],
+    QN_ADDPROGRAM6: [''],
+    QN_COMMENT_PROGRAM: [''],
+    QN_COMMENT_LEARN: [''],
+    QN_COMMENT_SOCIAL: [''],
+    QN_COMMENT_ACTIVITY: [''],
+    QN_COMMENT_LOCATION: [''],
+    QN_DATE_UPDATE: [''],
+  });
 
-  FIRST_NAME: string;
-  LAST_NAME: string;
-  AGE: string;
-  STD_CODE: string;
   MAJOR_NAME_THAI: string;
-  MAJOR_NO: string;
   FACULTY_NAME_THAI: string;
-  FACUTY_NO: string;
+
+  dialog_confirm_result: string = '';
 
   QUIZ_HEADER: string;
 
@@ -102,7 +154,8 @@ export class QuestionNaireComponent implements OnInit {
 
 
   checked = false;
-  //--- ค่าที่ได้จากการเลือก ข้อ 9
+  //--- ค่าที่ได้จากการเลือก ข้อ ต่างๆ
+  selected_3: string;
   selected_9: string;
   selected_10: string;
   selected_11: string;
@@ -156,7 +209,6 @@ export class QuestionNaireComponent implements OnInit {
     this.selected_11_2_disabled_all = false;
   }
 
-
   constructor(
     private questionService: QuestionNaireService,
     public dialog: MatDialog,
@@ -177,10 +229,64 @@ export class QuestionNaireComponent implements OnInit {
 
       if (response.question_error_message_status == 1) {
 
-        this.FIRST_NAME = this.preUserData.FIRST_NAME_THAI;
-        this.LAST_NAME = this.preUserData.LAST_NAME_THAI;
-        this.AGE = this.preUserData.AGE;
-        this.STD_CODE = this.preUserData.STD_CODE;
+        this.questionValueForm.setValue({
+          GENDER_NO: [''],
+          PRENAME_NO: this.preUserData.PRENAME_NO,
+          FIRST_NAME_THAI: this.preUserData.FIRST_NAME_THAI,
+          LAST_NAME_THAI: this.preUserData.LAST_NAME_THAI,
+          AGE: this.preUserData.AGE,
+          STD_CODE: this.preUserData.STD_CODE,
+          MAJOR_NO: this.preUserData.MAJOR_NO,
+          FACULTY_NO: this.preUserData.FACUTY_NO,
+
+          STD_TYPE: [''],
+          STD_STUDY_TIME: [''],
+          STD_FUND: [''],
+          BE_WORK_STATUS: [''],
+          BE_WORK_STATUS_TXT: [''],
+          QN_WORK_STATUS: [''],
+          QN_WORK_STATUS_NO_TXT: [''],
+          QN_WORK_STATUS_ED_TXT: [''],
+          QN_OCCUP_TYPE: [''],
+          QN_OCCUP_TYPE_TXT: [''],
+          QN_SALARY: [''],
+          QN_WORK_SALARY: [''],
+          QN_WORK_NAME: [''],
+          QN_WORK_NO: [''],
+          QN_WORK_MOO: [''],
+          QN_WORK_BUILDING: [''],
+          QN_WORK_FLOOR: [''],
+          QN_WORK_SOI: [''],
+          QN_WORK_STREET: [''],
+          QN_WORK_TAMBON: [''],
+          QN_WORK_AMPHUR: [''],
+          QN_WORK_PROVINCE_NO: [''],
+          QN_WORK_ZIPCODE: [''],
+          QN_WORK_TEL: [''],
+          QN_WORK_FAX: [''],
+          QN_WORK_URL: [''],
+          AF_FIND_WORK: [''],
+          QN_MATCH_EDU: [''],
+          QN_WORK_APPLY: [''],
+          QN_EMPLOYER: [''],
+          QN_AWARD: [''],
+          QN_AWARD_TXT: [''],
+          QN_AWARD_INSTITUTE: [''],
+          QN_AWARD_MMYYYY: [''],
+          QN_ADDPROGRAM2: [''],
+          QN_ADDPROGRAM1: [''],
+          QN_ADDPROGRAM3: [''],
+          QN_ADDPROGRAM4: [''],
+          QN_ADDPROGRAM5: [''],
+          QN_ADDPROGRAM6: [''],
+          QN_COMMENT_PROGRAM: [''],
+          QN_COMMENT_LEARN: [''],
+          QN_COMMENT_SOCIAL: [''],
+          QN_COMMENT_ACTIVITY: [''],
+          QN_COMMENT_LOCATION: [''],
+          QN_DATE_UPDATE: [''],
+        });
+
         this.MAJOR_NAME_THAI = this.preUserData.MAJOR_NAME_THAI;
         this.FACULTY_NAME_THAI = this.preUserData.FACULTY_NAME_THAI;
 
@@ -241,9 +347,9 @@ export class QuestionNaireComponent implements OnInit {
         this.CHOICES_OF_QUESTION_ID_11_VALUE_6_4 = response.CHOICES_OF_QUESTION.CHOICES_OF_QUESTION_ID_11_VALUE_6_4;
         this.CHOICES_OF_QUESTION_ID_11_VALUE_6_5 = response.CHOICES_OF_QUESTION.CHOICES_OF_QUESTION_ID_11_VALUE_6_5;
 
-
         this.QUESTION_DETAIL_ID_12 = response.QUESTION_SUB_HEADER.QUESTION_DETAIL_ID_12;
         this.QUESTION_DETAIL_ID_13 = response.QUESTION_SUB_HEADER.QUESTION_DETAIL_ID_13;
+
         this.QUESTION_DETAIL_ID_14 = response.QUESTION_SUB_HEADER.QUESTION_DETAIL_ID_14;
         this.QUESTION_DETAIL_ID_15 = response.QUESTION_SUB_HEADER.QUESTION_DETAIL_ID_15;
         this.QUESTION_DETAIL_ID_16 = response.QUESTION_SUB_HEADER.QUESTION_DETAIL_ID_16;
