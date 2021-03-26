@@ -1,3 +1,4 @@
+import { questionSetInterfaceData } from './question-set-interface-data';
 import { Router } from '@angular/router';
 import { ConfirmDialogModel, ConfirmDialogComponent } from './../confirm-dialog/confirm-dialog.component';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -5,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionNaireService } from '../services/question-naire.service';
 import { userResponseDataInterface } from './../login/user-response-data';
 import { MatDialog } from '@angular/material/dialog';
+import { DatePipe, registerLocaleData } from '@angular/common';
+import localeTh from '@angular/common/locales/th';
 
 @Component({
   selector: 'app-question-naire',
@@ -14,7 +17,9 @@ import { MatDialog } from '@angular/material/dialog';
 export class QuestionNaireComponent implements OnInit {
 
   preUserData: userResponseDataInterface;
+  postUserData: questionSetInterfaceData;
 
+  //-- prepared Data และทำการจัด Group เอาไว้สำหรับ Insert หรือ Update
   questionValueForm = this.formBuilder.group({
     STD_CODE: ['', [Validators.required, Validators.minLength(10)]],
     PRENAME_NO: [''],
@@ -35,20 +40,20 @@ export class QuestionNaireComponent implements OnInit {
     QN_OCCUP_TYPE: ['', Validators.required],
     QN_OCCUP_TYPE_TXT: [''],
     QN_SALARY: ['', Validators.required],
-    QN_WORK_SALARY: ['', Validators.required],
+    QN_WORK_SALARY: [''],
     QN_WORK_NAME: ['', Validators.required],
     QN_WORK_NO: ['', Validators.required],
-    QN_WORK_MOO: ['', Validators.required],
-    QN_WORK_BUILDING: ['', Validators.required],
-    QN_WORK_FLOOR: ['', Validators.required],
-    QN_WORK_SOI: ['', Validators.required],
-    QN_WORK_STREET: ['', Validators.required],
+    QN_WORK_MOO: [''],
+    QN_WORK_BUILDING: [''],
+    QN_WORK_FLOOR: [''],
+    QN_WORK_SOI: [''],
+    QN_WORK_STREET: [''],
     QN_WORK_TAMBON: ['', Validators.required],
     QN_WORK_AMPHUR: ['', Validators.required],
     QN_WORK_PROVINCE_NO: ['', Validators.required],
     QN_WORK_ZIPCODE: ['', Validators.required],
-    QN_WORK_TEL: ['', Validators.required],
-    QN_WORK_FAX: ['', Validators.required],
+    QN_WORK_TEL: [''],
+    QN_WORK_FAX: [''],
     QN_WORK_URL: [''],
     AF_FIND_WORK: ['', Validators.required],
     QN_MATCH_EDU: ['', Validators.required],
@@ -58,68 +63,30 @@ export class QuestionNaireComponent implements OnInit {
     QN_AWARD_TXT: [''],
     QN_AWARD_INSTITUTE: [''],
     QN_AWARD_MMYYYY: [''],
-    QN_ADDPROGRAM2: [''],
-    QN_ADDPROGRAM1: [''],
-    QN_ADDPROGRAM3: [''],
-    QN_ADDPROGRAM4: [''],
-    QN_ADDPROGRAM5: [''],
-    QN_ADDPROGRAM6: [''],
+    QN_ADDPROGRAM2: ['', Validators.required],
+    QN_ADDPROGRAM1: ['', Validators.required],
+    QN_ADDPROGRAM3: ['', Validators.required],
+    QN_ADDPROGRAM4: ['', Validators.required],
+    QN_ADDPROGRAM5: ['', Validators.required],
+    QN_ADDPROGRAM6: ['', Validators.required],
     QN_COMMENT_PROGRAM: [''],
     QN_COMMENT_LEARN: [''],
     QN_COMMENT_SOCIAL: [''],
     QN_COMMENT_ACTIVITY: [''],
     QN_COMMENT_LOCATION: [''],
     QN_DATE_UPDATE: [''],
-    // BE_WORK_STATUS: ['', Validators.required],
-    // BE_WORK_STATUS_TXT: ['', Validators.required],
-    // QN_WORK_STATUS: ['', Validators.required],
-    // QN_WORK_STATUS_NO_TXT: ['', Validators.required],
-    // QN_WORK_STATUS_ED_TXT: ['', Validators.required],
-    // QN_OCCUP_TYPE: ['', Validators.required],
-    // QN_OCCUP_TYPE_TXT: ['', Validators.required],
-    // QN_SALARY: ['', Validators.required],
-    // QN_WORK_SALARY: ['', Validators.required],
-    // QN_WORK_NAME: ['', Validators.required],
-    // QN_WORK_NO: ['', Validators.required],
-    // QN_WORK_MOO: ['', Validators.required],
-    // QN_WORK_BUILDING: ['', Validators.required],
-    // QN_WORK_FLOOR: ['', Validators.required],
-    // QN_WORK_SOI: ['', Validators.required],
-    // QN_WORK_STREET: ['', Validators.required],
-    // QN_WORK_TAMBON: ['', Validators.required],
-    // QN_WORK_AMPHUR: ['', Validators.required],
-    // QN_WORK_PROVINCE_NO: ['', Validators.required],
-    // QN_WORK_ZIPCODE: ['', Validators.required],
-    // QN_WORK_TEL: ['', Validators.required],
-    // QN_WORK_FAX: ['', Validators.required],
-    // QN_WORK_URL: ['', Validators.required],
-    // AF_FIND_WORK: ['', Validators.required],
-    // QN_MATCH_EDU: ['', Validators.required],
-    // QN_WORK_APPLY: ['', Validators.required],
-    // QN_EMPLOYER: ['', Validators.required],
-    // QN_AWARD: ['', Validators.required],
-    // QN_AWARD_TXT: ['', Validators.required],
-    // QN_AWARD_INSTITUTE: ['', Validators.required],
-    // QN_AWARD_MMYYYY: ['', Validators.required],
-    // QN_ADDPROGRAM2: ['', Validators.required],
-    // QN_ADDPROGRAM1: ['', Validators.required],
-    // QN_ADDPROGRAM3: ['', Validators.required],
-    // QN_ADDPROGRAM4: ['', Validators.required],
-    // QN_ADDPROGRAM5: ['', Validators.required],
-    // QN_ADDPROGRAM6: ['', Validators.required],
-    // QN_COMMENT_PROGRAM: [''],
-    // QN_COMMENT_LEARN: [''],
-    // QN_COMMENT_SOCIAL: [''],
-    // QN_COMMENT_ACTIVITY: [''],
-    // QN_COMMENT_LOCATION: [''],
-    // QN_DATE_UPDATE: [''],
+    INSERT_STATUS: [''],
+    UPDATE_STATUS: ['']
+
   });
 
   MAJOR_NAME_THAI: string;
   FACULTY_NAME_THAI: string;
+  PRENAME_THAI: string;
 
   dialog_confirm_result: string = '';
 
+  //-- คำถามทั้งหมด
   QUIZ_HEADER: string;
 
   SECTION_NAME_ID_1: string;
@@ -177,8 +144,6 @@ export class QuestionNaireComponent implements OnInit {
   CHOICES_OF_QUESTION_ID_11_VALUE_6_3: string;
   CHOICES_OF_QUESTION_ID_11_VALUE_6_4: string;
   CHOICES_OF_QUESTION_ID_11_VALUE_6_5: string;
-
-
 
   QUESTION_DETAIL_ID_12: string;
   QUESTION_DETAIL_ID_13: string;
@@ -244,7 +209,89 @@ export class QuestionNaireComponent implements OnInit {
 
   ngOnInit(): void {
 
+    //-- Call API เพื่อไป Query คำถามมาแสดงใน Template
     this.getQuestionTocallApiService();
+
+    //-- Enable และ Disable ข้อ 11 -> ข้อ 17
+    this.questionValueForm.controls['QN_WORK_STATUS'].valueChanges.subscribe(selected => {
+
+      if (selected === '3' || selected === '4.1' || selected === '4.2' || selected === '4.3' || selected === '4.4' || selected === '5.1' || selected === '5.2' || selected === '5.3' || selected === '5.4' || selected === '5.5') {
+
+        this.questionValueForm.controls['QN_OCCUP_TYPE'].disable();
+        this.questionValueForm.controls['QN_OCCUP_TYPE_TXT'].disable();
+        this.questionValueForm.controls['QN_SALARY'].disable();
+        this.questionValueForm.controls['QN_WORK_SALARY'].disable();
+        this.questionValueForm.controls['QN_WORK_NAME'].disable();
+        this.questionValueForm.controls['QN_WORK_NO'].disable();
+        this.questionValueForm.controls['QN_WORK_MOO'].disable();
+        this.questionValueForm.controls['QN_WORK_BUILDING'].disable();
+        this.questionValueForm.controls['QN_WORK_FLOOR'].disable();
+        this.questionValueForm.controls['QN_WORK_SOI'].disable();
+        this.questionValueForm.controls['QN_WORK_STREET'].disable();
+        this.questionValueForm.controls['QN_WORK_TAMBON'].disable();
+        this.questionValueForm.controls['QN_WORK_AMPHUR'].disable();
+        this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].disable();
+        this.questionValueForm.controls['QN_WORK_ZIPCODE'].disable();
+        this.questionValueForm.controls['QN_WORK_TEL'].disable();
+        this.questionValueForm.controls['QN_WORK_FAX'].disable();
+        this.questionValueForm.controls['QN_WORK_URL'].disable();
+        this.questionValueForm.controls['AF_FIND_WORK'].disable();
+        this.questionValueForm.controls['QN_MATCH_EDU'].disable();
+        this.questionValueForm.controls['QN_WORK_APPLY'].disable();
+        this.questionValueForm.controls['QN_EMPLOYER'].disable();
+
+        this.questionValueForm.controls['QN_OCCUP_TYPE'].patchValue('');
+        this.questionValueForm.controls['QN_OCCUP_TYPE_TXT'].patchValue('');
+        this.questionValueForm.controls['QN_SALARY'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_SALARY'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_NAME'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_NO'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_MOO'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_BUILDING'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_FLOOR'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_SOI'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_STREET'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_TAMBON'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_AMPHUR'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_ZIPCODE'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_TEL'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_FAX'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_URL'].patchValue('');
+        this.questionValueForm.controls['AF_FIND_WORK'].patchValue('');
+        this.questionValueForm.controls['QN_MATCH_EDU'].patchValue('');
+        this.questionValueForm.controls['QN_WORK_APPLY'].patchValue('');
+        this.questionValueForm.controls['QN_EMPLOYER'].patchValue('');
+
+      } else {
+
+        this.questionValueForm.controls['QN_OCCUP_TYPE'].enable();
+        this.questionValueForm.controls['QN_OCCUP_TYPE'].enable();
+        this.questionValueForm.controls['QN_OCCUP_TYPE_TXT'].enable();
+        this.questionValueForm.controls['QN_SALARY'].enable();
+        this.questionValueForm.controls['QN_WORK_SALARY'].enable();
+        this.questionValueForm.controls['QN_WORK_NAME'].enable();
+        this.questionValueForm.controls['QN_WORK_NO'].enable();
+        this.questionValueForm.controls['QN_WORK_MOO'].enable();
+        this.questionValueForm.controls['QN_WORK_BUILDING'].enable();
+        this.questionValueForm.controls['QN_WORK_FLOOR'].enable();
+        this.questionValueForm.controls['QN_WORK_SOI'].enable();
+        this.questionValueForm.controls['QN_WORK_STREET'].enable();
+        this.questionValueForm.controls['QN_WORK_TAMBON'].enable();
+        this.questionValueForm.controls['QN_WORK_AMPHUR'].enable();
+        this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].enable();
+        this.questionValueForm.controls['QN_WORK_ZIPCODE'].enable();
+        this.questionValueForm.controls['QN_WORK_TEL'].enable();
+        this.questionValueForm.controls['QN_WORK_FAX'].enable();
+        this.questionValueForm.controls['QN_WORK_URL'].enable();
+        this.questionValueForm.controls['AF_FIND_WORK'].enable();
+        this.questionValueForm.controls['QN_MATCH_EDU'].enable();
+        this.questionValueForm.controls['QN_WORK_APPLY'].enable();
+        this.questionValueForm.controls['QN_EMPLOYER'].enable();
+
+      }
+
+    });
 
     this.questionValueForm.controls['BE_WORK_STATUS'].valueChanges.subscribe(selected => {
 
@@ -361,16 +408,19 @@ export class QuestionNaireComponent implements OnInit {
 
   }
 
+  //-- Call API เพื่อไป Query คำถามมาแสดงใน Template
   async getQuestionTocallApiService() {
 
+    //-- Get value and Assignment ให้ตัวแปลประเภท Interface class
     this.preUserData = JSON.parse(sessionStorage.getItem('userSessionStorage'));
 
+    //-- Call API Service เพื่อนำคำถามมาแสดง
     await this.questionService.getHttpQuestions(this.preUserData.LEV_ID).subscribe(response => {
 
       if (response.question_error_message_status == 1) {
 
+        //-- Assignment values ที่ได้จากการ Login เตรียมไว้ก่อน
         this.questionValueForm.patchValue({
-
           PRENAME_NO: this.preUserData.PRENAME_NO,
           FIRST_NAME_THAI: this.preUserData.FIRST_NAME_THAI,
           LAST_NAME_THAI: this.preUserData.LAST_NAME_THAI,
@@ -378,8 +428,10 @@ export class QuestionNaireComponent implements OnInit {
           STD_CODE: this.preUserData.STD_CODE,
           MAJOR_NO: this.preUserData.MAJOR_NO,
           FACULTY_NO: this.preUserData.FACUTY_NO,
-
+          // INSERT_STATUS: 'true'
         });
+
+        this.PRENAME_THAI = this.preUserData.PRENAME_THAI;
 
         this.MAJOR_NAME_THAI = this.preUserData.MAJOR_NAME_THAI;
         this.FACULTY_NAME_THAI = this.preUserData.FACULTY_NAME_THAI;
@@ -497,22 +549,210 @@ export class QuestionNaireComponent implements OnInit {
 
       }
 
-    },
-      error => {
+    }, error => {
 
-        this.handlesErrors(error.status);
+      this.handlesErrors(error.status);
 
-      });
+    });
+
+    //-- Check ว่าเคยทำแบบสอบถามแล้วหรือไม่
+    //-- ใช่เคย ทำการ Set value ให้ตัวแปร UPDATE_STATUS = "ture" และ INSERT_STATUS = ""
+    //-- ไม่เคย ทำการ Set value ให้ตัวแปร INSERT_STATUS = "ture" และ UPDATE_STATUS = ""
+    await this.questionService.getHttpCheckInsertBefore(this.preUserData.STD_CODE).subscribe(responses => {
+
+      if (responses.UPDATE_STATUS == "true") {
+
+        this.questionValueForm.setValue({
+          STD_CODE: responses.STD_CODE == 'null' ? '' : responses.STD_CODE,
+          PRENAME_NO: responses.PRENAME_NO == 'null' ? '' : responses.PRENAME_NO,
+          FIRST_NAME_THAI: responses.FIRST_NAME_THAI == 'null' ? '' : responses.FIRST_NAME_THAI,
+          LAST_NAME_THAI: responses.LAST_NAME_THAI == 'null' ? '' : responses.LAST_NAME_THAI,
+          AGE: responses.AGE == 'null' ? '' : responses.AGE,
+          GENDER_NO: responses.GENDER_NO == 'null' ? '' : responses.GENDER_NO,
+          FACULTY_NO: responses.FACULTY_NO == 'null' ? '' : responses.FACULTY_NO,
+          MAJOR_NO: responses.MAJOR_NO == 'null' ? '' : responses.MAJOR_NO,
+          STD_TYPE: responses.STD_TYPE == 'null' ? '' : responses.STD_TYPE,
+          STD_STUDY_TIME: responses.STD_STUDY_TIME == 'null' ? '' : responses.STD_STUDY_TIME,
+          STD_FUND: responses.STD_FUND == 'null' ? '' : responses.STD_FUND,
+          BE_WORK_STATUS: responses.BE_WORK_STATUS == 'null' ? '' : responses.BE_WORK_STATUS,
+          BE_WORK_STATUS_TXT: responses.BE_WORK_STATUS_TXT == 'null' ? '' : responses.BE_WORK_STATUS_TXT,
+          QN_WORK_STATUS: responses.QN_WORK_STATUS == 'null' ? '' : responses.QN_WORK_STATUS,
+          QN_WORK_STATUS_NO_TXT: responses.QN_WORK_STATUS_NO_TXT == 'null' ? '' : responses.QN_WORK_STATUS_NO_TXT,
+          QN_WORK_STATUS_ED_TXT: responses.QN_WORK_STATUS_ED_TXT == 'null' ? '' : responses.QN_WORK_STATUS_ED_TXT,
+          QN_OCCUP_TYPE: responses.QN_OCCUP_TYPE == 'null' ? '' : responses.QN_OCCUP_TYPE,
+          QN_OCCUP_TYPE_TXT: responses.QN_OCCUP_TYPE_TXT == 'null' ? '' : responses.QN_OCCUP_TYPE_TXT,
+          QN_SALARY: responses.QN_SALARY == 'null' ? '' : responses.QN_SALARY,
+          QN_WORK_SALARY: responses.QN_WORK_SALARY == 'null' ? '' : responses.QN_WORK_SALARY,
+          QN_WORK_NAME: responses.QN_WORK_NAME == 'null' ? '' : responses.QN_WORK_NAME,
+          QN_WORK_NO: responses.QN_WORK_NO == 'null' ? '' : responses.QN_WORK_NO,
+          QN_WORK_MOO: responses.QN_WORK_MOO == 'null' ? '' : responses.QN_WORK_MOO,
+          QN_WORK_BUILDING: responses.QN_WORK_BUILDING == 'null' ? '' : responses.QN_WORK_BUILDING,
+          QN_WORK_FLOOR: responses.QN_WORK_FLOOR == 'null' ? '' : responses.QN_WORK_FLOOR,
+          QN_WORK_SOI: responses.QN_WORK_SOI == 'null' ? '' : responses.QN_WORK_SOI,
+          QN_WORK_STREET: responses.QN_WORK_STREET == 'null' ? '' : responses.QN_WORK_STREET,
+          QN_WORK_TAMBON: responses.QN_WORK_TAMBON == 'null' ? '' : responses.QN_WORK_TAMBON,
+          QN_WORK_AMPHUR: responses.QN_WORK_AMPHUR == 'null' ? '' : responses.QN_WORK_AMPHUR,
+          QN_WORK_PROVINCE_NO: responses.QN_WORK_PROVINCE_NO == 'null' ? '' : responses.QN_WORK_PROVINCE_NO,
+          QN_WORK_ZIPCODE: responses.QN_WORK_ZIPCODE == 'null' ? '' : responses.QN_WORK_ZIPCODE,
+          QN_WORK_TEL: responses.QN_WORK_TEL == 'null' ? '' : responses.QN_WORK_TEL,
+          QN_WORK_FAX: responses.QN_WORK_FAX == 'null' ? '' : responses.QN_WORK_FAX,
+          QN_WORK_URL: responses.QN_WORK_URL == 'null' ? '' : responses.QN_WORK_URL,
+          AF_FIND_WORK: responses.AF_FIND_WORK == 'null' ? '' : responses.AF_FIND_WORK,
+          QN_MATCH_EDU: responses.QN_MATCH_EDU == 'null' ? '' : responses.QN_MATCH_EDU,
+          QN_WORK_APPLY: responses.QN_WORK_APPLY == 'null' ? '' : responses.QN_WORK_APPLY,
+          QN_EMPLOYER: responses.QN_EMPLOYER == 'null' ? '' : responses.QN_EMPLOYER,
+          QN_AWARD: responses.QN_AWARD == 'null' ? '' : responses.QN_AWARD,
+          QN_AWARD_TXT: responses.QN_AWARD_TXT == 'null' ? '' : responses.QN_AWARD_TXT,
+          QN_AWARD_INSTITUTE: responses.QN_AWARD_INSTITUTE == 'null' ? '' : responses.QN_AWARD_INSTITUTE,
+          QN_AWARD_MMYYYY: responses.QN_AWARD_MMYYYY == 'null' ? '' : responses.QN_AWARD_MMYYYY,
+          QN_ADDPROGRAM2: responses.QN_ADDPROGRAM2 == 'null' ? '' : responses.QN_ADDPROGRAM2,
+          QN_ADDPROGRAM1: responses.QN_ADDPROGRAM1 == 'null' ? '' : responses.QN_ADDPROGRAM1,
+          QN_ADDPROGRAM3: responses.QN_ADDPROGRAM3 == 'null' ? '' : responses.QN_ADDPROGRAM3,
+          QN_ADDPROGRAM4: responses.QN_ADDPROGRAM4 == 'null' ? '' : responses.QN_ADDPROGRAM4,
+          QN_ADDPROGRAM5: responses.QN_ADDPROGRAM5 == 'null' ? '' : responses.QN_ADDPROGRAM5,
+          QN_ADDPROGRAM6: responses.QN_ADDPROGRAM6 == 'null' ? '' : responses.QN_ADDPROGRAM6,
+          QN_COMMENT_PROGRAM: responses.QN_COMMENT_PROGRAM == 'null' ? '' : responses.QN_COMMENT_PROGRAM,
+          QN_COMMENT_LEARN: responses.QN_COMMENT_LEARN == 'null' ? '' : responses.QN_COMMENT_LEARN,
+          QN_COMMENT_SOCIAL: responses.QN_COMMENT_SOCIAL == 'null' ? '' : responses.QN_COMMENT_SOCIAL,
+          QN_COMMENT_ACTIVITY: responses.QN_COMMENT_ACTIVITY == 'null' ? '' : responses.QN_COMMENT_ACTIVITY,
+          QN_COMMENT_LOCATION: responses.QN_COMMENT_LOCATION == 'null' ? '' : responses.QN_COMMENT_LOCATION,
+          QN_DATE_UPDATE: responses.QN_DATE_UPDATE == 'null' ? '' : responses.QN_DATE_UPDATE,
+          INSERT_STATUS: responses.INSERT_STATUS == 'null' ? '' : responses.INSERT_STATUS,
+          UPDATE_STATUS: responses.UPDATE_STATUS == null ? '' : responses.UPDATE_STATUS,
+        });
+
+        console.log(this.preUserData.PRENAME_THAI)
+        this.PRENAME_THAI = this.preUserData.PRENAME_THAI;
+
+        this.CHECKED_QN_ADDPROGRAM1 = this.questionValueForm.controls['QN_ADDPROGRAM1'].value;
+        this.CHECKED_QN_ADDPROGRAM2 = this.questionValueForm.controls['QN_ADDPROGRAM2'].value;
+        this.CHECKED_QN_ADDPROGRAM3 = this.questionValueForm.controls['QN_ADDPROGRAM3'].value;
+        this.CHECKED_QN_ADDPROGRAM4 = this.questionValueForm.controls['QN_ADDPROGRAM4'].value;
+        this.CHECKED_QN_ADDPROGRAM5 = this.questionValueForm.controls['QN_ADDPROGRAM5'].value;
+        this.CHECKED_QN_ADDPROGRAM6 = this.questionValueForm.controls['QN_ADDPROGRAM6'].value;
+
+        registerLocaleData(localeTh, 'th');
+        let pipe = new DatePipe('th-TH');
+        let nowYear = (new Date()).getFullYear();
+        let fakeYearTH = (nowYear + 543);
+        let dateNewFormat = pipe.transform(this.questionValueForm.controls['QN_DATE_UPDATE'].value.toString(), 'dd MMM' + fakeYearTH + ' เวลา hh:mm:ss', 'th').toString();
+        const message = `คุณลงทะเบียนเมื่อ: ${dateNewFormat}`;
+        // const description = `${dateNewFormat}`;
+        const description = `คุณสามารถแก้ไข แบบสำรวจได้ด้วยตนเอง หรือเข้าดูรายละเอียดที่ลงทะเบียนไว้ได้`;
+        const dialogData = new ConfirmDialogModel("แบบสำรวจภาวะการมีงานทำ", message, description);
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          data: dialogData
+        });
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+
+          this.dialog_confirm_result = dialogResult;
+          if (!this.dialog_confirm_result) {
+
+            this.router.navigate(['/login']);
+          }
+
+        });
+
+
+      } else {
+
+        this.questionValueForm.patchValue({ INSERT_STATUS: responses.INSERT_STATUS });
+
+      }
+
+    }, errors => {
+
+      this.handlesErrors(errors.status);
+
+    });
+
   }
 
-
-
+  //-- จัดการส่วนของ Checked Box ( Ueser สามารถเลือก Checked Box ได้มากกว่า 1)
   checkBoxvalueQN_ADDPROGRAM1(event) {
 
     if (event.checked) {
+
       this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('1');
+
+      if (
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].value) {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+      }
+
     } else {
+
       this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
+
+      if (
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].value.length === 0) {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+
+      } else {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+
+      }
     }
 
   }
@@ -520,19 +760,170 @@ export class QuestionNaireComponent implements OnInit {
   checkBoxvalueQN_ADDPROGRAM2(event) {
 
     if (event.checked) {
+
       this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('2');
+
+      if (
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].value) {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+      }
+
     } else {
+
       this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
+
+      if (
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].value.length === 0) {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+      } else {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+
+      }
     }
 
   }
 
   checkBoxvalueQN_ADDPROGRAM3(event) {
-
     if (event.checked) {
+
       this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('3');
+
+      if (
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].value) {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+      }
+
     } else {
+
       this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
+
+      if (
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].value.length === 0) {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+      } else {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+
+      }
     }
 
   }
@@ -540,9 +931,85 @@ export class QuestionNaireComponent implements OnInit {
   checkBoxvalueQN_ADDPROGRAM4(event) {
 
     if (event.checked) {
+
       this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('4');
+
+      if (
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].value) {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+      }
+
     } else {
+
       this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
+
+      if (
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].value.length === 0) {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+      } else {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+
+      }
     }
 
   }
@@ -550,9 +1017,85 @@ export class QuestionNaireComponent implements OnInit {
   checkBoxvalueQN_ADDPROGRAM5(event) {
 
     if (event.checked) {
+
       this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('5');
+
+      if (
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].value) {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+      }
+
     } else {
+
       this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('');
+
+      if (
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].value.length === 0) {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+      } else {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+
+      }
     }
 
   }
@@ -560,23 +1103,194 @@ export class QuestionNaireComponent implements OnInit {
   checkBoxvalueQN_ADDPROGRAM6(event) {
 
     if (event.checked) {
+
       this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('6');
+
+      if (
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].value ||
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].value) {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+      }
+
     } else {
+
       this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
+
+      if (
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].value.length === 0 &&
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].value.length === 0) {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('');
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].setValidators([Validators.required]);
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+      } else {
+
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+
+      }
     }
 
   }
 
+  //-- ส่วนของการ Binding Data ระหว่าง Template กับ Component แบบ Realtime
+  //-- เอาไว้เรียกดูค่า Validators สำหรับจัดการ Required
   get fbValidation() { return this.questionValueForm.controls; }
 
-  get checkedAddProgram1() { return this.CHECKED_QN_ADDPROGRAM1; }
+  //-- ส่งข้อมูลไป Insert หรือ Update
+  async onSubmit() {
 
-  onSubmit() {
+    //-- Assignment values ทั้งหมดที่ได้จากการ เลือกคำตอบของ User
+    //-- Assignment values จาก FromBuilderGroup ให้กับ Interface
+    this.postUserData = await {
+      STD_CODE: this.questionValueForm.get('STD_CODE').value,
+      PRENAME_NO: this.questionValueForm.get('PRENAME_NO').value,
+      FIRST_NAME_THAI: this.questionValueForm.get('FIRST_NAME_THAI').value,
+      LAST_NAME_THAI: this.questionValueForm.get('LAST_NAME_THAI').value,
+      AGE: this.questionValueForm.get('AGE').value,
+      GENDER_NO: this.questionValueForm.get('GENDER_NO').value,
+      FACULTY_NO: this.questionValueForm.get('FACULTY_NO').value,
+      MAJOR_NO: this.questionValueForm.get('MAJOR_NO').value,
+      STD_TYPE: this.questionValueForm.get('STD_TYPE').value,
+      STD_STUDY_TIME: this.questionValueForm.get('STD_STUDY_TIME').value,
+      STD_FUND: this.questionValueForm.get('STD_FUND').value,
+      BE_WORK_STATUS: this.questionValueForm.get('BE_WORK_STATUS').value,
+      BE_WORK_STATUS_TXT: this.questionValueForm.get('BE_WORK_STATUS_TXT').value,
+      QN_WORK_STATUS: this.questionValueForm.get('QN_WORK_STATUS').value,
+      QN_WORK_STATUS_NO_TXT: this.questionValueForm.get('QN_WORK_STATUS_NO_TXT').value,
+      QN_WORK_STATUS_ED_TXT: this.questionValueForm.get('QN_WORK_STATUS_ED_TXT').value,
+      QN_OCCUP_TYPE: this.questionValueForm.get('QN_OCCUP_TYPE').value,
+      QN_OCCUP_TYPE_TXT: this.questionValueForm.get('QN_OCCUP_TYPE_TXT').value,
+      QN_SALARY: this.questionValueForm.get('QN_SALARY').value,
+      QN_WORK_SALARY: this.questionValueForm.get('QN_WORK_SALARY').value,
+      QN_WORK_NAME: this.questionValueForm.get('QN_WORK_NAME').value,
+      QN_WORK_NO: this.questionValueForm.get('QN_WORK_NO').value,
+      QN_WORK_MOO: this.questionValueForm.get('QN_WORK_MOO').value,
+      QN_WORK_BUILDING: this.questionValueForm.get('QN_WORK_BUILDING').value,
+      QN_WORK_FLOOR: this.questionValueForm.get('QN_WORK_FLOOR').value,
+      QN_WORK_SOI: this.questionValueForm.get('QN_WORK_SOI').value,
+      QN_WORK_STREET: this.questionValueForm.get('QN_WORK_STREET').value,
+      QN_WORK_TAMBON: this.questionValueForm.get('QN_WORK_TAMBON').value,
+      QN_WORK_AMPHUR: this.questionValueForm.get('QN_WORK_AMPHUR').value,
+      QN_WORK_PROVINCE_NO: this.questionValueForm.get('QN_WORK_PROVINCE_NO').value,
+      QN_WORK_ZIPCODE: this.questionValueForm.get('QN_WORK_ZIPCODE').value,
+      QN_WORK_TEL: this.questionValueForm.get('QN_WORK_TEL').value,
+      QN_WORK_FAX: this.questionValueForm.get('QN_WORK_FAX').value,
+      QN_WORK_URL: this.questionValueForm.get('QN_WORK_URL').value,
+      AF_FIND_WORK: this.questionValueForm.get('AF_FIND_WORK').value,
+      QN_MATCH_EDU: this.questionValueForm.get('QN_MATCH_EDU').value,
+      QN_WORK_APPLY: this.questionValueForm.get('QN_WORK_APPLY').value,
+      QN_EMPLOYER: this.questionValueForm.get('QN_EMPLOYER').value,
+      QN_AWARD: this.questionValueForm.get('QN_AWARD').value,
+      QN_AWARD_TXT: this.questionValueForm.get('QN_AWARD_TXT').value,
+      QN_AWARD_INSTITUTE: this.questionValueForm.get('QN_AWARD_INSTITUTE').value,
+      QN_AWARD_MMYYYY: this.questionValueForm.get('QN_AWARD_MMYYYY').value,
+      QN_ADDPROGRAM2: this.questionValueForm.get('QN_ADDPROGRAM2').value,
+      QN_ADDPROGRAM1: this.questionValueForm.get('QN_ADDPROGRAM1').value,
+      QN_ADDPROGRAM3: this.questionValueForm.get('QN_ADDPROGRAM3').value,
+      QN_ADDPROGRAM4: this.questionValueForm.get('QN_ADDPROGRAM4').value,
+      QN_ADDPROGRAM5: this.questionValueForm.get('QN_ADDPROGRAM5').value,
+      QN_ADDPROGRAM6: this.questionValueForm.get('QN_ADDPROGRAM6').value,
+      QN_COMMENT_PROGRAM: this.questionValueForm.get('QN_COMMENT_PROGRAM').value,
+      QN_COMMENT_LEARN: this.questionValueForm.get('QN_COMMENT_LEARN').value,
+      QN_COMMENT_SOCIAL: this.questionValueForm.get('QN_COMMENT_SOCIAL').value,
+      QN_COMMENT_ACTIVITY: this.questionValueForm.get('QN_COMMENT_ACTIVITY').value,
+      QN_COMMENT_LOCATION: this.questionValueForm.get('QN_COMMENT_LOCATION').value,
+      QN_DATE_UPDATE: this.questionValueForm.get('QN_DATE_UPDATE').value,
+      INSERT_STATUS: this.questionValueForm.get('INSERT_STATUS').value,
+      UPDATE_STATUS: this.questionValueForm.get('UPDATE_STATUS').value
+    };
 
-    console.table('onSubmit => ', this.questionValueForm.value);
+    //-- ส่งข้อมูลไปยัง Service เพื่อ Insert หรือ Update ข้อมูล
+    await this.questionService.postHttpQuestions(this.postUserData).subscribe(responsePost => {
+
+      //-- Successfully
+      if (responsePost.error_question_insert_update_message_status == 1) {
+
+        //-- ********** สำเร็จ แจ้งด้วย Dialog และจบการทำงาน Redirect to Login ******** --//
+        const message = `ทำการบันทึก แบบสำรวจเรียบร้อยแล้วครับ`;
+        const description = `หากคุณต้องการแก้ไข หรือต้องการดูรายละเอียดแบบสำรวจของคุณ สามารถทำได้ด้วยการ Login อีกครั้ง`;
+        const dialogData = new ConfirmDialogModel("บันทึกแบบสำรวจเรียบร้อย", message, description);
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          data: dialogData
+        });
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+          this.dialog_confirm_result = dialogResult;
+          this.router.navigate(['/login']);
+        });
+
+      } else {
+
+        //-- กรณีนี้จะเป็น ตัวแปรไม่สมบูณร์ จะเข้า Condition นี้
+        this.handlesErrors(responsePost.error_question_insert_update_message_status);
+
+      }
+
+    }, error => {
+
+      this.handlesErrors(error.status);
+
+    });
 
   }
 
+  //-- ส่วนของการจัดการ Errors Handles ทั้งหมดใน Componemt
   public handlesErrors(_handle_error: any): void {
 
     if (_handle_error == 404) {
@@ -595,8 +1309,7 @@ export class QuestionNaireComponent implements OnInit {
 
   }
 
-
-  //-- ยืนยันการ Logout
+  //-- ยืนยันการ Logout ออกจากระบบ
   logoutConfirmDialog(): void {
     const message = `คุณต้องการที่จะออกจากระบบใช่หรือไม่?`;
 
@@ -623,4 +1336,4 @@ export class QuestionNaireComponent implements OnInit {
 
 
 
-}
+}// -- End Componemt

@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
 
   // -- เอาไว้เปลี่ยน format เป็น 'MM/dd/yyyy' -- //
   pipe = new DatePipe('en-US');
-  dateNewFormat = new Date();
 
   STD_CODE: string;
   BIRTH_DATE: string;
@@ -68,7 +67,18 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('userSessionStorage', JSON.stringify(response));
         sessionStorage.setItem('loginSuccessesSessionStorage', JSON.stringify(response.STD_CODE));
 
-        this.router.navigate(['/question-naire']);
+        //-- ส่งไปยังหน้า แบบสำรวจ
+        if (response.LEV_ID == '1') {
+
+          //-- ไปยังหน้า แบบสำรวจ ป.ตรี
+          this.router.navigate(['/question-naire']);
+
+        } else {
+
+          //-- ไปยังหน้า แบบสำรวจ ป.โท
+
+        }
+
 
       } else {
 

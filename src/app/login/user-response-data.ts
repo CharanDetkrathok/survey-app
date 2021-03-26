@@ -3,6 +3,7 @@ export interface userResponseDataInterface {
   LEV_ID: string;
   STD_CODE: string;
   PRENAME_NO: string;
+  PRENAME_THAI: string;
   FIRST_NAME_THAI: string;
   LAST_NAME_THAI: string;
   BIRTH_DATE: string;

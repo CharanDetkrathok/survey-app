@@ -21,7 +21,7 @@
                         <div class="form-group">
 
                             <!------ ข้อย่อย 1  ------->
-                            <mat-label>1.</mat-label> &nbsp;&nbsp;
+                            <mat-label>1. {{PRENAME_THAI}}</mat-label> &nbsp;&nbsp;
                             <mat-form-field class="">
                                 <mat-label>ชื่อ</mat-label>
                                 <input matInput placeholder="กรุณากรอก ชื่อ" formControlName="FIRST_NAME_THAI" [class.is-invalid]="fbValidation.FIRST_NAME_THAI.invalid && fbValidation.FIRST_NAME_THAI.touched && fbValidation.FIRST_NAME_THAI.pristine">
@@ -41,7 +41,7 @@
                             <mat-label>2.</mat-label> &nbsp;&nbsp;
                             <mat-form-field class="">
                                 <mat-label>อายุ</mat-label>
-                                <input matInput placeholder="กรุณากรอก อายุ" formControlName="AGE" maxlength="2" numbersOnly [class.is-invalid]="fbValidation.AGE.invalid && fbValidation.AGE.touched && fbValidation.AGE.pristine">
+                                <input matInput placeholder="กรุณากรอก อายุ" formControlName="AGE" maxlength="3" numbersOnly [class.is-invalid]="fbValidation.AGE.invalid && fbValidation.AGE.touched && fbValidation.AGE.pristine">
                             </mat-form-field>
                             <mat-label> ปี</mat-label>
                         </div>
@@ -217,7 +217,7 @@
                     <h2>
                         <mat-label>10.</mat-label> {{QUESTION_DETAIL_ID_10}}
                         <div>
-                            <p>เลือกตอบเพียงข้อเดียว ระหว่าง 10.1 หรือ 10.2 หรือ 10.3 &nbsp;
+                            <p>เลือกตอบเพียงข้อเดียว ระหว่าง 10.1 หรือ 10.2 หรือ 10.3 หรือ 10.4 &nbsp;
                                 <small *ngIf="questionValueForm.get('QN_WORK_STATUS').hasError('required') && questionValueForm.get('QN_WORK_STATUS').errors?.required" class="text-danger">***</small>
                             </p>
                         </div>
@@ -234,12 +234,15 @@
                                     <mat-radio-button class="" value="2">
                                         {{CHOICES_OF_QUESTION_ID_10_VALUE_2}}
                                     </mat-radio-button><br>
+
+                                    <!------ ข้อย่อย 10.2  ------->
+                                    <mat-label>10.2 ( กรณีท่านเลือกคำตอบ ข้อ 10.2 แล้วข้ามไปทำข้อที่ 18 )</mat-label><br>
                                     <mat-radio-button class="" value="3">
                                         {{CHOICES_OF_QUESTION_ID_10_VALUE_3}}
                                     </mat-radio-button><br>
 
-                                    <!------ ข้อย่อย 10.2  ------->
-                                    <mat-label>10.2 ( กรณีท่านเลือกคำตอบ ข้อ 10.2 แล้วข้ามไปทำข้อที่ 18 )</mat-label><br>
+                                    <!------ ข้อย่อย 10.3  ------->
+                                    <mat-label>10.3 ( กรณีท่านเลือกคำตอบ ข้อ 10.3 แล้วข้ามไปทำข้อที่ 18 )</mat-label><br>
                                     <mat-radio-button class="" value="4.1">
                                         {{CHOICES_OF_QUESTION_ID_10_VALUE_4_1}}
                                     </mat-radio-button><br>
@@ -257,8 +260,8 @@
                                         <input matInput placeholder="กรุณาระบุเพิ่มเติม" formControlName="QN_WORK_STATUS_NO_TXT" [class.is-invalid]="questionValueForm.get('QN_WORK_STATUS_NO_TXT').hasError('required') || questionValueForm.get('QN_WORK_STATUS_NO_TXT').errors?.required">
                                     </mat-form-field> &nbsp; <small *ngIf="questionValueForm.get('QN_WORK_STATUS_NO_TXT').hasError('required') || questionValueForm.get('QN_WORK_STATUS_NO_TXT').errors?.required" class="text-danger">***</small><br>
 
-                                    <!------ ข้อย่อย 10.3  ------->
-                                    <mat-label>10.3 ( กรณีท่านเลือกคำตอบ ข้อ 10.3 แล้วข้ามไปทำข้อที่ 18 )</mat-label><br>
+                                    <!------ ข้อย่อย 10.4  ------->
+                                    <mat-label>10.4 ( กรณีท่านเลือกคำตอบ ข้อ 10.4 แล้วข้ามไปทำข้อที่ 18 )</mat-label><br>
                                     <mat-radio-button class="" value="5.1">
                                         {{CHOICES_OF_QUESTION_ID_10_VALUE_5_1}}
                                     </mat-radio-button><br>
@@ -353,10 +356,9 @@
                         <mat-label>รายได้พิเศษต่อเดือน</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="">
                             <mat-label>รายได้พิเศษต่อเดือน</mat-label>
-                            <input matInput placeholder="กรุณากรอก รายได้พิเศษต่อเดือน" numbersOnly formControlName="QN_WORK_SALARY" [class.is-invalid]="questionValueForm.get('QN_WORK_SALARY').hasError('required') || questionValueForm.get('QN_WORK_SALARY').errors?.required">
+                            <input matInput placeholder="กรุณากรอก รายได้พิเศษต่อเดือน" numbersOnly formControlName="QN_WORK_SALARY">
                         </mat-form-field>
-                        <mat-label> บาท</mat-label> &nbsp;
-                        <small *ngIf="questionValueForm.get('QN_SALARY').hasError('required') && questionValueForm.get('QN_SALARY').errors?.required || questionValueForm.get('QN_WORK_SALARY').hasError('required') && questionValueForm.get('QN_WORK_SALARY').errors?.required" class="text-danger">***</small>
+                        <mat-label> บาท</mat-label>
                     </div>
                 </h2>
             </div>
@@ -367,19 +369,6 @@
                         <!------ ข้อย่อย 13  ------->
 
                         <mat-label>13. {{QUESTION_DETAIL_ID_13}}</mat-label>&nbsp;
-                        <!-- <small *ngIf="questionValueForm.get('QN_WORK_NAME').hasError('required') && questionValueForm.get('QN_WORK_NAME').errors?.required ||
-                        questionValueForm.get('QN_WORK_NO').hasError('required') && questionValueForm.get('QN_WORK_NO').errors?.required ||
-                        questionValueForm.get('QN_WORK_MOO').hasError('required') && questionValueForm.get('QN_WORK_MOO').errors?.required ||
-                        questionValueForm.get('QN_WORK_BUILDING').hasError('required') && questionValueForm.get('QN_WORK_BUILDING').errors?.required ||
-                        questionValueForm.get('QN_WORK_FLOOR').hasError('required') && questionValueForm.get('QN_WORK_FLOOR').errors?.required ||
-                        questionValueForm.get('QN_WORK_SOI').hasError('required') && questionValueForm.get('QN_WORK_SOI').errors?.required ||
-                        questionValueForm.get('QN_WORK_STREET').hasError('required') && questionValueForm.get('QN_WORK_STREET').errors?.required ||
-                        questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required ||
-                        questionValueForm.get('QN_WORK_AMPHUR').hasError('required') && questionValueForm.get('QN_WORK_AMPHUR').errors?.required ||
-                        questionValueForm.get('QN_WORK_PROVINCE_NO').hasError('required') && questionValueForm.get('QN_WORK_PROVINCE_NO').errors?.required ||
-                        questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') && questionValueForm.get('QN_WORK_ZIPCODE').errors?.required ||
-                        questionValueForm.get('QN_WORK_TEL').hasError('required') && questionValueForm.get('QN_WORK_TEL').errors?.required ||
-                        questionValueForm.get('QN_WORK_FAX').hasError('required') && questionValueForm.get('QN_WORK_FAX').errors?.required" class="text-danger">***กรุณาระบุข้อมูล สถานที่ทำงานปัจจุบัน ***</small><br> -->
 
                         <mat-label>ชื่อหน่วยงาน/สถานที่ประกอบการ</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
@@ -395,33 +384,28 @@
 
                         <mat-label>หมู่ที่</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก หมู่ที่" formControlName="QN_WORK_MOO" [class.is-invalid]="questionValueForm.get('QN_WORK_MOO').hasError('required') || questionValueForm.get('QN_WORK_MOO').errors?.required">
-                        </mat-form-field>&nbsp;
-                        <small *ngIf="questionValueForm.get('QN_WORK_MOO').hasError('required') && questionValueForm.get('QN_WORK_MOO').errors?.required" class="text-danger">***</small><br>
+                            <input matInput placeholder="กรุณากรอก หมู่ที่" formControlName="QN_WORK_MOO">
+                        </mat-form-field><br>
 
                         <mat-label>อาคาร/ตึก</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก ชื่ออาคาร/ตึก" formControlName="QN_WORK_BUILDING" [class.is-invalid]="questionValueForm.get('QN_WORK_BUILDING').hasError('required') || questionValueForm.get('QN_WORK_BUILDING').errors?.required">
-                        </mat-form-field>&nbsp;
-                        <small *ngIf="questionValueForm.get('QN_WORK_BUILDING').hasError('required') && questionValueForm.get('QN_WORK_BUILDING').errors?.required" class="text-danger">***</small><br>
+                            <input matInput placeholder="กรุณากรอก ชื่ออาคาร/ตึก" formControlName="QN_WORK_BUILDING">
+                        </mat-form-field><br>
 
                         <mat-label>ชั้น</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก ชั้น" formControlName="QN_WORK_FLOOR" [class.is-invalid]="questionValueForm.get('QN_WORK_FLOOR').hasError('required') || questionValueForm.get('QN_WORK_FLOOR').errors?.required">
-                        </mat-form-field>&nbsp;
-                        <small *ngIf="questionValueForm.get('QN_WORK_FLOOR').hasError('required') && questionValueForm.get('QN_WORK_FLOOR').errors?.required" class="text-danger">***</small><br>
+                            <input matInput placeholder="กรุณากรอก ชั้น" formControlName="QN_WORK_FLOOR" maxlength="2" numbersOnly>
+                        </mat-form-field><br>
 
                         <mat-label>ตรอก/ซอย</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก ตรอก/ซอย" formControlName="QN_WORK_SOI" [class.is-invalid]="questionValueForm.get('QN_WORK_SOI').hasError('required') || questionValueForm.get('QN_WORK_SOI').errors?.required">
-                        </mat-form-field>&nbsp;
-                        <small *ngIf="questionValueForm.get('QN_WORK_SOI').hasError('required') && questionValueForm.get('QN_WORK_SOI').errors?.required" class="text-danger">***</small><br>
+                            <input matInput placeholder="กรุณากรอก ตรอก/ซอย" formControlName="QN_WORK_SOI">
+                        </mat-form-field><br>
 
                         <mat-label>ถนน</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก ถนน" formControlName="QN_WORK_STREET" [class.is-invalid]="questionValueForm.get('QN_WORK_STREET').hasError('required') || questionValueForm.get('QN_WORK_STREET').errors?.required">
-                        </mat-form-field>&nbsp;
-                        <small *ngIf="questionValueForm.get('QN_WORK_STREET').hasError('required') && questionValueForm.get('QN_WORK_STREET').errors?.required" class="text-danger">***</small><br>
+                            <input matInput placeholder="กรุณากรอก ถนน" formControlName="QN_WORK_STREET">
+                        </mat-form-field><br>
 
                         <mat-label>ตำบล/แขวง</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
@@ -443,21 +427,19 @@
 
                         <mat-label>รหัสไปรษณีย์</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก รหัสไปรษณีย์" formControlName="QN_WORK_ZIPCODE" [class.is-invalid]="questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') || questionValueForm.get('QN_WORK_ZIPCODE').errors?.required">
+                            <input matInput placeholder="กรุณากรอก รหัสไปรษณีย์" formControlName="QN_WORK_ZIPCODE" [class.is-invalid]="questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') || questionValueForm.get('QN_WORK_ZIPCODE').errors?.required" numbersOnly maxlength="5">
                         </mat-form-field>&nbsp;
                         <small *ngIf="questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') && questionValueForm.get('QN_WORK_ZIPCODE').errors?.required" class="text-danger">***</small><br>
 
                         <mat-label>โทรศัพท์ ที่ทำงาน</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก เบอร์โทรศัพท์ที่ทำงาน" formControlName="QN_WORK_TEL" [class.is-invalid]="questionValueForm.get('QN_WORK_TEL').hasError('required') || questionValueForm.get('QN_WORK_TEL').errors?.required">
-                        </mat-form-field>&nbsp;
-                        <small *ngIf="questionValueForm.get('QN_WORK_TEL').hasError('required') && questionValueForm.get('QN_WORK_TEL').errors?.required" class="text-danger">***</small><br>
+                            <input matInput placeholder="กรุณากรอก เบอร์โทรศัพท์ที่ทำงาน" formControlName="QN_WORK_TEL">
+                        </mat-form-field><br>
 
                         <mat-label>โทรสาร ที่ทำงาน</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก โทรสารที่ทำงาน" formControlName="QN_WORK_FAX" [class.is-invalid]="questionValueForm.get('QN_WORK_FAX').hasError('required') || questionValueForm.get('QN_WORK_FAX').errors?.required">
-                        </mat-form-field>&nbsp;
-                        <small *ngIf=" questionValueForm.get('QN_WORK_FAX').hasError('required') && questionValueForm.get('QN_WORK_FAX').errors?.required" class="text-danger">***</small><br>
+                            <input matInput placeholder="กรุณากรอก โทรสารที่ทำงาน" formControlName="QN_WORK_FAX">
+                        </mat-form-field><br>
 
                         <mat-label>เว็บไซต์ ที่ทำงาน(ถ้ามี)</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
@@ -650,11 +632,13 @@
             <div>
                 <h2>
                     <mat-label>19. {{QUESTION_DETAIL_ID_19}} &nbsp;
-                        <small *ngIf="!CHECKED_QN_ADDPROGRAM1 && !CHECKED_QN_ADDPROGRAM2 && !CHECKED_QN_ADDPROGRAM3 && !CHECKED_QN_ADDPROGRAM4 && !CHECKED_QN_ADDPROGRAM5 && !CHECKED_QN_ADDPROGRAM6" class="text-danger">***</small>
+                        <small *ngIf="questionValueForm.get('QN_ADDPROGRAM1').hasError('required') && questionValueForm.get('QN_ADDPROGRAM1').errors?.required || questionValueForm.get('QN_ADDPROGRAM2').hasError('required') && questionValueForm.get('QN_ADDPROGRAM2').errors?.required || questionValueForm.get('QN_ADDPROGRAM3').hasError('required') && questionValueForm.get('QN_ADDPROGRAM3').errors?.required || questionValueForm.get('QN_ADDPROGRAM4').hasError('required') && questionValueForm.get('QN_ADDPROGRAM4').errors?.required || questionValueForm.get('QN_ADDPROGRAM5').hasError('required') && questionValueForm.get('QN_ADDPROGRAM5').errors?.required || questionValueForm.get('QN_ADDPROGRAM6').hasError('required') && questionValueForm.get('QN_ADDPROGRAM6').errors?.required"
+                            class="text-danger">***</small>
+                        <!-- <small *ngIf="name.hasError('required') && name.errors?.required" class="text-danger">***</small> -->
                     </mat-label><br>
                     <div class="form-group">
                         <!------ ข้อย่อย 19  ------->
-                        <section class="" required>
+                        <section class="">
                             <mat-checkbox class="" [(ngModel)]="CHECKED_QN_ADDPROGRAM1" [ngModelOptions]="{standalone: true}" (change)="checkBoxvalueQN_ADDPROGRAM1($event)">
                                 {{CHOICES_OF_QUESTION_ID_19_VALUE_1}}</mat-checkbox><br>
                             <mat-checkbox class="" [(ngModel)]="CHECKED_QN_ADDPROGRAM2" [ngModelOptions]="{standalone: true}" (change)="checkBoxvalueQN_ADDPROGRAM2($event)">
@@ -677,10 +661,6 @@
                 </h2>
             </div>
         </div>
-        <div class="form-group">
-            <button mat-raised-button [disabled]="!questionValueForm.valid" color="primary" type="submit">บันทึกแบบสำรวจ</button>
-        </div>
-        {{questionValueForm.value | json}}
         <div>
             <div>
                 <div>
@@ -712,6 +692,9 @@
                     </h2>
                 </div>
             </div>
+        </div>
+        <div class="form-group">
+            <button mat-raised-button [disabled]="!questionValueForm.valid" color="primary" type="submit">บันทึกแบบสำรวจ</button>
         </div>
     </form>
 </div>

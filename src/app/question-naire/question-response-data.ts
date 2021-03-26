@@ -1,3 +1,6 @@
+
+//-- ให้สำหรับ รับค่า Response ของคำถามทั้งหมด จากการ Call API
+//-- เช่น ( ..._ID_10 คือข้อที่ 10 ) หรือ ( ..._ID_10_VALUE_1 คือคำตอบของข้อ 10 มีค่าเป็น 1 )
 export interface questionResponseDataInterface {
   QUESTION_SUB_HEADER: {
     QUESTION_DETAIL_ID_18: string;
