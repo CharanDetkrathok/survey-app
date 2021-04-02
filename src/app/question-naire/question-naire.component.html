@@ -384,7 +384,7 @@
 
                         <mat-label>หมู่ที่</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก หมู่ที่" formControlName="QN_WORK_MOO">
+                            <input matInput placeholder="กรุณากรอก หมู่ที่" formControlName="QN_WORK_MOO" numbersOnly>
                         </mat-form-field><br>
 
                         <mat-label>อาคาร/ตึก</mat-label> &nbsp;&nbsp;
@@ -407,29 +407,53 @@
                             <input matInput placeholder="กรุณากรอก ถนน" formControlName="QN_WORK_STREET">
                         </mat-form-field><br>
 
-                        <mat-label>ตำบล/แขวง</mat-label> &nbsp;&nbsp;
-                        <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก ตำบล/แขวง" formControlName="QN_WORK_TAMBON" [class.is-invalid]="questionValueForm.get('QN_WORK_TAMBON').hasError('required') || questionValueForm.get('QN_WORK_TAMBON').errors?.required">
-                        </mat-form-field>&nbsp;
-                        <small *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required" class="text-danger">***</small><br>
+                        <div fxLayout="row">
+                            <mat-label>ตำบล/แขวง</mat-label> &nbsp;&nbsp;
+                            <div class="ng-autocomplete">
+                                <!-- [data]="CHOICES_OF_ALL_DISTRICT" -->
+                                <ng-autocomplete [data]="checkLetters()" [searchKeyword]="keyword.tumbon" (selected)='selectEventTambon($event)' (closed)="closeTab()" (inputCleared)="onInputClearedTambon($event)" (inputChanged)="onChangeSearchTambon($event)" [itemTemplate]="itemTemplateTambon"
+                                    [notFoundTemplate]="notFoundTemplateTambon" placeholder="กรุณาเลือก ตำบล/แขวง" formControlName="QN_WORK_TAMBON">
+                                </ng-autocomplete>
+
+                                <ng-template #itemTemplateTambon let-item>
+                                    <div fxLayout="row" fxLayoutAlign="start center">
+                                        <a [innerHTML]="item.DISTRICT_NAME"></a>
+                                        <small fxLayout="row" fxLayoutAlign="start center">(&nbsp; อำเภอ/เขต <a
+                        [innerHTML]="item.AMPHUR_NAME"></a>)</small>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template #notFoundTemplateTambon let-notFound>
+                                    <div class="text-danger">ไม่พบ ตำบล/แขวง ที่ต้องการ</div>
+                                </ng-template>&nbsp;
+                            </div>
+                            <small *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required" class="text-danger">*** กรุณาเลือก ตำบล/แขวง ก่อน</small><br>
+                        </div>
+                        <!-- <hr style="width: 48%; height: 0.05em; margin-top: -30px;"> -->
 
                         <mat-label>อำเภอ/เขต</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก อำเภอ/เขต" formControlName="QN_WORK_AMPHUR" [class.is-invalid]="questionValueForm.get('QN_WORK_AMPHUR').hasError('required') || questionValueForm.get('QN_WORK_AMPHUR').errors?.required">
+                            <input readonly matInput placeholder="กรุณากรอก อำเภอ/เขต" formControlName="QN_WORK_AMPHUR" [class.is-invalid]="questionValueForm.get('QN_WORK_AMPHUR').hasError('required') || questionValueForm.get('QN_WORK_AMPHUR').errors?.required">
                         </mat-form-field>&nbsp;
-                        <small *ngIf="questionValueForm.get('QN_WORK_AMPHUR').hasError('required') && questionValueForm.get('QN_WORK_AMPHUR').errors?.required" class="text-danger">***</small><br>
+                        <small *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required || questionValueForm.get('QN_WORK_AMPHUR').hasError('required') && questionValueForm.get('QN_WORK_AMPHUR').errors?.required"
+                            class="text-danger">*** กรุณาเลือก ตำบล/แขวง ก่อน</small><br>
 
                         <mat-label>จังหวัด/ประเทศ</mat-label> &nbsp;&nbsp;
+                        <!-- formControlName="QN_WORK_PROVINCE_NO" -->
                         <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก จังหวัด/ประเทศ" formControlName="QN_WORK_PROVINCE_NO" [class.is-invalid]="questionValueForm.get('QN_WORK_PROVINCE_NO').hasError('required') || questionValueForm.get('QN_WORK_PROVINCE_NO').errors?.required">
+                            <input readonly matInput placeholder="กรุณากรอก จังหวัด/ประเทศ" [class.is-invalid]="questionValueForm.get('QN_WORK_PROVINCE_NO').hasError('required') || questionValueForm.get('QN_WORK_PROVINCE_NO').errors?.required" [(ngModel)]="QN_WORK_PROVINCE_NAME"
+                                [ngModelOptions]="{standalone: true}" [disabled]="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required">
                         </mat-form-field>&nbsp;
-                        <small *ngIf="questionValueForm.get('QN_WORK_PROVINCE_NO').hasError('required') && questionValueForm.get('QN_WORK_PROVINCE_NO').errors?.required" class="text-danger">***</small><br>
+                        <small *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required || questionValueForm.get('QN_WORK_PROVINCE_NO').hasError('required') && questionValueForm.get('QN_WORK_PROVINCE_NO').errors?.required"
+                            class="text-danger">*** กรุณาเลือก ตำบล/แขวง ก่อน</small><br>
 
                         <mat-label>รหัสไปรษณีย์</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">
-                            <input matInput placeholder="กรุณากรอก รหัสไปรษณีย์" formControlName="QN_WORK_ZIPCODE" [class.is-invalid]="questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') || questionValueForm.get('QN_WORK_ZIPCODE').errors?.required" numbersOnly maxlength="5">
+                            <input readonly matInput placeholder="กรุณากรอก รหัสไปรษณีย์" formControlName="QN_WORK_ZIPCODE" [class.is-invalid]="questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') || questionValueForm.get('QN_WORK_ZIPCODE').errors?.required" numbersOnly
+                                maxlength="5">
                         </mat-form-field>&nbsp;
-                        <small *ngIf="questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') && questionValueForm.get('QN_WORK_ZIPCODE').errors?.required" class="text-danger">***</small><br>
+                        <small *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required || questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') && questionValueForm.get('QN_WORK_ZIPCODE').errors?.required"
+                            class="text-danger">*** กรุณาเลือก ตำบล/แขวง ก่อน</small><br>
 
                         <mat-label>โทรศัพท์ ที่ทำงาน</mat-label> &nbsp;&nbsp;
                         <mat-form-field class="textarea-full-width">

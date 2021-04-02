@@ -1,7 +1,9 @@
+import { districtInterface, amphurInterface, provinceInterface, postcodeInterface, districtAllInterface } from './question-response-data';
+
 import { questionSetInterfaceData } from './question-set-interface-data';
 import { Router } from '@angular/router';
 import { ConfirmDialogModel, ConfirmDialogComponent } from './../confirm-dialog/confirm-dialog.component';
-import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { QuestionNaireService } from '../services/question-naire.service';
 import { userResponseDataInterface } from './../login/user-response-data';
@@ -200,6 +202,13 @@ export class QuestionNaireComponent implements OnInit {
   QUESTION_DETAIL_ID_33: string;
   QUESTION_DETAIL_ID_34: string;
   QUESTION_DETAIL_ID_35: string;
+
+  CHOICES_OF_ALL_DISTRICT: districtAllInterface;
+  CHOICES_OF_DISTRICT: districtInterface;
+  CHOICES_OF_AMPHUR: amphurInterface;
+  CHOICES_OF_PROVINCE: provinceInterface;
+  QN_WORK_PROVINCE_NAME: string;
+  CHOICES_OF_POSTCODE: postcodeInterface;
 
   constructor(
     private questionService: QuestionNaireService,
@@ -406,7 +415,113 @@ export class QuestionNaireComponent implements OnInit {
 
     });
 
+    //-- ต้องเลือก ตำบล/แขวง ก่อน จึงจะ enable
+    this.questionValueForm.controls['QN_WORK_AMPHUR'].disable();
+    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].disable();
+    this.questionValueForm.controls['QN_WORK_ZIPCODE'].disable();
+
   }
+
+  //-------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------
+  //เริ่ม-- Autocomplete zone ------
+  keyword = {
+    tumbon: 'DISTRICT_NAME'
+  };
+  TEMP_DISTRICT_NAME: string;
+  TEMP_AMPHUR_NAME: string;
+  TEMP_PROVINCE_NAME: string;
+  TEMP_POSTCODE: string;
+
+  setLetters: boolean = false;
+  // notFoundTemplate: any;
+  //-------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------
+  checkLetters(): any {
+    if (this.setLetters) return this.CHOICES_OF_ALL_DISTRICT;
+    // else return false;
+  }
+
+
+  closeTab(): any {
+    this.setLetters = false;
+    this.checkLetters();
+    // return true;
+  }
+
+  //เริ่ม-- Autocomplete ตำบล/แขวง
+  selectEventTambon(item) {
+    this.TEMP_DISTRICT_NAME = item.DISTRICT_NAME;
+    this.questionValueForm.controls['QN_WORK_TAMBON'].patchValue(this.TEMP_DISTRICT_NAME);
+
+    this.TEMP_AMPHUR_NAME = item.AMPHUR_NAME;
+    this.questionValueForm.controls['QN_WORK_AMPHUR'].patchValue(this.TEMP_AMPHUR_NAME);
+
+    //-- เก็บไว้ตอน onSubmit เพื่อ Insert to Database เพราะเก็บเป็น ID
+    this.TEMP_PROVINCE_NAME = item.PROVINCE_ID;
+    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].patchValue(item.TEMP_PROVINCE_NAME);
+    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].clearValidators();
+    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].updateValueAndValidity();
+    //-- เก็บไว้แสดง ชื่อจังหวัด/ประเทศ เป็น อักษร ที่หน้าเว็บ
+    this.QN_WORK_PROVINCE_NAME = item.PROVINCE_NAME;
+
+    this.TEMP_POSTCODE = item.POSTCODE;
+    this.questionValueForm.controls['QN_WORK_ZIPCODE'].patchValue(this.TEMP_POSTCODE);
+
+    //-- เลือก ตำบล/แขวง แล้วทำการ enable
+    this.questionValueForm.controls['QN_WORK_AMPHUR'].enable();
+    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].enable();
+    this.questionValueForm.controls['QN_WORK_ZIPCODE'].enable();
+  }
+
+  onChangeSearchTambon(val: string) {
+    // console.log('จำนวน srt => ' + val);
+
+    if (val.length >= 3) {
+      this.setLetters = true;
+    }
+
+    if (val.length === 0 || val === null || val === undefined || val === '') {
+      this.setLetters = false;
+    }
+
+  }
+
+  onInputClearedTambon(e) {
+
+    this.setLetters = false;
+
+    this.TEMP_DISTRICT_NAME = '';
+    this.questionValueForm.controls['QN_WORK_TAMBON'].setValue('');
+    this.questionValueForm.controls['QN_WORK_TAMBON'].setValidators([Validators.required]);
+    this.questionValueForm.controls['QN_WORK_TAMBON'].updateValueAndValidity();
+
+
+    this.TEMP_AMPHUR_NAME = '';
+    this.questionValueForm.controls['QN_WORK_AMPHUR'].setValue('');
+    this.questionValueForm.controls['QN_WORK_AMPHUR'].setValidators([Validators.required]);
+    this.questionValueForm.controls['QN_WORK_AMPHUR'].updateValueAndValidity();
+
+    this.TEMP_PROVINCE_NAME = '';
+    this.QN_WORK_PROVINCE_NAME = '';
+    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].setValue('');
+    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].setValidators([Validators.required]);
+    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].updateValueAndValidity();
+
+    this.TEMP_POSTCODE = '';
+    this.questionValueForm.controls['QN_WORK_ZIPCODE'].setValue('');
+    this.questionValueForm.controls['QN_WORK_ZIPCODE'].setValidators([Validators.required]);
+    this.questionValueForm.controls['QN_WORK_ZIPCODE'].updateValueAndValidity();
+
+    //-- ต้องเลือก ตำบล/แขวง ก่อน จึงจะ enable
+    this.questionValueForm.controls['QN_WORK_AMPHUR'].disable();
+    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].disable();
+    this.questionValueForm.controls['QN_WORK_ZIPCODE'].disable();
+  }
+  //จบ-- Autocomplete zone ------
+  //-------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------
+
 
   //-- Call API เพื่อไป Query คำถามมาแสดงใน Template
   async getQuestionTocallApiService() {
@@ -435,6 +550,12 @@ export class QuestionNaireComponent implements OnInit {
 
         this.MAJOR_NAME_THAI = this.preUserData.MAJOR_NAME_THAI;
         this.FACULTY_NAME_THAI = this.preUserData.FACULTY_NAME_THAI;
+
+        this.CHOICES_OF_ALL_DISTRICT = response.CHOICES_OF_ALL_DISTRICT;
+        this.CHOICES_OF_DISTRICT = response.CHOICES_OF_DISTRICT;
+        this.CHOICES_OF_AMPHUR = response.CHOICES_OF_AMPHUR;
+        this.CHOICES_OF_PROVINCE = response.CHOICES_OF_PROVINCE;
+        this.CHOICES_OF_POSTCODE = response.CHOICES_OF_POSTCODE;
 
         this.QUIZ_HEADER = response.QUIZ_HEADER
         this.SECTION_NAME_ID_1 = response.SECTION_MAIN_HEADER.SECTION_NAME_ID_1;
@@ -558,9 +679,15 @@ export class QuestionNaireComponent implements OnInit {
     //-- Check ว่าเคยทำแบบสอบถามแล้วหรือไม่
     //-- ใช่เคย ทำการ Set value ให้ตัวแปร UPDATE_STATUS = "ture" และ INSERT_STATUS = ""
     //-- ไม่เคย ทำการ Set value ให้ตัวแปร INSERT_STATUS = "ture" และ UPDATE_STATUS = ""
+
     await this.questionService.getHttpCheckInsertBefore(this.preUserData.STD_CODE).subscribe(responses => {
 
       if (responses.UPDATE_STATUS == "true") {
+
+        this.TEMP_DISTRICT_NAME = responses.QN_WORK_TAMBON == 'null' ? '' : responses.QN_WORK_TAMBON;
+        this.TEMP_AMPHUR_NAME = responses.QN_WORK_AMPHUR == 'null' ? '' : responses.QN_WORK_AMPHUR;
+        this.QN_WORK_PROVINCE_NAME = responses.QN_WORK_PROVINCE_NAME == 'null' ? '' : responses.QN_WORK_PROVINCE_NAME;
+        this.TEMP_POSTCODE = responses.QN_WORK_ZIPCODE == 'null' ? '' : responses.QN_WORK_ZIPCODE;
 
         this.questionValueForm.setValue({
           STD_CODE: responses.STD_CODE == 'null' ? '' : responses.STD_CODE,
@@ -621,7 +748,6 @@ export class QuestionNaireComponent implements OnInit {
           UPDATE_STATUS: responses.UPDATE_STATUS == null ? '' : responses.UPDATE_STATUS,
         });
 
-        console.log(this.preUserData.PRENAME_THAI)
         this.PRENAME_THAI = this.preUserData.PRENAME_THAI;
 
         this.CHECKED_QN_ADDPROGRAM1 = this.questionValueForm.controls['QN_ADDPROGRAM1'].value;
@@ -631,15 +757,23 @@ export class QuestionNaireComponent implements OnInit {
         this.CHECKED_QN_ADDPROGRAM5 = this.questionValueForm.controls['QN_ADDPROGRAM5'].value;
         this.CHECKED_QN_ADDPROGRAM6 = this.questionValueForm.controls['QN_ADDPROGRAM6'].value;
 
+        this.clearValidatorsAll_QA_ADDPROGRAM();
+
         registerLocaleData(localeTh, 'th');
         let pipe = new DatePipe('th-TH');
         let nowYear = (new Date()).getFullYear();
         let fakeYearTH = (nowYear + 543);
         let dateNewFormat = pipe.transform(this.questionValueForm.controls['QN_DATE_UPDATE'].value.toString(), 'dd MMM' + fakeYearTH + ' เวลา hh:mm:ss', 'th').toString();
+
+        const title = 'แบบสำรวจภาวะการมีงานทำ';
         const message = `คุณลงทะเบียนเมื่อ: ${dateNewFormat}`;
-        // const description = `${dateNewFormat}`;
-        const description = `คุณสามารถแก้ไข แบบสำรวจได้ด้วยตนเอง หรือเข้าดูรายละเอียดที่ลงทะเบียนไว้ได้`;
-        const dialogData = new ConfirmDialogModel("แบบสำรวจภาวะการมีงานทำ", message, description);
+        const description = 'คุณสามารถแก้ไข แบบสำรวจได้ด้วยตนเอง หรือเข้าดูรายละเอียดที่ลงทะเบียนไว้ได้';
+        const descriptionDetail = 'ด้วยการ Click ที่ปุ่ม OK';
+        const btnLeftDisable = false;
+        const btnRightDisable = false;
+        const txtBtnLeft = 'CLOSE';
+        const txtBtnRight = 'OK';
+        const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight);
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
           data: dialogData
         });
@@ -650,6 +784,7 @@ export class QuestionNaireComponent implements OnInit {
           if (!this.dialog_confirm_result) {
 
             this.router.navigate(['/login']);
+
           }
 
         });
@@ -670,11 +805,11 @@ export class QuestionNaireComponent implements OnInit {
   }
 
   //-- จัดการส่วนของ Checked Box ( Ueser สามารถเลือก Checked Box ได้มากกว่า 1)
-  checkBoxvalueQN_ADDPROGRAM1(event) {
+  async checkBoxvalueQN_ADDPROGRAM1(event) {
 
     if (event.checked) {
 
-      this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('1');
+      await this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('1');
 
       if (
         this.questionValueForm.controls['QN_ADDPROGRAM1'].value ||
@@ -684,25 +819,16 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_ADDPROGRAM5'].value ||
         this.questionValueForm.controls['QN_ADDPROGRAM6'].value) {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+        await this.clearValidators_QA_ADDPROGRAM2();
+        await this.clearValidators_QA_ADDPROGRAM3();
+        await this.clearValidators_QA_ADDPROGRAM4();
+        await this.clearValidators_QA_ADDPROGRAM5();
+        await this.clearValidators_QA_ADDPROGRAM6();
       }
 
     } else {
 
-      this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
+      await this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
 
       if (
         this.questionValueForm.controls['QN_ADDPROGRAM1'].value.length === 0 &&
@@ -712,56 +838,26 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_ADDPROGRAM5'].value.length === 0 &&
         this.questionValueForm.controls['QN_ADDPROGRAM6'].value.length === 0) {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+        await this.setValidators_QA_ADDPROGRAM2();
+        await this.setValidators_QA_ADDPROGRAM3();
+        await this.setValidators_QA_ADDPROGRAM4();
+        await this.setValidators_QA_ADDPROGRAM5();
+        await this.setValidators_QA_ADDPROGRAM6();
 
       } else {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+        await this.clearValidatorsAll_QA_ADDPROGRAM();
 
       }
     }
 
   }
 
-  checkBoxvalueQN_ADDPROGRAM2(event) {
+  async checkBoxvalueQN_ADDPROGRAM2(event) {
 
     if (event.checked) {
 
-      this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('2');
+      await this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('2');
 
       if (
         this.questionValueForm.controls['QN_ADDPROGRAM1'].value ||
@@ -771,25 +867,17 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_ADDPROGRAM5'].value ||
         this.questionValueForm.controls['QN_ADDPROGRAM6'].value) {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+        await this.clearValidators_QA_ADDPROGRAM1();
+        await this.clearValidators_QA_ADDPROGRAM3();
+        await this.clearValidators_QA_ADDPROGRAM4();
+        await this.clearValidators_QA_ADDPROGRAM5();
+        await this.clearValidators_QA_ADDPROGRAM6();
 
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
       }
 
     } else {
 
-      this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
+      await this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
 
       if (
         this.questionValueForm.controls['QN_ADDPROGRAM1'].value.length === 0 &&
@@ -799,54 +887,24 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_ADDPROGRAM5'].value.length === 0 &&
         this.questionValueForm.controls['QN_ADDPROGRAM6'].value.length === 0) {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+        await this.setValidators_QA_ADDPROGRAM1();
+        await this.setValidators_QA_ADDPROGRAM3();
+        await this.setValidators_QA_ADDPROGRAM4();
+        await this.setValidators_QA_ADDPROGRAM5();
+        await this.setValidators_QA_ADDPROGRAM6();
 
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
       } else {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
-
+        await this.clearValidatorsAll_QA_ADDPROGRAM();
       }
     }
 
   }
 
-  checkBoxvalueQN_ADDPROGRAM3(event) {
+  async checkBoxvalueQN_ADDPROGRAM3(event) {
     if (event.checked) {
 
-      this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('3');
+      await this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('3');
 
       if (
         this.questionValueForm.controls['QN_ADDPROGRAM1'].value ||
@@ -856,25 +914,16 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_ADDPROGRAM5'].value ||
         this.questionValueForm.controls['QN_ADDPROGRAM6'].value) {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+        await this.clearValidators_QA_ADDPROGRAM1();
+        await this.clearValidators_QA_ADDPROGRAM2();
+        await this.clearValidators_QA_ADDPROGRAM4();
+        await this.clearValidators_QA_ADDPROGRAM5();
+        await this.clearValidators_QA_ADDPROGRAM6();
       }
 
     } else {
 
-      this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
+      await this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
 
       if (
         this.questionValueForm.controls['QN_ADDPROGRAM1'].value.length === 0 &&
@@ -884,55 +933,26 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_ADDPROGRAM5'].value.length === 0 &&
         this.questionValueForm.controls['QN_ADDPROGRAM6'].value.length === 0) {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+        await this.setValidators_QA_ADDPROGRAM1();
+        await this.setValidators_QA_ADDPROGRAM2();
+        await this.setValidators_QA_ADDPROGRAM4();
+        await this.setValidators_QA_ADDPROGRAM5();
+        await this.setValidators_QA_ADDPROGRAM6();
 
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
       } else {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+        await this.clearValidatorsAll_QA_ADDPROGRAM();
 
       }
     }
 
   }
 
-  checkBoxvalueQN_ADDPROGRAM4(event) {
+  async checkBoxvalueQN_ADDPROGRAM4(event) {
 
     if (event.checked) {
 
-      this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('4');
+      await this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('4');
 
       if (
         this.questionValueForm.controls['QN_ADDPROGRAM1'].value ||
@@ -942,25 +962,17 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_ADDPROGRAM5'].value ||
         this.questionValueForm.controls['QN_ADDPROGRAM6'].value) {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+        await this.clearValidators_QA_ADDPROGRAM1();
+        await this.clearValidators_QA_ADDPROGRAM2();
+        await this.clearValidators_QA_ADDPROGRAM3();
+        await this.clearValidators_QA_ADDPROGRAM5();
+        await this.clearValidators_QA_ADDPROGRAM6();
 
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
       }
 
     } else {
 
-      this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
+      await this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
 
       if (
         this.questionValueForm.controls['QN_ADDPROGRAM1'].value.length === 0 &&
@@ -970,55 +982,26 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_ADDPROGRAM5'].value.length === 0 &&
         this.questionValueForm.controls['QN_ADDPROGRAM6'].value.length === 0) {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+        await this.setValidators_QA_ADDPROGRAM1();
+        await this.setValidators_QA_ADDPROGRAM2();
+        await this.setValidators_QA_ADDPROGRAM3();
+        await this.setValidators_QA_ADDPROGRAM5();
+        await this.setValidators_QA_ADDPROGRAM6();
 
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
       } else {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+        await this.clearValidatorsAll_QA_ADDPROGRAM();
 
       }
     }
 
   }
 
-  checkBoxvalueQN_ADDPROGRAM5(event) {
+  async checkBoxvalueQN_ADDPROGRAM5(event) {
 
     if (event.checked) {
 
-      this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('5');
+      await this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('5');
 
       if (
         this.questionValueForm.controls['QN_ADDPROGRAM1'].value ||
@@ -1028,20 +1011,12 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_ADDPROGRAM5'].value ||
         this.questionValueForm.controls['QN_ADDPROGRAM6'].value) {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+        await this.clearValidators_QA_ADDPROGRAM1();
+        await this.clearValidators_QA_ADDPROGRAM2();
+        await this.clearValidators_QA_ADDPROGRAM3();
+        await this.clearValidators_QA_ADDPROGRAM4();
+        await this.clearValidators_QA_ADDPROGRAM6();
 
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
       }
 
     } else {
@@ -1056,55 +1031,26 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_ADDPROGRAM5'].value.length === 0 &&
         this.questionValueForm.controls['QN_ADDPROGRAM6'].value.length === 0) {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+        await this.setValidators_QA_ADDPROGRAM1();
+        await this.setValidators_QA_ADDPROGRAM2();
+        await this.setValidators_QA_ADDPROGRAM3();
+        await this.setValidators_QA_ADDPROGRAM4();
+        await this.setValidators_QA_ADDPROGRAM6();
 
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
       } else {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+        await this.clearValidatorsAll_QA_ADDPROGRAM();
 
       }
     }
 
   }
 
-  checkBoxvalueQN_ADDPROGRAM6(event) {
+  async checkBoxvalueQN_ADDPROGRAM6(event) {
 
     if (event.checked) {
 
-      this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('6');
+      await this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('6');
 
       if (
         this.questionValueForm.controls['QN_ADDPROGRAM1'].value ||
@@ -1114,26 +1060,17 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_ADDPROGRAM5'].value ||
         this.questionValueForm.controls['QN_ADDPROGRAM6'].value) {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+        await this.clearValidators_QA_ADDPROGRAM1();
+        await this.clearValidators_QA_ADDPROGRAM2();
+        await this.clearValidators_QA_ADDPROGRAM3();
+        await this.clearValidators_QA_ADDPROGRAM4();
+        await this.clearValidators_QA_ADDPROGRAM5();
 
       }
 
     } else {
 
-      this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
+      await this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
 
       if (
         this.questionValueForm.controls['QN_ADDPROGRAM1'].value.length === 0 &&
@@ -1143,48 +1080,130 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_ADDPROGRAM5'].value.length === 0 &&
         this.questionValueForm.controls['QN_ADDPROGRAM6'].value.length === 0) {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('');
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].setValidators([Validators.required]);
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+        await this.setValidators_QA_ADDPROGRAM1();
+        await this.setValidators_QA_ADDPROGRAM2();
+        await this.setValidators_QA_ADDPROGRAM3();
+        await this.setValidators_QA_ADDPROGRAM4();
+        await this.setValidators_QA_ADDPROGRAM5();
 
       } else {
 
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
-
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
-        this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+        await this.clearValidatorsAll_QA_ADDPROGRAM();
 
       }
     }
+
+  }
+
+  setValidators_QA_ADDPROGRAM1() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM1'].patchValue('');
+    this.questionValueForm.controls['QN_ADDPROGRAM1'].setValidators([Validators.required]);
+    this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+  }
+
+  setValidators_QA_ADDPROGRAM2() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM2'].patchValue('');
+    this.questionValueForm.controls['QN_ADDPROGRAM2'].setValidators([Validators.required]);
+    this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+  }
+
+  setValidators_QA_ADDPROGRAM3() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
+    this.questionValueForm.controls['QN_ADDPROGRAM3'].setValidators([Validators.required]);
+    this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+  }
+
+  setValidators_QA_ADDPROGRAM4() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM4'].patchValue('');
+    this.questionValueForm.controls['QN_ADDPROGRAM4'].setValidators([Validators.required]);
+    this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+  }
+
+  setValidators_QA_ADDPROGRAM5() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM5'].patchValue('');
+    this.questionValueForm.controls['QN_ADDPROGRAM5'].setValidators([Validators.required]);
+    this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+  }
+
+  setValidators_QA_ADDPROGRAM6() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM6'].patchValue('');
+    this.questionValueForm.controls['QN_ADDPROGRAM6'].setValidators([Validators.required]);
+    this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+
+  }
+
+  clearValidatorsAll_QA_ADDPROGRAM() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+    this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+    this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+    this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+    this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+    this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+    this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+    this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+    this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+    this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+    this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+    this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
+
+  }
+
+  clearValidators_QA_ADDPROGRAM1() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM1'].clearValidators();
+    this.questionValueForm.controls['QN_ADDPROGRAM1'].updateValueAndValidity();
+
+  }
+
+  clearValidators_QA_ADDPROGRAM2() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM2'].clearValidators();
+    this.questionValueForm.controls['QN_ADDPROGRAM2'].updateValueAndValidity();
+
+  }
+
+  clearValidators_QA_ADDPROGRAM3() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM3'].clearValidators();
+    this.questionValueForm.controls['QN_ADDPROGRAM3'].updateValueAndValidity();
+
+  }
+
+  clearValidators_QA_ADDPROGRAM4() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM4'].clearValidators();
+    this.questionValueForm.controls['QN_ADDPROGRAM4'].updateValueAndValidity();
+
+  }
+
+  clearValidators_QA_ADDPROGRAM5() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM5'].clearValidators();
+    this.questionValueForm.controls['QN_ADDPROGRAM5'].updateValueAndValidity();
+
+  }
+
+  clearValidators_QA_ADDPROGRAM6() {
+
+    this.questionValueForm.controls['QN_ADDPROGRAM6'].clearValidators();
+    this.questionValueForm.controls['QN_ADDPROGRAM6'].updateValueAndValidity();
 
   }
 
@@ -1197,6 +1216,7 @@ export class QuestionNaireComponent implements OnInit {
 
     //-- Assignment values ทั้งหมดที่ได้จากการ เลือกคำตอบของ User
     //-- Assignment values จาก FromBuilderGroup ให้กับ Interface
+
     this.postUserData = await {
       STD_CODE: this.questionValueForm.get('STD_CODE').value,
       PRENAME_NO: this.questionValueForm.get('PRENAME_NO').value,
@@ -1225,10 +1245,11 @@ export class QuestionNaireComponent implements OnInit {
       QN_WORK_FLOOR: this.questionValueForm.get('QN_WORK_FLOOR').value,
       QN_WORK_SOI: this.questionValueForm.get('QN_WORK_SOI').value,
       QN_WORK_STREET: this.questionValueForm.get('QN_WORK_STREET').value,
-      QN_WORK_TAMBON: this.questionValueForm.get('QN_WORK_TAMBON').value,
-      QN_WORK_AMPHUR: this.questionValueForm.get('QN_WORK_AMPHUR').value,
-      QN_WORK_PROVINCE_NO: this.questionValueForm.get('QN_WORK_PROVINCE_NO').value,
-      QN_WORK_ZIPCODE: this.questionValueForm.get('QN_WORK_ZIPCODE').value,
+      QN_WORK_TAMBON: this.TEMP_DISTRICT_NAME,
+      QN_WORK_AMPHUR: this.TEMP_AMPHUR_NAME,
+      QN_WORK_PROVINCE_NAME: this.TEMP_DISTRICT_NAME,
+      QN_WORK_PROVINCE_NO: this.TEMP_PROVINCE_NAME,
+      QN_WORK_ZIPCODE: this.TEMP_POSTCODE,
       QN_WORK_TEL: this.questionValueForm.get('QN_WORK_TEL').value,
       QN_WORK_FAX: this.questionValueForm.get('QN_WORK_FAX').value,
       QN_WORK_URL: this.questionValueForm.get('QN_WORK_URL').value,
@@ -1263,17 +1284,30 @@ export class QuestionNaireComponent implements OnInit {
       if (responsePost.error_question_insert_update_message_status == 1) {
 
         //-- ********** สำเร็จ แจ้งด้วย Dialog และจบการทำงาน Redirect to Login ******** --//
+        const title = 'บันทึกแบบสำรวจเรียบร้อย';
         const message = `ทำการบันทึก แบบสำรวจเรียบร้อยแล้วครับ`;
-        const description = `หากคุณต้องการแก้ไข หรือต้องการดูรายละเอียดแบบสำรวจของคุณ สามารถทำได้ด้วยการ Login อีกครั้ง`;
-        const dialogData = new ConfirmDialogModel("บันทึกแบบสำรวจเรียบร้อย", message, description);
+        const description = 'หากคุณต้องการแก้ไข หรือต้องการดูรายละเอียดแบบสำรวจของคุณ สามารถทำได้ด้วยการ Login อีกครั้ง';
+        const descriptionDetail = '';
+        const btnLeftDisable = false;
+        const btnRightDisable = false;
+        const txtBtnLeft = 'CLOSE';
+        const txtBtnRight = 'OK';
+        const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight);
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
           data: dialogData
         });
 
         dialogRef.afterClosed().subscribe(dialogResult => {
+
           this.dialog_confirm_result = dialogResult;
-          this.router.navigate(['/login']);
+          if (this.dialog_confirm_result) {
+
+            this.router.navigate(['/login']);
+
+          }
+
         });
+
 
       } else {
 
@@ -1311,12 +1345,16 @@ export class QuestionNaireComponent implements OnInit {
 
   //-- ยืนยันการ Logout ออกจากระบบ
   logoutConfirmDialog(): void {
-    const message = `คุณต้องการที่จะออกจากระบบใช่หรือไม่?`;
 
-    const description = `ถ้าคุณออกจากหน้าเพจการทำงานนี้ ข้อมูลที่คุณทำการกรอกไว้จะไม่ถูกบันทึก !`;
-
-    const dialogData = new ConfirmDialogModel("Logout", message, description);
-
+    const title = `Logout`;
+    const message = `คุณต้องการที่จะออกจากระบบใช่หรือไม่`;
+    const description = `หากคุณออกจากหน้าเพจการทำงานนี้ ข้อมูลที่คุณทำการกรอกไว้จะไม่ถูกบันทึก !`;
+    const descriptionDetail = '';
+    const btnLeftDisable = false;
+    const btnRightDisable = false;
+    const txtBtnLeft = 'CLOSE';
+    const txtBtnRight = 'OK';
+    const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: dialogData
     });
@@ -1331,9 +1369,9 @@ export class QuestionNaireComponent implements OnInit {
       }
 
     });
+
   }
 
 
-
-
 }// -- End Componemt
+

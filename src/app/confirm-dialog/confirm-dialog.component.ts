@@ -11,14 +11,27 @@ export class ConfirmDialogComponent implements OnInit {
   title: string;
   message: string;
   description: string;
+  descriptionDetail: string;
+  btnLeftDisable: boolean;
+  btn_LeftDisable: boolean;
+  btnRightDisable: boolean;
+  btn_RightDisable: boolean;
+  txtBtnLeft: string;
+  txtBtnRight: string;
 
-  constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogModel) {
 
     // Update view with given values
     this.title = data.title;
     this.message = data.message;
     this.description = data.description;
+    this.descriptionDetail = data.descriptionDetail;
+    this.btnLeftDisable = data.btnLeftDisable;
+    this.btnRightDisable = data.btnRightDisable;
+    this.txtBtnLeft = data.txtBtnLeft;
+    this.txtBtnRight = data.txtBtnRight;
 
 
   }
@@ -44,6 +57,13 @@ export class ConfirmDialogComponent implements OnInit {
  **/
 export class ConfirmDialogModel {
 
-  constructor(public title: string, public message: string, public description: string) {
-  }
+  constructor(
+    public title: string,
+    public message: string,
+    public description: string,
+    public descriptionDetail: string,
+    public btnLeftDisable: boolean,
+    public btnRightDisable: boolean,
+    public txtBtnLeft: string,
+    public txtBtnRight: string) { }
 }

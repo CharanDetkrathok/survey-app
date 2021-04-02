@@ -91,7 +91,6 @@ export class QuestionNaireService {
     urlSearchParams.append('INSERT_STATUS', postUserData.INSERT_STATUS);
 
     const body = urlSearchParams.toString();
-    console.log(JSON.stringify(body));
 
     return this.httpUrl.post<questionResponseInsertUpdate>(`${environment._base_url}questions-naire-choices-b.jsp`, body, { headers: headers });
 

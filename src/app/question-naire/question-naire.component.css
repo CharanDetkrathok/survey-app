@@ -2,6 +2,10 @@ a {
     cursor: pointer;
 }
 
+.do-not-change-address {
+    z-index: -99;
+}
+
 .double-under-line-section {
     text-decoration-line: underline;
     -moz-text-decoration-line: underline;
@@ -20,4 +24,25 @@ a {
 
 small {
     font-size: 1rem;
+}
+
+.ng-autocomplete {
+    width: 50vw;
+}
+
+.ng-autocomplete ::ng-deep .autocomplete-container {
+    box-shadow: none;
+}
+
+.ng-autocomplete ::ng-deep .autocomplete-container ::ng-deep .input-container ::ng-deep input {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input {
+    font-size: 20px;
+}
+
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input:disabled {
+    background-color: #fff;
+    color: #FFF;
 }

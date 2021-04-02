@@ -1,16 +1,24 @@
-<div class="row">
-    <div class="container-fluid">
-        <div class="col-8">
+<div class="main-wrap" fxLayoutAlign="center center">
+    <div class="main-wrap-blur"></div>
+</div>
 
-            <mat-card>
+<div class="main-" fxLayout="column" fxFlexFill fxLayoutAlign="center center" fxLayoutGap="10px">
+    <div class="main--blur">
+        <div class="">
 
-                <h1 class="text-center label-text">Login Form</h1>
+            <mat-card fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+
+                <div class="img-header-login" fxLayoutAlign="center center">
+                    <h1 class="text-center label-text" fxLayout="column" fxLayoutAlign="center center">
+                        <img class="img-login-logo" src="assets/imgs/ic-father.png" alt="ตราพ่อขุน">เข้าสู่ระบบ
+                    </h1>
+                </div>
 
                 <form [formGroup]="userLoginForm" (ngSubmit)="onSubmit()">
 
-                    <div class="form-group">
+                    <div class="form-group" fxLayout="column">
 
-                        <mat-form-field class="mat-form-fiels-full-width label-text">
+                        <mat-form-field appearance="outline">
                             <mat-label>รหัสนักศึกษา</mat-label>
                             <input matInput placeholder="กรุณากรอก รหัสนักศึกษา" class="form-control" type="text" formControlName="std_code" maxlength="10" [class.is-invalid]="stdCode.invalid && stdCode.touched" numbersOnly>
                         </mat-form-field>
@@ -19,13 +27,9 @@
                             <small *ngIf="stdCode.errors?.required" class="text-danger small-warning">กรุณากรอก หัสนักศึกษา!</small>
                             <small *ngIf="stdCode.errors?.minlength" class="text-danger small-warning">รหัสนักศึกษา ต้องมีทั้งหมด 10
                 ตัวอักษร!</small>
-                        </div>
+                        </div><br>
 
-                    </div>
-
-                    <div class="form-group">
-
-                        <mat-form-field color="primary" class="mat-form-fiels-full-width label-text" appearance="fill" style="background-color: #fff;">
+                        <mat-form-field appearance="outline">
                             <mat-label>ปี/เดือน/วัน เกิด</mat-label>
                             <input matInput [matDatepicker]="picker" formControlName="birth_date" placeholder="กรุณากรอก เดือน/วัน/ปี เกิด" class="form-control" [class.is-invalid]="birthDate.invalid && birthDate.touched">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -35,17 +39,22 @@
                         <div *ngIf="birthDate.invalid && birthDate.touched">
                             <small *ngIf="birthDate.errors?.required" class="text-danger small-warning">กรุณาเลือก ปี/เดือน/วัน
                 เกิด!</small>
-                        </div>
+                        </div><br>
 
                     </div>
 
-                    <div class="form-group">
-                        <button mat-raised-button color="primary" type="submit" [disabled]="stdCode.invalid && stdCode.touched || stdCode.errors?.minlength || birthDate.invalid && birthDate.touched || stdCode.untouched || birthDate.untouched">Login</button>
+                    <div class="form-group" fxLayout="row" fxLayoutAlign="end center">
+                        <button mat-raised-button class="btn-login" color="primary" type="submit" [disabled]="stdCode.invalid && stdCode.touched || stdCode.errors?.minlength || birthDate.invalid && birthDate.touched || stdCode.untouched || birthDate.untouched">Login</button>
                     </div>
 
                 </form>
             </mat-card>
             <!-- {{userLoginForm.value | json}} -->
+        </div>
+    </div>
+    <div class="footer" fxLayout="row" fxLayoutAlign="center end" style="margin-bottom: 0;">
+        <div class="">
+            <h5 class="footer">แบบสำรวจภาวะการมีงานทำของบัณฑิต มหาวิทยาลัยรามคำแหง</h5>
         </div>
     </div>
 </div>

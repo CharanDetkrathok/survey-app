@@ -30,6 +30,7 @@ export interface questionSetInterfaceData {
   QN_WORK_STREET: string;
   QN_WORK_TAMBON: string;
   QN_WORK_AMPHUR: string;
+  QN_WORK_PROVINCE_NAME: string;
   QN_WORK_PROVINCE_NO: string;
   QN_WORK_ZIPCODE: string;
   QN_WORK_TEL: string;

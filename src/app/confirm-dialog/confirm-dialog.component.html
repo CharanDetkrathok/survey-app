@@ -4,10 +4,11 @@
 
 <div mat-dialog-content>
     <p>{{message}}</p>
-    <p class="text-danger">{{description}}</p>
+    <p>{{description}}</p>
+    <p>{{descriptionDetail}}</p>
 </div>
 
-<div mat-dialog-actions>
-    <button mat-button (click)="onDismiss()">ไม่ใช่</button>
-    <button mat-raised-button color="primary" (click)="onConfirm()">ใช่</button>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end end">
+    <button mat-raised-button [disabled]="btnLeftDisable" (click)="onDismiss()">{{txtBtnLeft}}</button>
+    <button mat-raised-button [disabled]="btnRightDisable" color="primary" (click)="onConfirm()">{{txtBtnRight}}</button>
 </div>

@@ -101,5 +101,58 @@ export interface questionResponseDataInterface {
     SECTION_NAME_ID_1: string;
     SECTION_NAME_ID_2: string;
     SECTION_NAME_ID_3: string;
+  },
+  CHOICES_OF_ALL_DISTRICT: {
+    DISTRICT_NAME: string;
+    AMPHUR_NAME: string;
+    POSTCODE: string;
+    DISTRICT_ID: string;
+    AMPHUR_ID: string;
+    PROVINCE_ID: string;
+    COUNTRY_NAME_ENG: string;
+    PROVINCE_NAME: string;
+    COUNTRY_NO: string;
+  },
+  CHOICES_OF_DISTRICT: {
+    DISTRICT_NAME: string;
+  },
+  CHOICES_OF_AMPHUR: {
+    AMPHUR_NAME: string;
+  },
+  CHOICES_OF_PROVINCE: {
+    PROVINCE_ID: string;
+    PROVINCE_NAME: string;
+  },
+  CHOICES_OF_POSTCODE: {
+    POSTCODE: string;
   }
+}
+
+export interface districtInterface {
+  DISTRICT_NAME: string;
+}
+
+export interface amphurInterface {
+  AMPHUR_NAME: string;
+}
+
+export interface provinceInterface {
+  PROVINCE_ID: string;
+  PROVINCE_NAME: string;
+}
+
+export interface postcodeInterface {
+  POSTCODE: string;
+}
+
+export interface districtAllInterface {
+  DISTRICT_NAME: string;
+  AMPHUR_NAME: string;
+  POSTCODE: string;
+  DISTRICT_ID: string;
+  AMPHUR_ID: string;
+  PROVINCE_ID: string;
+  COUNTRY_NAME_ENG: string;
+  PROVINCE_NAME: string;
+  COUNTRY_NO: string;
 }

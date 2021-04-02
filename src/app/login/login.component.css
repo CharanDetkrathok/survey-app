@@ -1,25 +1,100 @@
-.mat-form-fiels-full-width {
-    min-width: 150px;
-    max-width: 500px;
-    width: 60%;
+.main-wrap {
+    /* background-color: rgba(0, 0, 0, 0.1); */
+    height: 100vh;
+    width: 100vw;
+    background-image: url('../../assets/imgs/bg-home.svg');
+    margin: 0em 0em 0em 0em !important;
+    /*background-image: url('../../assets/imgs/bg-home-3.svg');*/
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    z-index: -8;
 }
 
-.label-text {
-    font-size: 16px;
-    font-family: 'Kanit', sans-serif;
+.main-wrap-blur {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: -7;
 }
 
 .form-control:focus {
     box-shadow: none;
+    background-color: rgba(255, 255, 255, 0);
 }
 
-::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
-    background-color: #fff !important;
+::ng-deep .mat-form-field-flex,
+.ng-tns-c114-1 {
+    /* background-color: #fff !important; */
     padding: 0 !important;
     margin: 0 !important;
 }
 
-.small-warning {
-    padding: 0;
-    margin: 0;
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-label {
+    padding: 0 1em 0 1em !important;
 }
+
+::placeholder {
+    padding: 0em 1em 0em 1em;
+}
+
+::ng-deep .mat-form-field-infix {
+    font-size: 16px !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 1em 1em 1em 1em !important;
+    width: 60vw !important;
+}
+
+::ng-deep ._ngcontent-gqm-c139 .small-warning {
+    margin-top: -20px;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    padding: 0;
+}
+
+::ng-deep .mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: 2px 2px 1px -2px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+@media screen and (max-width: 959px) {
+     ::ng-deep .mat-card {
+        width: 90vw !important;
+        padding: 20px !important;
+        overflow: hidden;
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+    .img-login-logo {
+        width: 10vw !important;
+    }
+    .img-header-login {
+        /* background-image: url('../../assets/imgs/bg-home-3.svg'); */
+        background-color: rgba(0, 0, 0, 0);
+        background-size: cover;
+        background-position: center;
+        width: 90vw !important;
+        margin: -20px !important;
+        padding: 10px 0 0 0 !important;
+    }
+    .mat-card>:last-child:not(.mat-card-footer),
+    .mat-card-content>:last-child:not(.mat-card-footer) {
+        margin-top: 40px;
+    }
+    .btn-login {
+        width: 100%;
+        padding: 0.3em;
+    }
+    .txt-login {
+        color: #000;
+    }
+    /*👉::ng-deep .mat-form-field-flex,
+  .ng-tns-c114-1[_ngcontent-tqh-c139] {
+      background-color: rgba(255, 255, 255, 0.5);
+  }👈*/
+}
+
+@media screen and (min-width: 960px) {}

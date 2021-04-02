@@ -14,6 +14,8 @@ import { QuestionNaireComponent } from './question-naire/question-naire.componen
 
 import { NumberDirective } from './login/numbers-only.directive';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 function getLocale() {
   const locale = 'th';
@@ -25,11 +27,13 @@ function getLocale() {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     FormsModule,
+    AppRoutingModule,
+    AutocompleteLibModule,
     MaterialModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FlexLayoutModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: "th-TH" }],
   bootstrap: [AppComponent]

@@ -1,10 +1,11 @@
+import { ConfirmDialogComponent, ConfirmDialogModel } from './../confirm-dialog/confirm-dialog.component';
 
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -82,7 +83,29 @@ export class LoginComponent implements OnInit {
 
       } else {
 
-        this.dialog.open(DialogAlert);
+        const title = 'Login Fail';
+        const message = 'ไม่สามารถเข้า สู่ระบบได้ !';
+        const description = 'เนื่องจากไม่พบข้อมูล กรุณากรอกข้อมูลใหม่อีกครั้ง';
+        const descriptionDetail = 'และทำการตรวจสอบความถูกต้องของข้อมูล ก่อนเข้าสู่ระบบ';
+        const btnLeftDisable = true;
+        const btnRightDisable = false;
+        const txtBtnLeft = '';
+        const txtBtnRight = 'CLOSE';
+        const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight);
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          data: dialogData
+        });
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+
+          this.dialog_confirm_result = dialogResult;
+          if (this.dialog_confirm_result) {
+
+            this.router.navigate(['/login']);
+
+          }
+
+        });
 
       }
 
@@ -114,15 +137,3 @@ export class LoginComponent implements OnInit {
 
 }
 
-@Component({
-  selector: 'dialog-alert',
-  templateUrl: 'dialog-alert.html',
-})
-export class DialogAlert {
-
-  constructor(public dialogRef: MatDialogRef<LoginComponent>) { }
-
-  close(): void {
-    this.dialogRef.close(false);
-  }
-}
