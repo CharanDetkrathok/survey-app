@@ -1,18 +1,28 @@
-<div class="main-wrap" fxLayoutAlign="center center">
-    <div class="main-wrap-blur"></div>
+<!-- <div class="main-wrap" style="background-image: url(../.././assets/imgs/bg-home-3.svg);" fxLayoutAlign="center center"> -->
+<div class="main-wrap" style="background-image: url(assets/imgs/bg-home-3.svg);" fxLayoutAlign="center center">
 </div>
 
-<div class="main-" fxLayout="column" fxFlexFill fxLayoutAlign="center center" fxLayoutGap="10px">
-    <div class="main--blur">
+<div class="main-content" fxLayout="column" fxFlexFill fxLayoutAlign="center center" fxLayoutGap="10px">
+    <div class="">
         <div class="">
 
             <mat-card fxLayout="column" fxFlexFill fxLayoutAlign="center center">
 
                 <div class="img-header-login" fxLayoutAlign="center center">
                     <h1 class="text-center label-text" fxLayout="column" fxLayoutAlign="center center">
-                        <img class="img-login-logo" src="assets/imgs/ic-father.png" alt="ตราพ่อขุน">เข้าสู่ระบบ
+                        <img class="img-login-logo" src="assets/imgs/ru.png" alt="ตราพ่อขุน">
+                        <!-- <img class="img-login-logo" src="./assets/imgs/ic-father-01.png" alt="ตราพ่อขุน"> -->
+                        <p class="text-login">เข้าสู่ระบบ</p>
                     </h1>
                 </div>
+
+                <div class="text-center">
+                    <p class="p-text-title-1">แบบสำรวจภาวะการมีงานทำของบัณฑิต มหาวิทยาลัยรามคำแหง</p>
+                    <p class="p-text-title-2">แบบสำรวจภาวะการมีงานทำของบัณฑิต</p>
+                    <p class="p-text-title-2">มหาวิทยาลัยรามคำแหง</p>
+                </div>
+
+                <hr />
 
                 <form [formGroup]="userLoginForm" (ngSubmit)="onSubmit()">
 
@@ -31,7 +41,7 @@
 
                         <mat-form-field appearance="outline">
                             <mat-label>ปี/เดือน/วัน เกิด</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="birth_date" placeholder="กรุณากรอก เดือน/วัน/ปี เกิด" class="form-control" [class.is-invalid]="birthDate.invalid && birthDate.touched">
+                            <input readonly matInput [matDatepicker]="picker" formControlName="birth_date" placeholder="กรุณากรอก เดือน/วัน/ปี เกิด" class="form-control" [class.is-invalid]="birthDate.invalid && birthDate.touched">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker touchUi #picker startView="multi-year"></mat-datepicker>
                         </mat-form-field>
@@ -48,13 +58,18 @@
                     </div>
 
                 </form>
+
+
+                <hr />
+
             </mat-card>
+
             <!-- {{userLoginForm.value | json}} -->
         </div>
     </div>
     <div class="footer" fxLayout="row" fxLayoutAlign="center end" style="margin-bottom: 0;">
         <div class="">
-            <h5 class="footer">แบบสำรวจภาวะการมีงานทำของบัณฑิต มหาวิทยาลัยรามคำแหง</h5>
+            <!-- <h5 class="footer">แบบสำรวจภาวะการมีงานทำของบัณฑิต มหาวิทยาลัยรามคำแหง</h5> -->
         </div>
     </div>
 </div>

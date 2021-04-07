@@ -3,8 +3,8 @@ import { districtInterface, amphurInterface, provinceInterface, postcodeInterfac
 import { questionSetInterfaceData } from './question-set-interface-data';
 import { Router } from '@angular/router';
 import { ConfirmDialogModel, ConfirmDialogComponent } from './../confirm-dialog/confirm-dialog.component';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { QuestionNaireService } from '../services/question-naire.service';
 import { userResponseDataInterface } from './../login/user-response-data';
 import { MatDialog } from '@angular/material/dialog';
@@ -210,6 +210,10 @@ export class QuestionNaireComponent implements OnInit {
   QN_WORK_PROVINCE_NAME: string;
   CHOICES_OF_POSTCODE: postcodeInterface;
 
+  searchTambon: string;
+
+  isHidden: boolean = false;
+
   constructor(
     private questionService: QuestionNaireService,
     public dialog: MatDialog,
@@ -226,6 +230,7 @@ export class QuestionNaireComponent implements OnInit {
 
       if (selected === '3' || selected === '4.1' || selected === '4.2' || selected === '4.3' || selected === '4.4' || selected === '5.1' || selected === '5.2' || selected === '5.3' || selected === '5.4' || selected === '5.5') {
 
+        this.isHidden = true;
         this.questionValueForm.controls['QN_OCCUP_TYPE'].disable();
         this.questionValueForm.controls['QN_OCCUP_TYPE_TXT'].disable();
         this.questionValueForm.controls['QN_SALARY'].disable();
@@ -274,6 +279,7 @@ export class QuestionNaireComponent implements OnInit {
 
       } else {
 
+        this.isHidden = false;
         this.questionValueForm.controls['QN_OCCUP_TYPE'].enable();
         this.questionValueForm.controls['QN_OCCUP_TYPE'].enable();
         this.questionValueForm.controls['QN_OCCUP_TYPE_TXT'].enable();
@@ -423,103 +429,102 @@ export class QuestionNaireComponent implements OnInit {
   }
 
   //-------------------------------------------------------------------------------
-  //-------------------------------------------------------------------------------
   //เริ่ม-- Autocomplete zone ------
-  keyword = {
-    tumbon: 'DISTRICT_NAME'
-  };
   TEMP_DISTRICT_NAME: string;
   TEMP_AMPHUR_NAME: string;
   TEMP_PROVINCE_NAME: string;
   TEMP_POSTCODE: string;
 
-  setLetters: boolean = false;
-  // notFoundTemplate: any;
-  //-------------------------------------------------------------------------------
-  //-------------------------------------------------------------------------------
-  checkLetters(): any {
-    if (this.setLetters) return this.CHOICES_OF_ALL_DISTRICT;
-    // else return false;
+  // เลือกข้อมูลใน Dropdownlist ไปแล้วหรือไม่
+  setLettersFag: boolean = false;
+  // จำนวนความยาวตัวอักษรที่เลือกไป
+  setLetters: number = 0;
+  // เปิด-ปิด Dropdownlist
+  isDisableDropdownlist = new FormControl(true);
+
+  //-- เป็นส่วนหนึ่งของคำสั่งในการเปิด dropdownlist แบบ Custom ให้ Auto เมื่อมีการพิมพ์ อักษรอย่างน้อยสองตัว
+  @ViewChild('dropdownlist', { static: true }) public dropdownlist: any;
+
+  searchTambonKeyup(value) {
+
+    // คำสั่งเปิด-ปิด Dropdownlist
+    if (value.length > 0) {
+      // เปิด dropdownlist Auto
+      this.dropdownlist.toggle(true);
+      // ยกเลิกการ Disabl (ยกเลิกการ ปิด Dropdownlist)
+      this.isDisableDropdownlist.setValue(false);
+    } else {
+      // ปิด dropdownlist Auto
+      this.dropdownlist.toggle(false);
+      // ทำการปิดการมองเห็น Disabl (ปิด Dropdownlist)
+      // this.isDisableDropdownlist.setValue(true);
+    }
+
+
+    // กรณีที่มีการเลือกข้อมูลไปแล้ว และทำการลบ หรือพิมพ์อักษร เพิ่ม จะทำการ คืนค่า ตำบล อำเภอ จังหวัด รหัสไปรษณีย์ เป็นค่าว่าง และปิดปุ่ม submit เพื่อกันข้อมูลไม่ครบถ้วน
+    if (value.length < 1) {
+
+      // คำสั่งเปิด-ปิด Dropdownlist
+      // this.isDisableDropdownlist.setValue(true);
+
+      this.TEMP_DISTRICT_NAME = '';
+      this.questionValueForm.controls['QN_WORK_TAMBON'].setValue('');
+      this.questionValueForm.controls['QN_WORK_TAMBON'].setValidators([Validators.required]);
+      this.questionValueForm.controls['QN_WORK_TAMBON'].updateValueAndValidity();
+
+
+      this.TEMP_AMPHUR_NAME = '';
+      this.questionValueForm.controls['QN_WORK_AMPHUR'].setValue('');
+      this.questionValueForm.controls['QN_WORK_AMPHUR'].setValidators([Validators.required]);
+      this.questionValueForm.controls['QN_WORK_AMPHUR'].updateValueAndValidity();
+
+      this.TEMP_PROVINCE_NAME = '';
+      this.QN_WORK_PROVINCE_NAME = '';
+      this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].setValue('');
+      this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].setValidators([Validators.required]);
+      this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].updateValueAndValidity();
+
+      this.TEMP_POSTCODE = '';
+      this.questionValueForm.controls['QN_WORK_ZIPCODE'].setValue('');
+      this.questionValueForm.controls['QN_WORK_ZIPCODE'].setValidators([Validators.required]);
+      this.questionValueForm.controls['QN_WORK_ZIPCODE'].updateValueAndValidity();
+
+      //-- ต้องเลือก ตำบล/แขวง ก่อน จึงจะ enable
+      this.questionValueForm.controls['QN_WORK_AMPHUR'].disable();
+      this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].disable();
+      this.questionValueForm.controls['QN_WORK_ZIPCODE'].disable();
+
+    }
+
   }
 
+  selectedTambon(event) {
 
-  closeTab(): any {
-    this.setLetters = false;
-    this.checkLetters();
-    // return true;
-  }
+    this.TEMP_DISTRICT_NAME = event.DISTRICT_NAME;
 
-  //เริ่ม-- Autocomplete ตำบล/แขวง
-  selectEventTambon(item) {
-    this.TEMP_DISTRICT_NAME = item.DISTRICT_NAME;
     this.questionValueForm.controls['QN_WORK_TAMBON'].patchValue(this.TEMP_DISTRICT_NAME);
 
-    this.TEMP_AMPHUR_NAME = item.AMPHUR_NAME;
+    this.TEMP_AMPHUR_NAME = event.AMPHUR_NAME;
     this.questionValueForm.controls['QN_WORK_AMPHUR'].patchValue(this.TEMP_AMPHUR_NAME);
 
     //-- เก็บไว้ตอน onSubmit เพื่อ Insert to Database เพราะเก็บเป็น ID
-    this.TEMP_PROVINCE_NAME = item.PROVINCE_ID;
-    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].patchValue(item.TEMP_PROVINCE_NAME);
+    this.TEMP_PROVINCE_NAME = event.PROVINCE_ID;
+    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].patchValue(event.TEMP_PROVINCE_NAME);
     this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].clearValidators();
     this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].updateValueAndValidity();
     //-- เก็บไว้แสดง ชื่อจังหวัด/ประเทศ เป็น อักษร ที่หน้าเว็บ
-    this.QN_WORK_PROVINCE_NAME = item.PROVINCE_NAME;
+    this.QN_WORK_PROVINCE_NAME = event.PROVINCE_NAME;
 
-    this.TEMP_POSTCODE = item.POSTCODE;
+    this.TEMP_POSTCODE = event.POSTCODE;
     this.questionValueForm.controls['QN_WORK_ZIPCODE'].patchValue(this.TEMP_POSTCODE);
 
     //-- เลือก ตำบล/แขวง แล้วทำการ enable
     this.questionValueForm.controls['QN_WORK_AMPHUR'].enable();
     this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].enable();
     this.questionValueForm.controls['QN_WORK_ZIPCODE'].enable();
-  }
 
-  onChangeSearchTambon(val: string) {
-    // console.log('จำนวน srt => ' + val);
-
-    if (val.length >= 3) {
-      this.setLetters = true;
-    }
-
-    if (val.length === 0 || val === null || val === undefined || val === '') {
-      this.setLetters = false;
-    }
-
-  }
-
-  onInputClearedTambon(e) {
-
-    this.setLetters = false;
-
-    this.TEMP_DISTRICT_NAME = '';
-    this.questionValueForm.controls['QN_WORK_TAMBON'].setValue('');
-    this.questionValueForm.controls['QN_WORK_TAMBON'].setValidators([Validators.required]);
-    this.questionValueForm.controls['QN_WORK_TAMBON'].updateValueAndValidity();
-
-
-    this.TEMP_AMPHUR_NAME = '';
-    this.questionValueForm.controls['QN_WORK_AMPHUR'].setValue('');
-    this.questionValueForm.controls['QN_WORK_AMPHUR'].setValidators([Validators.required]);
-    this.questionValueForm.controls['QN_WORK_AMPHUR'].updateValueAndValidity();
-
-    this.TEMP_PROVINCE_NAME = '';
-    this.QN_WORK_PROVINCE_NAME = '';
-    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].setValue('');
-    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].setValidators([Validators.required]);
-    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].updateValueAndValidity();
-
-    this.TEMP_POSTCODE = '';
-    this.questionValueForm.controls['QN_WORK_ZIPCODE'].setValue('');
-    this.questionValueForm.controls['QN_WORK_ZIPCODE'].setValidators([Validators.required]);
-    this.questionValueForm.controls['QN_WORK_ZIPCODE'].updateValueAndValidity();
-
-    //-- ต้องเลือก ตำบล/แขวง ก่อน จึงจะ enable
-    this.questionValueForm.controls['QN_WORK_AMPHUR'].disable();
-    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].disable();
-    this.questionValueForm.controls['QN_WORK_ZIPCODE'].disable();
   }
   //จบ-- Autocomplete zone ------
-  //-------------------------------------------------------------------------------
   //-------------------------------------------------------------------------------
 
 
@@ -687,6 +692,7 @@ export class QuestionNaireComponent implements OnInit {
         this.TEMP_DISTRICT_NAME = responses.QN_WORK_TAMBON == 'null' ? '' : responses.QN_WORK_TAMBON;
         this.TEMP_AMPHUR_NAME = responses.QN_WORK_AMPHUR == 'null' ? '' : responses.QN_WORK_AMPHUR;
         this.QN_WORK_PROVINCE_NAME = responses.QN_WORK_PROVINCE_NAME == 'null' ? '' : responses.QN_WORK_PROVINCE_NAME;
+        this.TEMP_PROVINCE_NAME = responses.QN_WORK_PROVINCE_NO == 'null' ? '' : responses.QN_WORK_PROVINCE_NO;
         this.TEMP_POSTCODE = responses.QN_WORK_ZIPCODE == 'null' ? '' : responses.QN_WORK_ZIPCODE;
 
         this.questionValueForm.setValue({
@@ -763,17 +769,33 @@ export class QuestionNaireComponent implements OnInit {
         let pipe = new DatePipe('th-TH');
         let nowYear = (new Date()).getFullYear();
         let fakeYearTH = (nowYear + 543);
-        let dateNewFormat = pipe.transform(this.questionValueForm.controls['QN_DATE_UPDATE'].value.toString(), 'dd MMM' + fakeYearTH + ' เวลา hh:mm:ss', 'th').toString();
+        let dateNewFormat = pipe.transform(this.questionValueForm.controls['QN_DATE_UPDATE'].value.toString(), 'dd MMM' + fakeYearTH, 'th').toString();
 
-        const title = 'แบบสำรวจภาวะการมีงานทำ';
-        const message = `คุณลงทะเบียนเมื่อ: ${dateNewFormat}`;
-        const description = 'คุณสามารถแก้ไข แบบสำรวจได้ด้วยตนเอง หรือเข้าดูรายละเอียดที่ลงทะเบียนไว้ได้';
-        const descriptionDetail = 'ด้วยการ Click ที่ปุ่ม OK';
+        const title = 'ยืนยันการกรอกแบบสำรวจ';
+        const message_insert = `รหัสนักศึกษา : ${this.preUserData.STD_CODE}`;
+        const message = `ชื่อ-สกุล : ${this.preUserData.PRENAME_THAI} ${this.preUserData.FIRST_NAME_THAI} ${this.preUserData.LAST_NAME_THAI}`;
+        const description = `กรอกแบบสำรวจเมื่อ: ${dateNewFormat}`;
+        const descriptionDetail = `คุณต้องการาดูรายละเอียด หรือแก้ไขแบบสำรวจหรือไม่?`;
         const btnLeftDisable = false;
         const btnRightDisable = false;
-        const txtBtnLeft = 'CLOSE';
-        const txtBtnRight = 'OK';
-        const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight);
+        const txtBtnLeft = 'ไม่';
+        const txtBtnRight = 'ใช่';
+        const message1 = '';
+        const message2 = '';
+        const message3 = '';
+        const message4 = '';
+        const message5 = '';
+        const message6 = '';
+        const message7 = '';
+        const message8 = '';
+        const message9 = '';
+        const message10 = '';
+        const message11 = '';
+        const message12 = '';
+        const message13 = '';
+        const message14 = '';
+        const message15 = '';
+        const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight, message_insert, message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15);
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
           data: dialogData
         });
@@ -1245,11 +1267,11 @@ export class QuestionNaireComponent implements OnInit {
       QN_WORK_FLOOR: this.questionValueForm.get('QN_WORK_FLOOR').value,
       QN_WORK_SOI: this.questionValueForm.get('QN_WORK_SOI').value,
       QN_WORK_STREET: this.questionValueForm.get('QN_WORK_STREET').value,
-      QN_WORK_TAMBON: this.TEMP_DISTRICT_NAME,
-      QN_WORK_AMPHUR: this.TEMP_AMPHUR_NAME,
-      QN_WORK_PROVINCE_NAME: this.TEMP_DISTRICT_NAME,
-      QN_WORK_PROVINCE_NO: this.TEMP_PROVINCE_NAME,
-      QN_WORK_ZIPCODE: this.TEMP_POSTCODE,
+      QN_WORK_TAMBON: this.TEMP_DISTRICT_NAME == undefined ? '' : this.TEMP_DISTRICT_NAME,
+      QN_WORK_AMPHUR: this.TEMP_AMPHUR_NAME == undefined ? '' : this.TEMP_AMPHUR_NAME,
+      QN_WORK_PROVINCE_NAME: this.TEMP_DISTRICT_NAME == undefined ? '' : this.TEMP_DISTRICT_NAME,
+      QN_WORK_PROVINCE_NO: this.TEMP_PROVINCE_NAME == undefined ? '' : this.TEMP_PROVINCE_NAME,
+      QN_WORK_ZIPCODE: this.TEMP_POSTCODE == undefined ? '' : this.TEMP_POSTCODE,
       QN_WORK_TEL: this.questionValueForm.get('QN_WORK_TEL').value,
       QN_WORK_FAX: this.questionValueForm.get('QN_WORK_FAX').value,
       QN_WORK_URL: this.questionValueForm.get('QN_WORK_URL').value,
@@ -1277,50 +1299,107 @@ export class QuestionNaireComponent implements OnInit {
       UPDATE_STATUS: this.questionValueForm.get('UPDATE_STATUS').value
     };
 
-    //-- ส่งข้อมูลไปยัง Service เพื่อ Insert หรือ Update ข้อมูล
-    await this.questionService.postHttpQuestions(this.postUserData).subscribe(responsePost => {
+    //-- ********** สำเร็จ แจ้งด้วย Dialog และจบการทำงาน Redirect to Login ******** --//
+    const title = 'ยืนยันการบันทึกแบบสำรวจ';
+    const message_insert = '';
+    const message = `คุณต้องการบันทึก แบบสำรวจใช่หรือไม่`;
+    const description = 'หากคุณต้องการแก้ไข หรือต้องการดูรายละเอียดแบบสำรวจของคุณ สามารถทำได้ด้วยการ Login อีกครั้ง';
+    const descriptionDetail = '';
+    const btnLeftDisable = false;
+    const btnRightDisable = false;
+    const txtBtnLeft = 'ไม่บันทึก';
+    const txtBtnRight = 'บันทึก';
+    const message1 = '';
+    const message2 = '';
+    const message3 = '';
+    const message4 = '';
+    const message5 = '';
+    const message6 = '';
+    const message7 = '';
+    const message8 = '';
+    const message9 = '';
+    const message10 = '';
+    const message11 = '';
+    const message12 = '';
+    const message13 = '';
+    const message14 = '';
+    const message15 = '';
+    const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight, message_insert, message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: dialogData
+    });
 
-      //-- Successfully
-      if (responsePost.error_question_insert_update_message_status == 1) {
+    dialogRef.afterClosed().subscribe(dialogResult => {
 
-        //-- ********** สำเร็จ แจ้งด้วย Dialog และจบการทำงาน Redirect to Login ******** --//
-        const title = 'บันทึกแบบสำรวจเรียบร้อย';
-        const message = `ทำการบันทึก แบบสำรวจเรียบร้อยแล้วครับ`;
-        const description = 'หากคุณต้องการแก้ไข หรือต้องการดูรายละเอียดแบบสำรวจของคุณ สามารถทำได้ด้วยการ Login อีกครั้ง';
-        const descriptionDetail = '';
-        const btnLeftDisable = false;
-        const btnRightDisable = false;
-        const txtBtnLeft = 'CLOSE';
-        const txtBtnRight = 'OK';
-        const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight);
-        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-          data: dialogData
-        });
+      this.dialog_confirm_result = dialogResult;
+      if (this.dialog_confirm_result) {
 
-        dialogRef.afterClosed().subscribe(dialogResult => {
+        //-- ส่งข้อมูลไปยัง Service เพื่อ Insert หรือ Update ข้อมูล
+        this.questionService.postHttpQuestions(this.postUserData).subscribe(responsePost => {
 
-          this.dialog_confirm_result = dialogResult;
-          if (this.dialog_confirm_result) {
+          //-- Successfully
+          if (responsePost.error_question_insert_update_message_status == 1) {
 
-            this.router.navigate(['/login']);
+            //-- ********** สำเร็จ แจ้งด้วย Dialog และจบการทำงาน Redirect to Login ******** --//
+            const title = 'บันทึกแบบสำรวจเรียบร้อย';
+            const message_insert = `ทำการบันทึก แบบสำรวจเรียบร้อยแล้วครับ`;
+            const message = '';
+            const description = 'หากคุณต้องการแก้ไข หรือต้องการดูรายละเอียดแบบสำรวจของคุณ สามารถทำได้ด้วยการ Login อีกครั้ง';
+            const descriptionDetail = '';
+            const btnLeftDisable = false;
+            const btnRightDisable = false;
+            const txtBtnLeft = 'ไม่';
+            const txtBtnRight = 'ใช่';
+            const message1 = '';
+            const message2 = '';
+            const message3 = '';
+            const message4 = '';
+            const message5 = '';
+            const message6 = '';
+            const message7 = '';
+            const message8 = '';
+            const message9 = '';
+            const message10 = '';
+            const message11 = '';
+            const message12 = '';
+            const message13 = '';
+            const message14 = '';
+            const message15 = '';
+            const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight, message_insert, message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15);
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              data: dialogData
+            });
+
+            dialogRef.afterClosed().subscribe(dialogResult => {
+
+              this.dialog_confirm_result = dialogResult;
+              if (this.dialog_confirm_result) {
+
+                this.router.navigate(['/login']);
+
+              }
+
+            });
+
+
+          } else {
+
+            //-- กรณีนี้จะเป็น ตัวแปรไม่สมบูณร์ จะเข้า Condition นี้
+            this.handlesErrors(responsePost.error_question_insert_update_message_status);
 
           }
 
+        }, error => {
+
+          this.handlesErrors(error.status);
+
         });
-
-
-      } else {
-
-        //-- กรณีนี้จะเป็น ตัวแปรไม่สมบูณร์ จะเข้า Condition นี้
-        this.handlesErrors(responsePost.error_question_insert_update_message_status);
 
       }
 
-    }, error => {
-
-      this.handlesErrors(error.status);
-
     });
+
+
 
   }
 
@@ -1347,14 +1426,30 @@ export class QuestionNaireComponent implements OnInit {
   logoutConfirmDialog(): void {
 
     const title = `Logout`;
+    const message_insert = '';
     const message = `คุณต้องการที่จะออกจากระบบใช่หรือไม่`;
     const description = `หากคุณออกจากหน้าเพจการทำงานนี้ ข้อมูลที่คุณทำการกรอกไว้จะไม่ถูกบันทึก !`;
     const descriptionDetail = '';
     const btnLeftDisable = false;
     const btnRightDisable = false;
-    const txtBtnLeft = 'CLOSE';
-    const txtBtnRight = 'OK';
-    const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight);
+    const txtBtnLeft = 'ไม่';
+    const txtBtnRight = 'ใช่';
+    const message1 = '';
+    const message2 = '';
+    const message3 = '';
+    const message4 = '';
+    const message5 = '';
+    const message6 = '';
+    const message7 = '';
+    const message8 = '';
+    const message9 = '';
+    const message10 = '';
+    const message11 = '';
+    const message12 = '';
+    const message13 = '';
+    const message14 = '';
+    const message15 = '';
+    const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight, message_insert, message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: dialogData
     });

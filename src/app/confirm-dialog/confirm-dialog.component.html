@@ -1,14 +1,37 @@
-<h1 mat-dialog-title>
-    {{title}}
-</h1>
+<div class="bg-blur">
+    <div fxLayout="row" fxLayoutAlign="start center">
+        <!-- <img class="img-login-logo" src="../.././assets/imgs/ru.png" alt="รูปพ่อขุน"> -->
+        <img class="img-login-logo" src="assets/imgs/ru.png" alt="รูปพ่อขุน">
+        <h1 mat-dialog-title>
+            {{title}}
+        </h1>
+    </div>
+    <hr />
+    <div mat-dialog-content>
+        <p class="p-text-insert-before text-success">{{message_insert}}</p>
+        <p class="p-text-message">{{message}}</p>
+        <p class="p-text-description">{{description}}</p>
+        <p class="p-text-descriptionDetail">{{descriptionDetail}}</p>
 
-<div mat-dialog-content>
-    <p>{{message}}</p>
-    <p>{{description}}</p>
-    <p>{{descriptionDetail}}</p>
-</div>
-
-<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end end">
-    <button mat-raised-button [disabled]="btnLeftDisable" (click)="onDismiss()">{{txtBtnLeft}}</button>
-    <button mat-raised-button [disabled]="btnRightDisable" color="primary" (click)="onConfirm()">{{txtBtnRight}}</button>
+        <p class="p-text text-center"><b>{{message1}}</b></p>
+        <p class="p-text text-center"><b>{{message2}}</b></p>
+        <p class="p-text text-center"><b>{{message3}}</b></p>
+        <p class="p-text">{{message4}}</p>
+        <p class="p-text">{{message5}}</p>
+        <p class="p-text">{{message6}}</p>
+        <p class="p-text text-center"><b>{{message7}}</b></p>
+        <p class="p-text">{{message8}}</p>
+        <p class="p-text">{{message9}}</p>
+        <p class="p-text">{{message10}}</p>
+        <p class="p-text">{{message11}}</p>
+        <p class="p-text">{{message12}}</p>
+        <p class="p-text">{{message13}}</p>
+        <p class="p-text">{{message14}}</p>
+        <p class="p-text">{{message15}}</p>
+    </div>
+    <hr />
+    <div class="btn-button" mat-dialog-actions fxLayout="row" fxLayoutAlign="end end">
+        <button class="btn-left" mat-raised-button [disabled]="btnLeftDisable" (click)="onDismiss()">{{txtBtnLeft}}</button>
+        <button class="btn-right" mat-raised-button [disabled]="btnRightDisable" color="primary" (click)="onConfirm()">{{txtBtnRight}}</button>
+    </div>
 </div>

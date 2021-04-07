@@ -16,6 +16,9 @@ import { NumberDirective } from './login/numbers-only.directive';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { ɵROUTER_PROVIDERS } from '@angular/router';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 function getLocale() {
   const locale = 'th';
@@ -31,11 +34,12 @@ function getLocale() {
     AppRoutingModule,
     AutocompleteLibModule,
     MaterialModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     HttpClientModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    Ng2SearchPipeModule
   ],
-  providers: [{ provide: LOCALE_ID, useValue: "th-TH" }],
+  providers: [{ provide: LOCALE_ID, useValue: "th-TH" }, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

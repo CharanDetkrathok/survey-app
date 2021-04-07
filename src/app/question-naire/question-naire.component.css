@@ -2,6 +2,17 @@ a {
     cursor: pointer;
 }
 
+a:hover {
+    cursor: pointer;
+    color: #fc035e !important;
+    text-decoration: underline !important;
+}
+
+a:focus {
+    color: #fc035e !important;
+    text-decoration: underline !important;
+}
+
 .do-not-change-address {
     z-index: -99;
 }
@@ -38,11 +49,210 @@ small {
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 }
 
-.ng-autocomplete ::ng-deep .autocomplete-container .input-container input {
-    font-size: 20px;
-}
-
 .ng-autocomplete ::ng-deep .autocomplete-container .input-container input:disabled {
     background-color: #fff;
     color: #FFF;
+}
+
+.btn-submit {
+    background-color: darkblue;
+    color: #fff;
+    margin: 20px;
+    font-size: 20px;
+    padding: 10px 40px;
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    -ms-border-radius: 0 !important;
+    -o-border-radius: 0 !important;
+}
+
+.btn-submit:hover {
+    color: #fff;
+    background-color: rgb(61, 61, 196);
+}
+
+.btn-submit:disabled {
+    color: rgba(0, 0, 0, .26);
+    background-color: rgba(0, 0, 0, .12);
+}
+
+@media screen and (max-width: 959px) {
+    a {
+        padding: 16px;
+    }
+    .img-login-logo {
+        width: 20vw !important;
+        margin-bottom: 1.2em;
+    }
+    h1 {
+        font-size: 1.2em !important;
+    }
+    h2 {
+        font-size: 1.2em !important;
+        padding-top: 1em;
+        /* line-height: 1.3; */
+    }
+     ::ng-deep input {
+        font-weight: normal;
+    }
+     ::ng-deep .mat-radio-label-content {
+        font-weight: normal;
+    }
+    .text-mat-label-content {
+        font-weight: normal;
+        padding-bottom: 1em !important;
+    }
+     ::ng-deep mat-card {
+        width: 100vw !important;
+        padding: 0px 16px!important;
+        overflow: hidden !important;
+        border-radius: 0 !important;
+        -webkit-border-radius: 0 !important;
+        -moz-border-radius: 0 !important;
+        -ms-border-radius: 0 !important;
+        -o-border-radius: 0 !important;
+    }
+    .mat-card {
+        width: 100vw !important;
+        padding: 10px !important;
+        border-radius: 0 !important;
+        -webkit-border-radius: 0 !important;
+        -moz-border-radius: 0 !important;
+        -ms-border-radius: 0 !important;
+        -o-border-radius: 0 !important;
+    }
+     ::ng-deep .mat-card .main-wrap {
+        width: 100vw !important;
+        padding: 0px !important;
+        overflow: hidden !important;
+    }
+    .main-wrap {
+        /* background-image: url('../.././assets/imgs/bg-home-3.svg'); */
+        /* background-image: url('./assets/imgs/bg-home-3.svg'); */
+        background-size: cover;
+        background-position: top right;
+        width: 100vw !important;
+    }
+    .text-div-content {
+        padding-bottom: 15px;
+    }
+    hr {
+        margin: 5px 0px !important;
+    }
+    .name-content>*,
+    .gender-content>*,
+    .std-code-content>*,
+    .age-content>*,
+    .faculty-content>*,
+    .std-type-content>*,
+    .std-study-time-content>*,
+    .std-fund-content>*,
+    .be-work-status-content>*,
+    .qn-work-status-content>*,
+    .occup-type-content>*,
+    .salary-content>*,
+    .address-content>*,
+    .find-work-content>*,
+    .math-edu-content>*,
+    .work-applay-content>*,
+    .employer-content>*,
+    .award-content>*,
+    .addprogram-content>*,
+    .comment-content>* {
+        display: flex;
+        flex-direction: column;
+        padding: 0px 5px 0px 20px !important;
+        width: 90vw !important;
+    }
+     ::ng-deep .input-text-work {
+        width: 90vw !important;
+    }
+    .width-screen {
+        width: 80vw;
+    }
+     ::ng-deep input {
+        color: darkblue !important;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    .ng-autocomplete ::ng-deep .autocomplete-container .input-container input {
+        font-size: 20px;
+    }
+    a {
+        font-size: 1.2em !important;
+    }
+    .img-login-logo {
+        width: 10vw !important;
+        margin-bottom: 1.2em;
+    }
+     ::ng-deep .mat-card .main-wrap {
+        width: 100vw !important;
+        padding: 0px !important;
+        overflow: hidden !important;
+    }
+    .main-wrap {
+        background-size: cover;
+        background-position: top right;
+        width: 100vw !important;
+    }
+    .mat-card {
+        padding: 50px !important;
+        border-radius: 0 !important;
+        -webkit-border-radius: 0 !important;
+        -moz-border-radius: 0 !important;
+        -ms-border-radius: 0 !important;
+        -o-border-radius: 0 !important;
+    }
+    .text-div-content {
+        padding-bottom: 10px;
+    }
+    .form-group {
+        padding: 5px;
+    }
+    .text-mat-label-content {
+        font-weight: normal;
+    }
+    .name-content>*,
+    .gender-content>*,
+    .std-code-content>*,
+    .age-content>*,
+    .faculty-content>*,
+    .std-type-content>*,
+    .std-study-time-content>*,
+    .std-fund-content>*,
+    .be-work-status-content>*,
+    .qn-work-status-content>*,
+    .occup-type-content>*,
+    .salary-content>*,
+    .address-content>*,
+    .find-work-content>*,
+    .math-edu-content>*,
+    .work-applay-content>*,
+    .employer-content>*,
+    .award-content>*,
+    .addprogram-content>*,
+    .comment-content>* {
+        display: flex;
+        flex-direction: column;
+        padding: 0px 0px 0px 30px !important;
+        width: 45vw !important;
+    }
+    .width-screen {
+        width: 35vw;
+    }
+    .h2-content-padding-left {
+        padding-left: 30px;
+    }
+     ::ng-deep input {
+        color: darkblue !important;
+    }
+    .p-text-title-1 {
+        font-size: 1.8em;
+        text-shadow: 2px 2px rgba(0, 0, 0, 0.15);
+    }
+    .p-text-title-2 {
+        display: none;
+    }
 }

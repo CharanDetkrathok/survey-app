@@ -1,0 +1,80 @@
+.btn-left {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+}
+
+.btn-right {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+}
+
+::ng-deep .mat-dialog-container {
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    -ms-border-radius: 0 !important;
+    -o-border-radius: 0 !important;
+}
+
+@media screen and (max-width: 959px) {
+    .img-login-logo {
+        width: 10vw;
+    }
+    h1 {
+        font-size: 1.3em;
+        margin-bottom: 0;
+    }
+    .p-text-insert-before {
+        font-size: 1.5em;
+        line-height: 1.2;
+    }
+    .p-text-message {
+        font-size: 1.5em;
+        line-height: 1.2;
+        color: darkblue;
+    }
+    .p-text-description {
+        font-size: 1.3em;
+        line-height: 1.2;
+    }
+    .p-text-descriptionDetail {
+        font-size: 1.3em;
+        line-height: 1.2;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    .img-login-logo {
+        width: 5vw;
+    }
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 0;
+    }
+    .p-text-insert-before {
+        font-size: 1.5em;
+        line-height: 1.2;
+    }
+    .p-text-message {
+        font-size: 1.5em;
+        line-height: 1.2;
+        color: darkblue;
+    }
+    .p-text-description {
+        font-size: 1.3em;
+        line-height: 1.2;
+    }
+    .p-text-descriptionDetail {
+        font-size: 1.3em;
+        line-height: 1.2;
+    }
+    .p-text {
+        font-size: 1.3em;
+    }
+}

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  _base_url: `http://sevkn.ru.ac.th/survey-api/`
+  _base_url: `http://uat.ru.ac.th/survey-api/`
 };
 
 /*
