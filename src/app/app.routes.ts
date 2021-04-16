@@ -3,6 +3,7 @@ import { AuthenticationGuardService } from './services/authentication-guard.serv
 
 import { LoginComponent } from "./login/login.component";
 import { QuestionNaireComponent } from './question-naire/question-naire.component';
+import { QuestionNaireMComponent } from './question-naire-m/question-naire-m.component';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,11 @@ export const routes: Routes = [
   {
     path: 'question-naire',
     component: QuestionNaireComponent,
+    canActivate: [AuthenticationGuardService]
+  },
+  {
+    path: 'question-naire-m',
+    component: QuestionNaireMComponent,
     canActivate: [AuthenticationGuardService]
   },
   {

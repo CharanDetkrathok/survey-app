@@ -5,15 +5,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { questionResponseDataInterface } from '../question-naire/question-response-data';
 import { questionSetInterfaceData } from '../question-naire/question-set-interface-data';
+import { questionResponse_M_DataInterface } from '../question-naire-m/question-response-m-data';
+import { questionSetInterface_M_Data } from '../question-naire-m/question-set-interface-m-data';
+import { questionResponse_M_InsertUpdate } from '../question-naire-m/question-response-m-insert-update';
 
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class QuestionNaireService {
 
   constructor(private httpUrl: HttpClient) { }
 
+  /// เริ่ม -------- ป.ตรี ---------------------------------------
   //-- Get คำถาม และ คำตอบ
   getHttpQuestions(LEV_ID) {
 
@@ -25,7 +30,7 @@ export class QuestionNaireService {
   //-- ไม่เคย กลับไป Set ค่า INSERT_STATUS = "true"
   //-- ใช่เคย กลับไป Set ค่า UPDATE_STATUS = "true"
   getHttpCheckInsertBefore(STD_CODE: string) {
-    return this.httpUrl.get<questionSetInterfaceData>(`${environment._base_url}checked-data-before.jsp?STD_CODE=${STD_CODE}`);
+    return this.httpUrl.get<questionSetInterfaceData>(`${environment._base_url}checked-data-before-b.jsp?STD_CODE=${STD_CODE}`);
   }
 
   postHttpQuestions(postUserData: questionSetInterfaceData) {
@@ -95,5 +100,97 @@ export class QuestionNaireService {
     return this.httpUrl.post<questionResponseInsertUpdate>(`${environment._base_url}questions-naire-choices-b.jsp`, body, { headers: headers });
 
   }
+  /// จบ -------- ป.ตรี ---------------------------------------
 
+
+  /// เริ่ม -------- ป.โท / ป.เอก ------------------------------
+  //-- Get คำถาม และ คำตอบ
+  getHttpQuestionsM(LEV_ID) {
+
+    return this.httpUrl.get<questionResponse_M_DataInterface>(`${environment._base_url}questions-naire-m.jsp?lev_id=${LEV_ID}`);
+
+  }
+
+  //-- เคยทำแบบสำรวจ แล้วหรือไม่?
+  //-- ไม่เคย กลับไป Set ค่า INSERT_STATUS = "true"
+  //-- ใช่เคย กลับไป Set ค่า UPDATE_STATUS = "true"
+  getHttpCheckInsertBeforeM(STD_CODE: string) {
+    return this.httpUrl.get<questionSetInterface_M_Data>(`${environment._base_url}checked-data-before-m.jsp?STD_CODE=${STD_CODE}`);
+  }
+
+  postHttpQuestionsM(postUserData: questionSetInterface_M_Data) {
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' });
+
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('STD_CODE', postUserData.STD_CODE);
+    urlSearchParams.append('PRENAME_NO', postUserData.PRENAME_NO);
+    urlSearchParams.append('FIRST_NAME_THAI', postUserData.FIRST_NAME_THAI);
+    urlSearchParams.append('LAST_NAME_THAI', postUserData.LAST_NAME_THAI);
+    urlSearchParams.append('AGE', postUserData.AGE);
+    urlSearchParams.append('GENDER_NO', postUserData.GENDER_NO);
+    urlSearchParams.append('FACULTY_NO', postUserData.FACULTY_NO);
+    urlSearchParams.append('MAJOR_NO', postUserData.MAJOR_NO);
+    urlSearchParams.append('STD_TYPE', postUserData.STD_TYPE);
+    urlSearchParams.append('STD_STUDY_TIME', postUserData.STD_STUDY_TIME);
+    urlSearchParams.append('REGIONAL_NO', postUserData.REGIONAL_NO);
+    urlSearchParams.append('BE_WORK_STATUS', postUserData.BE_WORK_STATUS);
+    urlSearchParams.append('CAMPUS_NO', postUserData.CAMPUS_NO);
+    urlSearchParams.append('QN_PLAN_NO', postUserData.QN_PLAN_NO);
+    urlSearchParams.append('QN_WORK_STATUS', postUserData.QN_WORK_STATUS);
+    urlSearchParams.append('QN_OCCUP_TYPE', postUserData.QN_OCCUP_TYPE);
+    urlSearchParams.append('QN_OCCUP_TYPE_TXT', postUserData.QN_OCCUP_TYPE_TXT);
+    urlSearchParams.append('QN_WORK_NAME', postUserData.QN_WORK_NAME);
+    urlSearchParams.append('QN_WORK_NO', postUserData.QN_WORK_NO);
+    urlSearchParams.append('QN_WORK_MOO', postUserData.QN_WORK_MOO);
+    urlSearchParams.append('QN_WORK_BUILDING', postUserData.QN_WORK_BUILDING);
+    urlSearchParams.append('QN_WORK_FLOOR', postUserData.QN_WORK_FLOOR);
+    urlSearchParams.append('QN_WORK_SOI', postUserData.QN_WORK_SOI);
+    urlSearchParams.append('QN_WORK_STREET', postUserData.QN_WORK_STREET);
+    urlSearchParams.append('QN_WORK_TAMBON', postUserData.QN_WORK_TAMBON);
+    urlSearchParams.append('QN_WORK_AMPHUR', postUserData.QN_WORK_AMPHUR);
+    urlSearchParams.append('QN_WORK_PROVINCE_NAME', postUserData.QN_WORK_PROVINCE_NAME);
+    urlSearchParams.append('QN_WORK_PROVINCE_NO', postUserData.QN_WORK_PROVINCE_NO);
+    urlSearchParams.append('QN_WORK_ZIPCODE', postUserData.QN_WORK_ZIPCODE);
+    urlSearchParams.append('QN_WORK_TEL', postUserData.QN_WORK_TEL);
+    urlSearchParams.append('QN_MATCH_EDU', postUserData.QN_MATCH_EDU);
+    urlSearchParams.append('QN_WORK_APPLY', postUserData.QN_WORK_APPLY);
+    urlSearchParams.append('QN_AWARD', postUserData.QN_AWARD);
+    urlSearchParams.append('QN_AWARD_TXT', postUserData.QN_AWARD_TXT);
+    urlSearchParams.append('QN_AWARD_INSTITUTE', postUserData.QN_AWARD_INSTITUTE);
+    urlSearchParams.append('QN_AWARD_MMYYYY', postUserData.QN_AWARD_MMYYYY);
+    urlSearchParams.append('QN_CURR_PROPER', postUserData.QN_CURR_PROPER);
+    urlSearchParams.append('QN_CURR_MORAL', postUserData.QN_CURR_MORAL);
+    urlSearchParams.append('QN_CURR_CO', postUserData.QN_CURR_CO);
+    urlSearchParams.append('QN_CURR_INSPIRE', postUserData.QN_CURR_INSPIRE);
+    urlSearchParams.append('QN_CURR_OUTSIDE', postUserData.QN_CURR_OUTSIDE);
+    urlSearchParams.append('QN_INS_CONTENT', postUserData.QN_INS_CONTENT);
+    urlSearchParams.append('QN_INS_ONTIME', postUserData.QN_INS_ONTIME);
+    urlSearchParams.append('QN_INS_KNOWLEDGE', postUserData.QN_INS_KNOWLEDGE);
+    urlSearchParams.append('QN_INS_EXTENSIVE', postUserData.QN_INS_EXTENSIVE);
+    urlSearchParams.append('QN_INS_ETHICS', postUserData.QN_INS_ETHICS);
+    urlSearchParams.append('QN_INS_LUCID', postUserData.QN_INS_LUCID);
+    urlSearchParams.append('QN_MEDIA_MODERN', postUserData.QN_MEDIA_MODERN);
+    urlSearchParams.append('QN_MEDIA_ACC', postUserData.QN_MEDIA_ACC);
+    urlSearchParams.append('QN_MEDIA_NETWORK', postUserData.QN_MEDIA_NETWORK);
+    urlSearchParams.append('QN_MEDIA_DOC', postUserData.QN_MEDIA_DOC);
+    urlSearchParams.append('QN_MEDIA_FULLY', postUserData.QN_MEDIA_FULLY);
+    urlSearchParams.append('QN_ROOM_STUDY', postUserData.QN_ROOM_STUDY);
+    urlSearchParams.append('QN_ROOM_OVERVIEW', postUserData.QN_ROOM_OVERVIEW);
+    urlSearchParams.append('QN_ROOM_CLEAN', postUserData.QN_ROOM_CLEAN);
+    urlSearchParams.append('QN_ROOM_SIZE', postUserData.QN_ROOM_SIZE);
+    urlSearchParams.append('QN_ROOM_LIBRARY', postUserData.QN_ROOM_LIBRARY);
+    urlSearchParams.append('QN_ROOM_SAFETY', postUserData.QN_ROOM_SAFETY);
+    urlSearchParams.append('QN_OFFER', postUserData.QN_OFFER);
+    urlSearchParams.append('QN_UPDATE_DATE', postUserData.QN_UPDATE_DATE);
+    urlSearchParams.append('INSERT_STATUS', postUserData.INSERT_STATUS);
+    urlSearchParams.append('UPDATE_STATUS', postUserData.UPDATE_STATUS);
+
+    const body = urlSearchParams.toString();
+
+    return this.httpUrl.post<questionResponse_M_InsertUpdate>(`${environment._base_url}questions-naire-choices-m.jsp`, body, { headers: headers });
+
+  }
+
+  /// จบ -------- ป.โท / ป.เอก ------------------------------
 }

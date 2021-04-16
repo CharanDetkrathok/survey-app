@@ -228,9 +228,67 @@ export class QuestionNaireComponent implements OnInit {
     //-- Enable และ Disable ข้อ 11 -> ข้อ 17
     this.questionValueForm.controls['QN_WORK_STATUS'].valueChanges.subscribe(selected => {
 
+
       if (selected === '3' || selected === '4.1' || selected === '4.2' || selected === '4.3' || selected === '4.4' || selected === '5.1' || selected === '5.2' || selected === '5.3' || selected === '5.4' || selected === '5.5') {
 
+
+
         this.isHidden = true;
+
+        this.TEMP_DISTRICT_NAME = '';
+        this.TEMP_AMPHUR_NAME = '';
+        this.TEMP_PROVINCE_NAME = '';
+        this.TEMP_POSTCODE = '';
+
+        this.questionValueForm.controls['QN_OCCUP_TYPE'].setValue('');
+        this.questionValueForm.controls['QN_OCCUP_TYPE_TXT'].setValue('');
+        this.questionValueForm.controls['QN_SALARY'].setValue('');
+        this.questionValueForm.controls['QN_WORK_SALARY'].setValue('');
+        this.questionValueForm.controls['QN_WORK_NAME'].setValue('');
+        this.questionValueForm.controls['QN_WORK_NO'].setValue('');
+        this.questionValueForm.controls['QN_WORK_MOO'].setValue('');
+        this.questionValueForm.controls['QN_WORK_BUILDING'].setValue('');
+        this.questionValueForm.controls['QN_WORK_FLOOR'].setValue('');
+        this.questionValueForm.controls['QN_WORK_SOI'].setValue('');
+        this.questionValueForm.controls['QN_WORK_STREET'].setValue('');
+        this.questionValueForm.controls['QN_WORK_TAMBON'].setValue('');
+        this.questionValueForm.controls['QN_WORK_AMPHUR'].setValue('');
+        // แสดง ชื่อ จังหวัด
+        this.QN_WORK_PROVINCE_NAME = '';
+        // เอาไว้ insert to database ใน db เก็บเป็นตัวเลข
+        this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].setValue('');
+        this.questionValueForm.controls['QN_WORK_ZIPCODE'].setValue('');
+        this.questionValueForm.controls['QN_WORK_TEL'].setValue('');
+        this.questionValueForm.controls['QN_WORK_FAX'].setValue('');
+        this.questionValueForm.controls['QN_WORK_URL'].setValue('');
+        this.questionValueForm.controls['AF_FIND_WORK'].setValue('');
+        this.questionValueForm.controls['QN_MATCH_EDU'].setValue('');
+        this.questionValueForm.controls['QN_WORK_APPLY'].setValue('');
+        this.questionValueForm.controls['QN_EMPLOYER'].setValue('');
+
+        this.questionValueForm.controls['QN_OCCUP_TYPE'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_OCCUP_TYPE_TXT'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_SALARY'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_SALARY'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_NAME'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_NO'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_MOO'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_BUILDING'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_FLOOR'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_SOI'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_STREET'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_TAMBON'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_AMPHUR'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_ZIPCODE'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_TEL'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_FAX'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_URL'].updateValueAndValidity();
+        this.questionValueForm.controls['AF_FIND_WORK'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_MATCH_EDU'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_APPLY'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_EMPLOYER'].updateValueAndValidity();
+
         this.questionValueForm.controls['QN_OCCUP_TYPE'].disable();
         this.questionValueForm.controls['QN_OCCUP_TYPE_TXT'].disable();
         this.questionValueForm.controls['QN_SALARY'].disable();
@@ -253,29 +311,6 @@ export class QuestionNaireComponent implements OnInit {
         this.questionValueForm.controls['QN_MATCH_EDU'].disable();
         this.questionValueForm.controls['QN_WORK_APPLY'].disable();
         this.questionValueForm.controls['QN_EMPLOYER'].disable();
-
-        this.questionValueForm.controls['QN_OCCUP_TYPE'].patchValue('');
-        this.questionValueForm.controls['QN_OCCUP_TYPE_TXT'].patchValue('');
-        this.questionValueForm.controls['QN_SALARY'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_SALARY'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_NAME'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_NO'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_MOO'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_BUILDING'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_FLOOR'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_SOI'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_STREET'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_TAMBON'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_AMPHUR'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_ZIPCODE'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_TEL'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_FAX'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_URL'].patchValue('');
-        this.questionValueForm.controls['AF_FIND_WORK'].patchValue('');
-        this.questionValueForm.controls['QN_MATCH_EDU'].patchValue('');
-        this.questionValueForm.controls['QN_WORK_APPLY'].patchValue('');
-        this.questionValueForm.controls['QN_EMPLOYER'].patchValue('');
 
       } else {
 
@@ -437,35 +472,34 @@ export class QuestionNaireComponent implements OnInit {
 
   // เลือกข้อมูลใน Dropdownlist ไปแล้วหรือไม่
   setLettersFag: boolean = false;
+
   // จำนวนความยาวตัวอักษรที่เลือกไป
   setLetters: number = 0;
+
   // เปิด-ปิด Dropdownlist
   isDisableDropdownlist = new FormControl(true);
 
-  //-- เป็นส่วนหนึ่งของคำสั่งในการเปิด dropdownlist แบบ Custom ให้ Auto เมื่อมีการพิมพ์ อักษรอย่างน้อยสองตัว
+  //-- เป็นส่วนหนึ่งของคำสั่งในการเปิด dropdownlist แบบ Custom ให้ Auto เมื่อมีการพิมพ์ อักษรอย่างน้อย 1 ตัว
   @ViewChild('dropdownlist', { static: true }) public dropdownlist: any;
 
   searchTambonKeyup(value) {
 
-    // คำสั่งเปิด-ปิด Dropdownlist
-    if (value.length > 0) {
+    if (value.length >= 2) {
       // เปิด dropdownlist Auto
-      this.dropdownlist.toggle(true);
+      this.dropdownlist.toggle('true');
       // ยกเลิกการ Disabl (ยกเลิกการ ปิด Dropdownlist)
       this.isDisableDropdownlist.setValue(false);
+      this.isDisableDropdownlist.updateValueAndValidity();
     } else {
       // ปิด dropdownlist Auto
-      this.dropdownlist.toggle(false);
+      this.dropdownlist.toggle('false');
       // ทำการปิดการมองเห็น Disabl (ปิด Dropdownlist)
-      // this.isDisableDropdownlist.setValue(true);
+      this.isDisableDropdownlist.setValue(true);
+      this.isDisableDropdownlist.updateValueAndValidity();
     }
-
 
     // กรณีที่มีการเลือกข้อมูลไปแล้ว และทำการลบ หรือพิมพ์อักษร เพิ่ม จะทำการ คืนค่า ตำบล อำเภอ จังหวัด รหัสไปรษณีย์ เป็นค่าว่าง และปิดปุ่ม submit เพื่อกันข้อมูลไม่ครบถ้วน
     if (value.length < 1) {
-
-      // คำสั่งเปิด-ปิด Dropdownlist
-      // this.isDisableDropdownlist.setValue(true);
 
       this.TEMP_DISTRICT_NAME = '';
       this.questionValueForm.controls['QN_WORK_TAMBON'].setValue('');
@@ -795,7 +829,8 @@ export class QuestionNaireComponent implements OnInit {
         const message13 = '';
         const message14 = '';
         const message15 = '';
-        const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight, message_insert, message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15);
+        const isHiddenDisabled = true;
+        const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight, message_insert, message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15, isHiddenDisabled);
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
           data: dialogData
         });
@@ -944,6 +979,7 @@ export class QuestionNaireComponent implements OnInit {
       }
 
     } else {
+
 
       await this.questionValueForm.controls['QN_ADDPROGRAM3'].patchValue('');
 
@@ -1324,7 +1360,8 @@ export class QuestionNaireComponent implements OnInit {
     const message13 = '';
     const message14 = '';
     const message15 = '';
-    const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight, message_insert, message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15);
+    const isHiddenDisabled = true;
+    const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight, message_insert, message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15, isHiddenDisabled);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: dialogData
     });
@@ -1365,7 +1402,8 @@ export class QuestionNaireComponent implements OnInit {
             const message13 = '';
             const message14 = '';
             const message15 = '';
-            const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight, message_insert, message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15);
+            const isHiddenDisabled = true;
+            const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight, message_insert, message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15, isHiddenDisabled);
             const dialogRef = this.dialog.open(ConfirmDialogComponent, {
               data: dialogData
             });
@@ -1449,7 +1487,8 @@ export class QuestionNaireComponent implements OnInit {
     const message13 = '';
     const message14 = '';
     const message15 = '';
-    const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight, message_insert, message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15);
+    const isHiddenDisabled = true;
+    const dialogData = new ConfirmDialogModel(title, message, description, descriptionDetail, btnLeftDisable, btnRightDisable, txtBtnLeft, txtBtnRight, message_insert, message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15, isHiddenDisabled);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: dialogData
     });

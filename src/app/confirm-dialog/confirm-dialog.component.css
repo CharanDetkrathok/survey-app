@@ -1,26 +1,19 @@
-.btn-left {
-    border-radius: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    -ms-border-radius: 0;
-    -o-border-radius: 0;
+/*👉.btn-left {
+
 }
 
 .btn-right {
-    border-radius: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    -ms-border-radius: 0;
-    -o-border-radius: 0;
-}
 
-::ng-deep .mat-dialog-container {
+}👈*/
+
+
+/*👉::ng-deep .mat-dialog-container {
     border-radius: 0 !important;
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;
     -ms-border-radius: 0 !important;
     -o-border-radius: 0 !important;
-}
+}👈*/
 
 @media screen and (max-width: 959px) {
     .img-login-logo {

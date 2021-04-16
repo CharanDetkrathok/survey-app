@@ -19,6 +19,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { ɵROUTER_PROVIDERS } from '@angular/router';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { QuestionNaireMComponent } from './question-naire-m/question-naire-m.component';
 
 function getLocale() {
   const locale = 'th';
@@ -26,7 +27,7 @@ function getLocale() {
 }
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, QuestionNaireComponent, NumberDirective, ConfirmDialogComponent],
+  declarations: [AppComponent, LoginComponent, QuestionNaireComponent, NumberDirective, ConfirmDialogComponent, QuestionNaireMComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

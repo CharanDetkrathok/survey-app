@@ -12,22 +12,28 @@
     box-shadow: none;
 }
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+
+/*👉::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
     border-radius: 0px !important;
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
     border-radius: 0px !important;
+}👈*/
+
+hr {
+    border: 0;
+    clear: both;
+    display: block;
+    width: 90%;
+    background-color: rgba(0, 0, 0, 1);
+    height: 1px;
+    margin: 1.3em 0;
 }
 
 @media screen and (max-width: 959px) and (orientation: landscape) {
     mat-form-field {
         font-size: 20px;
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        -moz-border-radius: 0 !important;
-        -ms-border-radius: 0 !important;
-        -o-border-radius: 0 !important;
         width: 80vw;
         padding: 0 !important;
         margin: 0 !important;
@@ -39,11 +45,6 @@
         width: 80vw;
         padding: 0.5em;
         font-size: 1.5em;
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        -moz-border-radius: 0 !important;
-        -ms-border-radius: 0 !important;
-        -o-border-radius: 0 !important;
     }
      ::ng-deep .mat-form-field.mat-warn .mat-input-element,
     .mat-form-field-invalid .mat-input-element {
@@ -72,24 +73,12 @@
         margin-top: 1em;
         width: 95vw !important;
         padding: 30px 20px!important;
-        overflow: hidden !important;
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        -moz-border-radius: 0 !important;
-        -ms-border-radius: 0 !important;
-        -o-border-radius: 0 !important;
     }
      ::ng-deep .main-content {
         position: relative;
         width: 100vw;
         height: auto !important;
         padding: 0px 16px!important;
-        overflow: hidden !important;
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        -moz-border-radius: 0 !important;
-        -ms-border-radius: 0 !important;
-        -o-border-radius: 0 !important;
     }
     .p-text-title-1 {
         display: none;
@@ -103,11 +92,6 @@
 @media screen and (max-width: 959px) and (orientation: portrait) {
     mat-form-field {
         font-size: 20px;
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        -moz-border-radius: 0 !important;
-        -ms-border-radius: 0 !important;
-        -o-border-radius: 0 !important;
         width: 80vw;
         padding: 0 !important;
         margin: 0 !important;
@@ -119,11 +103,6 @@
         width: 80vw;
         padding: 0.5em;
         font-size: 1.5em;
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        -moz-border-radius: 0 !important;
-        -ms-border-radius: 0 !important;
-        -o-border-radius: 0 !important;
     }
      ::ng-deep .mat-form-field.mat-warn .mat-input-element,
     .mat-form-field-invalid .mat-input-element {
@@ -151,22 +130,10 @@
      ::ng-deep mat-card {
         width: 95vw !important;
         padding: 30px 20px!important;
-        overflow: hidden !important;
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        -moz-border-radius: 0 !important;
-        -ms-border-radius: 0 !important;
-        -o-border-radius: 0 !important;
     }
      ::ng-deep .main-content {
         position: relative;
         padding: 0px 16px!important;
-        overflow: hidden !important;
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        -moz-border-radius: 0 !important;
-        -ms-border-radius: 0 !important;
-        -o-border-radius: 0 !important;
     }
     .p-text-title-1 {
         display: none;
@@ -180,11 +147,6 @@
 @media screen and (min-width: 960px) {
     mat-form-field {
         font-size: 20px;
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        -moz-border-radius: 0 !important;
-        -ms-border-radius: 0 !important;
-        -o-border-radius: 0 !important;
         width: 40vw;
         padding: 0 !important;
         margin: 0 !important;
@@ -196,11 +158,6 @@
         width: 40vw;
         padding: 0.5em;
         font-size: 1.5em;
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        -moz-border-radius: 0 !important;
-        -ms-border-radius: 0 !important;
-        -o-border-radius: 0 !important;
     }
      ::ng-deep .mat-form-field.mat-warn .mat-input-element,
     .mat-form-field-invalid .mat-input-element {
@@ -228,22 +185,10 @@
      ::ng-deep mat-card {
         width: 60vw !important;
         padding: 40px 20px!important;
-        overflow: hidden !important;
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        -moz-border-radius: 0 !important;
-        -ms-border-radius: 0 !important;
-        -o-border-radius: 0 !important;
     }
      ::ng-deep .main-content {
         position: relative;
         padding: 0px 16px!important;
-        overflow: hidden !important;
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        -moz-border-radius: 0 !important;
-        -ms-border-radius: 0 !important;
-        -o-border-radius: 0 !important;
     }
     .p-text-title-1 {
         font-size: 1.8em;

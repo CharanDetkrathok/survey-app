@@ -1,7 +1,7 @@
 <div class="bg-blur">
     <div fxLayout="row" fxLayoutAlign="start center">
         <!-- <img class="img-login-logo" src="../.././assets/imgs/ru.png" alt="รูปพ่อขุน"> -->
-        <img class="img-login-logo" src="assets/imgs/ru.png" alt="รูปพ่อขุน">
+        <img class="img-login-logo" src="assets/imgs/ic-father-01.png" alt="รูปพ่อขุน">
         <h1 mat-dialog-title>
             {{title}}
         </h1>
@@ -28,10 +28,23 @@
         <p class="p-text">{{message13}}</p>
         <p class="p-text">{{message14}}</p>
         <p class="p-text">{{message15}}</p>
+
+        <div fxLayout="row">
+            <section [style.display]="isHiddenDisabled == true? 'none': 'block'" style="width: 15px; padding: 0; margin: 0;">
+                <mat-checkbox [(ngModel)]="disabled">
+                </mat-checkbox>
+            </section> &nbsp;&nbsp;
+            <mat-label class="p-text" [style.display]="isHiddenDisabled == true? 'none': 'block'">ข้าพเจ้าได้อ่าน และยินยอมตามรายละเอียด ข้อตกลงและความยินยอมข้างต้น
+            </mat-label>
+        </div>
+
     </div>
     <hr />
     <div class="btn-button" mat-dialog-actions fxLayout="row" fxLayoutAlign="end end">
         <button class="btn-left" mat-raised-button [disabled]="btnLeftDisable" (click)="onDismiss()">{{txtBtnLeft}}</button>
-        <button class="btn-right" mat-raised-button [disabled]="btnRightDisable" color="primary" (click)="onConfirm()">{{txtBtnRight}}</button>
+
+        <button class="btn-right" [style.display]="isHiddenDisabled == true? 'block': 'none'" mat-raised-button [disabled]="btnRightDisable" color="primary" (click)="onConfirm()">{{txtBtnRight}}</button>
+
+        <button [style.display]="isHiddenDisabled == true? 'none': 'block'" class="btn-right" color="primary" mat-raised-button [disabled]="!disabled" (click)="onConfirm()">{{txtBtnRight}}</button>
     </div>
 </div>

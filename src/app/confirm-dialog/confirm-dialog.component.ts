@@ -35,6 +35,9 @@ export class ConfirmDialogComponent implements OnInit {
   message14: string;
   message15: string;
 
+  disabled = false;
+  isHiddenDisabled: boolean = true;
+
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogModel) {
@@ -64,6 +67,7 @@ export class ConfirmDialogComponent implements OnInit {
     this.message13 = data.message13;
     this.message14 = data.message14;
     this.message15 = data.message15;
+    this.isHiddenDisabled = data.isHiddenDisabled;
 
 
   }
@@ -113,5 +117,6 @@ export class ConfirmDialogModel {
     public message12: string,
     public message13: string,
     public message14: string,
-    public message15: string) { }
+    public message15: string,
+    public isHiddenDisabled: boolean) { }
 }

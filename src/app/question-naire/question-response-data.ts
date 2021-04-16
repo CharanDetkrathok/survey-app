@@ -156,3 +156,4 @@ export interface districtAllInterface {
   PROVINCE_NAME: string;
   COUNTRY_NO: string;
 }
+
