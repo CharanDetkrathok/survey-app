@@ -3,9 +3,16 @@
 
 <div class="main-content" fxLayout="column" fxFlexFill fxLayoutAlign="center center" fxLayoutGap="10px">
     <div class="">
-        <div class="">
+        <div class="" [style.display]="isTH_EN == true? 'block': 'none'">
 
             <mat-card fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+                <div fxLayout="row" fxFlexFill fxLayoutAlign="end center">
+                    <mat-label> LANGUAGE </mat-label> &nbsp;&nbsp;
+                    <mat-slide-toggle [(ngModel)]="isTH_EN" [ngModelOptions]="{standalone: true}" (change)="onChange_TH_EN()">
+                        <mat-label [style.display]="isTH_EN == true? 'block': 'none'">TH</mat-label>
+                        <mat-label [style.display]="isTH_EN == false? 'block': 'none'">EN</mat-label>
+                    </mat-slide-toggle>
+                </div>
 
                 <div class="img-header-login" fxLayoutAlign="center center">
                     <h1 class="text-center label-text" fxLayout="column" fxLayoutAlign="center center">
@@ -32,9 +39,12 @@
                         </mat-form-field>
 
                         <div *ngIf="stdCode.invalid && stdCode.touched">
-                            <small *ngIf="stdCode.errors?.required" class="text-danger small-warning">กรุณากรอก หัสนักศึกษา!</small>
-                            <small *ngIf="stdCode.errors?.minlength" class="text-danger small-warning">รหัสนักศึกษา ต้องมีทั้งหมด 10
-                ตัวอักษร!</small>
+                            <small *ngIf="stdCode.errors?.required" class="text-danger small-warning">
+                กรุณากรอก หัสนักศึกษา!
+              </small>
+                            <small *ngIf="stdCode.errors?.minlength" class="text-danger small-warning">
+                รหัสนักศึกษา ต้องมีทั้งหมด 10 ตัวอักษร!
+              </small>
                         </div><br>
 
                         <mat-form-field appearance="outline">
@@ -50,9 +60,79 @@
                         </div><br>
 
                     </div>
-                    <!-- [style.display]="isOPEN_CLOSE == true? 'block': 'none'" -->
+
                     <div class="form-group" fxLayout="row" fxLayoutAlign="end center">
                         <button mat-raised-button class="btn-login" color="primary" type="submit" [disabled]="stdCode.invalid && stdCode.touched || stdCode.errors?.minlength || birthDate.invalid && birthDate.touched || stdCode.untouched || birthDate.untouched">Login</button>
+                    </div>
+                </form>
+
+
+                <hr />
+
+            </mat-card>
+        </div>
+
+        <!-- ภาษาอังกฤษ -->
+        <div class="" [style.display]="isTH_EN == false? 'block': 'none'">
+
+            <mat-card fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+                <div fxLayout="row" fxFlexFill fxLayoutAlign="end center">
+                    <mat-label> LANGUAGE </mat-label> &nbsp;&nbsp;
+                    <mat-slide-toggle [(ngModel)]="isTH_EN" [ngModelOptions]="{standalone: true}" (change)="onChange_TH_EN()">
+                        <mat-label [style.display]="isTH_EN == true? 'block': 'none'">TH</mat-label>
+                        <mat-label [style.display]="isTH_EN == false? 'block': 'none'">EN</mat-label>
+                    </mat-slide-toggle>
+                </div>
+
+                <div class="img-header-login" fxLayoutAlign="center center">
+                    <h1 class="text-center label-text" fxLayout="column" fxLayoutAlign="center center">
+                        <img class="img-login-logo" src="assets/imgs/ic-father-01.png" alt="ตราพ่อขุน">
+                        <p class="text-login">Login</p>
+                    </h1>
+                </div>
+
+                <div class="text-center">
+                    <p class="p-text-title-1" style="font-size: 1.2em;">the information about employment status of undergraduate and graduate students Ramkhamhaeng University</p>
+                    <p class="p-text-title-2">the information about employment status of undergraduate and graduate students</p>
+                    <p class="p-text-title-2">Ramkhamhaeng University</p>
+                </div>
+
+                <hr />
+
+                <form [formGroup]="userLoginFormEN" (ngSubmit)="onSubmitEN()">
+
+                    <div class="form-group" fxLayout="column">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Student ID</mat-label>
+                            <input matInput placeholder="Please enter student ID" class="form-control" type="text" formControlName="std_code_en" maxlength="10" [class.is-invalid]="stdCodeEN.invalid && stdCodeEN.touched" numbersOnly>
+                        </mat-form-field>
+
+                        <div *ngIf="stdCodeEN.invalid && stdCodeEN.touched">
+                            <small *ngIf="stdCodeEN.errors?.required" class="text-danger small-warning">Please enter student
+                ID!</small>
+                            <small *ngIf="stdCodeEN.errors?.minlength" class="text-danger small-warning">Student ID must have a total
+                of
+                10 characters!</small>
+                        </div><br>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Year / month / date of birth</mat-label>
+                            <input readonly matInput [matDatepicker]="pickerEN" formControlName="birth_date_en" placeholder="Please enter Year/month/date of birth" class="form-control" [class.is-invalid]="birthDateEN.invalid && birthDateEN.touched">
+                            <mat-datepicker-toggle matSuffix [for]="pickerEN"></mat-datepicker-toggle>
+                            <mat-datepicker touchUi #pickerEN startView="multi-year"></mat-datepicker>
+                        </mat-form-field>
+
+                        <div *ngIf="birthDateEN.invalid && birthDateEN.touched">
+                            <small *ngIf="birthDateEN.errors?.required" class="text-danger small-warning">
+                Please enter Year / month / date of birth!
+              </small>
+                        </div><br>
+
+                    </div>
+                    <!-- [style.display]="isOPEN_CLOSE == true? 'block': 'none'" -->
+                    <div class="form-group" fxLayout="row" fxLayoutAlign="end center">
+                        <button mat-raised-button class="btn-login" color="primary" type="submit" [disabled]="stdCodeEN.invalid && stdCodeEN.touched || stdCodeEN.errors?.minlength || birthDateEN.invalid && birthDateEN.touched || stdCodeEN.untouched || birthDateEN.untouched">Login</button>
                     </div>
                 </form>
 

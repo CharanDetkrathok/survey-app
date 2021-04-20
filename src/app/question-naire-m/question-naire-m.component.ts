@@ -875,7 +875,7 @@ export class QuestionNaireMComponent implements OnInit {
         const message_insert = `รหัสนักศึกษา : ${this.preUserData.STD_CODE}`;
         const message = `ชื่อ-สกุล : ${this.preUserData.PRENAME_THAI} ${this.preUserData.FIRST_NAME_THAI} ${this.preUserData.LAST_NAME_THAI}`;
         const description = `กรอกแบบสำรวจเมื่อ: ${dateNewFormat}`;
-        const descriptionDetail = `คุณต้องการาดูรายละเอียด หรือแก้ไขแบบสำรวจหรือไม่?`;
+        const descriptionDetail = `ท่านต้องการาดูรายละเอียด หรือแก้ไขแบบสำรวจหรือไม่?`;
         const btnLeftDisable = false;
         const btnRightDisable = false;
         const txtBtnLeft = 'ไม่';
@@ -1126,8 +1126,8 @@ export class QuestionNaireMComponent implements OnInit {
     //-- ********** สำเร็จ แจ้งด้วย Dialog และจบการทำงาน Redirect to Login ******** --//
     const title = 'ยืนยันการบันทึกแบบสำรวจ';
     const message_insert = '';
-    const message = `คุณต้องการบันทึก แบบสำรวจใช่หรือไม่`;
-    const description = 'หากคุณต้องการแก้ไข หรือต้องการดูรายละเอียดแบบสำรวจของคุณ สามารถทำได้ด้วยการ Login อีกครั้ง';
+    const message = `ท่านต้องการบันทึก แบบสำรวจใช่หรือไม่`;
+    const description = 'หากท่านต้องการแก้ไข หรือต้องการดูรายละเอียดแบบสำรวจของท่าน สามารถทำได้ด้วยการ Login อีกครั้ง';
     const descriptionDetail = '';
     const btnLeftDisable = false;
     const btnRightDisable = false;
@@ -1169,11 +1169,11 @@ export class QuestionNaireMComponent implements OnInit {
             const title = 'บันทึกแบบสำรวจเรียบร้อย';
             const message_insert = `ทำการบันทึก แบบสำรวจเรียบร้อยแล้วครับ`;
             const message = '';
-            const description = 'หากคุณต้องการแก้ไข หรือต้องการดูรายละเอียดแบบสำรวจของคุณ สามารถทำได้ด้วยการ Login อีกครั้ง';
+            const description = 'หากท่านต้องการแก้ไข หรือต้องการดูรายละเอียดแบบสำรวจของท่าน สามารถทำได้ด้วยการ Login อีกครั้ง';
             const descriptionDetail = '';
-            const btnLeftDisable = false;
+            const btnLeftDisable = true;
             const btnRightDisable = false;
-            const txtBtnLeft = 'ไม่';
+            const txtBtnLeft = '';
             const txtBtnRight = 'ใช่';
             const message1 = '';
             const message2 = '';
@@ -1200,6 +1200,10 @@ export class QuestionNaireMComponent implements OnInit {
 
               this.dialog_confirm_result = dialogResult;
               if (this.dialog_confirm_result) {
+
+                this.router.navigate(['/login']);
+
+              } else {
 
                 this.router.navigate(['/login']);
 
@@ -1233,8 +1237,8 @@ export class QuestionNaireMComponent implements OnInit {
 
     const title = `Logout`;
     const message_insert = '';
-    const message = `คุณต้องการที่จะออกจากระบบใช่หรือไม่`;
-    const description = `หากคุณออกจากหน้าเพจการทำงานนี้ ข้อมูลที่คุณทำการกรอกไว้จะไม่ถูกบันทึก !`;
+    const message = `ท่านต้องการที่จะออกจากระบบใช่หรือไม่`;
+    const description = `หากท่านออกจากหน้าเพจการทำงานนี้ ข้อมูลที่ท่านทำการกรอกไว้จะไม่ถูกบันทึก !`;
     const descriptionDetail = '';
     const btnLeftDisable = false;
     const btnRightDisable = false;
