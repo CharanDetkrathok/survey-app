@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { CheckOpenCloseService } from '../services/check-open-close.service';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,11 @@ export class LoginComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog) { }
 
-  ngOnInit(): void { sessionStorage.clear(); }
+  ngOnInit(): void {
+
+    sessionStorage.clear();
+
+  }
 
   // ---- เอาไว้ Validate การกรอก นักศึกษา Bidding ค่าไป template----//
   get stdCode() { return this.userLoginForm.get('std_code'); }
@@ -205,6 +210,7 @@ export class LoginComponent implements OnInit {
       this.handlesErrors(error.status);
 
     });
+
   }
 
   public handlesErrors(_handle_error: any): void {

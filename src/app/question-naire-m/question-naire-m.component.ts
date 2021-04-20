@@ -9,6 +9,7 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/co
 import { districtAll_M_Interface, district_M_Interface, amphur_M_Interface, province_M_Interface, postcode_M_Interface, regional_M_Interface } from './question-response-m-data';
 import { registerLocaleData, DatePipe } from '@angular/common';
 import localeTh from '@angular/common/locales/th';
+import { CheckOpenCloseService } from '../services/check-open-close.service';
 
 @Component({
   selector: 'app-question-naire-m',
@@ -313,24 +314,51 @@ export class QuestionNaireMComponent implements OnInit {
   CHOICES_OF_POSTCODE: postcode_M_Interface;
   CHOICE_OF_REGIONAL: regional_M_Interface;
 
+  isOPEN_CLOSE_Hidden: string = '';
+
   //-- ส่วนของการ Binding Data ระหว่าง Template กับ Component แบบ Realtime
   //-- เอาไว้เรียกดูค่า Validators สำหรับจัดการ Required
   get fbValidation() { return this.questionValueForm.controls; }
 
   constructor(
     private questionService: QuestionNaireService,
+    private checkOpenCloseService: CheckOpenCloseService,
     public dialog: MatDialog,
     private router: Router,
     private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
+    this.checkOpenCloseService.httpCheckOpenClose().subscribe(responseOpenClose => {
+
+      const _OPEN = 'open';
+
+      if (responseOpenClose.check_open_error_message_status === 1) {
+
+        if (responseOpenClose.CHECK_OPEN === _OPEN) {
+
+          this.isOPEN_CLOSE_Hidden = 'open';
+
+        } else {
+
+          this.isOPEN_CLOSE_Hidden = 'close';
+
+        }
+
+      } else {
+
+        this.handlesErrors(responseOpenClose.check_open_error_message_status);
+
+      }
+
+    }, error => {
+
+      this.handlesErrors(error.status);
+
+    });
+
     //-- Call API เพื่อไป Query คำถามมาแสดงใน Template
     this.getQuestionTocallApiService();
-
-
-
-
 
     this.questionValueForm.controls['CAMPUS_NO'].valueChanges.subscribe(selected => {
 

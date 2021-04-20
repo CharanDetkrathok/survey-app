@@ -50,11 +50,10 @@
                         </div><br>
 
                     </div>
-
+                    <!-- [style.display]="isOPEN_CLOSE == true? 'block': 'none'" -->
                     <div class="form-group" fxLayout="row" fxLayoutAlign="end center">
                         <button mat-raised-button class="btn-login" color="primary" type="submit" [disabled]="stdCode.invalid && stdCode.touched || stdCode.errors?.minlength || birthDate.invalid && birthDate.touched || stdCode.untouched || birthDate.untouched">Login</button>
                     </div>
-
                 </form>
 
 

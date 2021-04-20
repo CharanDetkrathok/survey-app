@@ -132,6 +132,19 @@ small {
         -ms-border-radius: 0px !important;
         -o-border-radius: 0px !important;
     }
+    .main-wrap-close {
+        width: 100vw !important;
+        height: 100vh;
+        padding: 0px !important;
+        /* margin-top: -9px !important; */
+        background-size: cover;
+        background-position: right;
+        border-radius: 0px !important;
+        -webkit-border-radius: 0px !important;
+        -moz-border-radius: 0px !important;
+        -ms-border-radius: 0px !important;
+        -o-border-radius: 0px !important;
+    }
     .text-div-content {
         padding-bottom: 15px;
     }
@@ -197,6 +210,18 @@ small {
         background-size: cover;
         background-position: top right;
         width: 100vw !important;
+    }
+    .main-wrap-close {
+        background-size: cover;
+        background-position: top right;
+        width: 100vw !important;
+        margin-top: -110px;
+        height: 100vh;
+        border-radius: 0px !important;
+        -webkit-border-radius: 0px !important;
+        -moz-border-radius: 0px !important;
+        -ms-border-radius: 0px !important;
+        -o-border-radius: 0px !important;
     }
     .mat-card {
         padding: 50px !important;

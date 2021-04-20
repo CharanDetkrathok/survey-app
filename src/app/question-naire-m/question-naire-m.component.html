@@ -1,5 +1,5 @@
 <mat-card class="main-wrap" style="background-image: url(assets/imgs/bg-home-3.svg);" fxLayout="column" fxLayoutAlign="center center">
-    <div class="main-content">
+    <div class="main-content" [style.display]="isOPEN_CLOSE_Hidden == 'open'? 'block': 'none'">
         <mat-card style="margin-top: 10px !important; margin-bottom: 10px !important;">
             <div fxLayout="row" fxLayoutAlign="end center">
                 <a (click)="logoutConfirmDialog()">ออกจากระบบ</a>
@@ -1597,3 +1597,30 @@
         </form>
     </div>
 </mat-card>
+
+<div class="main-content-close" [style.display]="isOPEN_CLOSE_Hidden == 'close'? 'block': 'none'">
+    <mat-card class="main-wrap-close" style="background-image: url(assets/imgs/bg-home-3.svg);" fxLayoutAlign="center center">
+        <mat-card style="background-color: rgba(255, 255, 255, 0.7); width: 70vw;">
+            <div fxLayout="row" fxLayoutAlign="end center">
+                <a (click)="logoutConfirmDialog()">ออกจากระบบ</a>
+            </div>
+            <div fxLayoutAlign="center center" fxLayout="column">
+                <img class="img-login-logo" src="assets/imgs/ic-father-01.png" alt="รูปพ่อขุน">
+
+                <h1 class="text-center">
+                    <mat-label class="">
+                        ขณะนี้ระบบยังไม่เปิดให้ทำการกรอกแบบสำรวจ
+                    </mat-label>
+                    <br>
+                    <mat-label class="text-primary">
+                        นักศึกษาสามารถติดตาม วันและระยะเวลา การเปิดให้บริการ กรอกข้อมูลแบบสำรวจได้จาก
+                    </mat-label>
+                    <br>
+                    <mat-label class="text-primary">
+                        https://www.ru.ac.th/th/
+                    </mat-label>
+                </h1>
+            </div>
+        </mat-card>
+    </mat-card>
+</div>

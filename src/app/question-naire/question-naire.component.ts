@@ -10,6 +10,7 @@ import { userResponseDataInterface } from './../login/user-response-data';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeTh from '@angular/common/locales/th';
+import { CheckOpenCloseService } from '../services/check-open-close.service';
 
 @Component({
   selector: 'app-question-naire',
@@ -214,13 +215,44 @@ export class QuestionNaireComponent implements OnInit {
 
   isHidden: boolean = false;
 
+  isOPEN_CLOSE_Hidden: string = '';
+
   constructor(
     private questionService: QuestionNaireService,
+    private checkOpenCloseService: CheckOpenCloseService,
     public dialog: MatDialog,
     private router: Router,
     private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+
+    this.checkOpenCloseService.httpCheckOpenClose().subscribe(responseOpenClose => {
+
+      const _OPEN = 'open';
+
+      if (responseOpenClose.check_open_error_message_status === 1) {
+
+        if (responseOpenClose.CHECK_OPEN === _OPEN) {
+
+          this.isOPEN_CLOSE_Hidden = 'open';
+
+        } else {
+
+          this.isOPEN_CLOSE_Hidden = 'close';
+
+        }
+
+      } else {
+
+        this.handlesErrors(responseOpenClose.check_open_error_message_status);
+
+      }
+
+    }, error => {
+
+      this.handlesErrors(error.status);
+
+    });
 
     //-- Call API เพื่อไป Query คำถามมาแสดงใน Template
     this.getQuestionTocallApiService();

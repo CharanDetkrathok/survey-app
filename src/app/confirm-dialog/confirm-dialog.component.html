@@ -1,6 +1,5 @@
 <div class="bg-blur">
     <div fxLayout="row" fxLayoutAlign="start center">
-        <!-- <img class="img-login-logo" src="../.././assets/imgs/ru.png" alt="รูปพ่อขุน"> -->
         <img class="img-login-logo" src="assets/imgs/ic-father-01.png" alt="รูปพ่อขุน">
         <h1 mat-dialog-title>
             {{title}}
@@ -16,25 +15,28 @@
         <p class="p-text text-center"><b>{{message1}}</b></p>
         <p class="p-text text-center"><b>{{message2}}</b></p>
         <p class="p-text text-center"><b>{{message3}}</b></p>
-        <p class="p-text">{{message4}}</p>
-        <p class="p-text">{{message5}}</p>
-        <p class="p-text">{{message6}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message4}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message5}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message6}}</p>
         <p class="p-text text-center"><b>{{message7}}</b></p>
-        <p class="p-text">{{message8}}</p>
-        <p class="p-text">{{message9}}</p>
-        <p class="p-text">{{message10}}</p>
-        <p class="p-text">{{message11}}</p>
-        <p class="p-text">{{message12}}</p>
-        <p class="p-text">{{message13}}</p>
-        <p class="p-text">{{message14}}</p>
-        <p class="p-text">{{message15}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message8}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message9}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message10}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message11}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message12}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message13}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message14}}</p>
+        <p class="p-text">
+            <!-- {{message15}} -->
+        </p>
 
         <div fxLayout="row">
             <section [style.display]="isHiddenDisabled == true? 'none': 'block'" style="width: 15px; padding: 0; margin: 0;">
                 <mat-checkbox [(ngModel)]="disabled">
                 </mat-checkbox>
             </section> &nbsp;&nbsp;
-            <mat-label class="p-text" [style.display]="isHiddenDisabled == true? 'none': 'block'">ข้าพเจ้าได้อ่าน และยินยอมตามรายละเอียด ข้อตกลงและความยินยอมข้างต้น
+            <mat-label class="p-text" [style.display]="isHiddenDisabled == true? 'none': 'block'">
+                {{message15}}
             </mat-label>
         </div>
 

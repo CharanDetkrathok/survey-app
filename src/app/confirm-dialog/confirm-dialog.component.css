@@ -17,10 +17,11 @@
 
 @media screen and (max-width: 959px) {
     .img-login-logo {
-        width: 10vw;
+        width: 13vw !important;
     }
     h1 {
         font-size: 1.3em;
+        font-weight: bold;
         margin-bottom: 0;
     }
     .p-text-insert-before {
@@ -44,10 +45,11 @@
 
 @media screen and (min-width: 960px) {
     .img-login-logo {
-        width: 5vw;
+        width: 5vw !important;
     }
     h1 {
         font-size: 1.8em;
+        font-weight: bold;
         margin-bottom: 0;
     }
     .p-text-insert-before {

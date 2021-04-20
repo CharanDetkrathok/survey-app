@@ -127,6 +127,19 @@ small {
         -ms-border-radius: 0px !important;
         -o-border-radius: 0px !important;
     }
+    .main-wrap-close {
+        width: 100vw !important;
+        height: 100vh;
+        padding: 0px !important;
+        margin-top: -9px !important;
+        background-size: cover;
+        background-position: right;
+        border-radius: 0px !important;
+        -webkit-border-radius: 0px !important;
+        -moz-border-radius: 0px !important;
+        -ms-border-radius: 0px !important;
+        -o-border-radius: 0px !important;
+    }
     .text-div-content {
         padding-bottom: 15px;
     }
@@ -178,13 +191,25 @@ small {
         margin-bottom: 1.2em;
     }
      ::ng-deep .mat-card .main-wrap {
-        width: 100vw !important;
+        width: 100vw;
         padding: 0px !important;
     }
     .main-wrap {
         background-size: cover;
         background-position: top right;
         width: 100vw !important;
+        border-radius: 0px !important;
+        -webkit-border-radius: 0px !important;
+        -moz-border-radius: 0px !important;
+        -ms-border-radius: 0px !important;
+        -o-border-radius: 0px !important;
+    }
+    .main-wrap-close {
+        background-size: cover;
+        background-position: top right;
+        width: 100vw !important;
+        margin-top: -110px;
+        height: 100vh;
         border-radius: 0px !important;
         -webkit-border-radius: 0px !important;
         -moz-border-radius: 0px !important;
