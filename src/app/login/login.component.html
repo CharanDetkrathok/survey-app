@@ -48,15 +48,14 @@
                         </div><br>
 
                         <mat-form-field appearance="outline">
-                            <mat-label>ปี/เดือน/วัน เกิด</mat-label>
-                            <input readonly matInput [matDatepicker]="picker" formControlName="birth_date" placeholder="กรุณากรอก เดือน/วัน/ปี เกิด" class="form-control" [class.is-invalid]="birthDate.invalid && birthDate.touched">
+                            <mat-label>วันเกิด</mat-label>
+                            <input readonly matInput [matDatepicker]="picker" formControlName="birth_date" placeholder="กรุณากรอก วันเกิด" class="form-control" [class.is-invalid]="birthDate.invalid && birthDate.touched">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker touchUi #picker startView="multi-year"></mat-datepicker>
                         </mat-form-field>
 
                         <div *ngIf="birthDate.invalid && birthDate.touched">
-                            <small *ngIf="birthDate.errors?.required" class="text-danger small-warning">กรุณาเลือก ปี/เดือน/วัน
-                เกิด!</small>
+                            <small *ngIf="birthDate.errors?.required" class="text-danger small-warning">กรุณาเลือก วันเกิด!</small>
                         </div><br>
 
                     </div>
@@ -117,15 +116,15 @@
                         </div><br>
 
                         <mat-form-field appearance="outline">
-                            <mat-label>Year / month / date of birth</mat-label>
-                            <input readonly matInput [matDatepicker]="pickerEN" formControlName="birth_date_en" placeholder="Please enter Year/month/date of birth" class="form-control" [class.is-invalid]="birthDateEN.invalid && birthDateEN.touched">
+                            <mat-label>date of birth</mat-label>
+                            <input readonly matInput [matDatepicker]="pickerEN" formControlName="birth_date_en" placeholder="Please enter date of birth" class="form-control" [class.is-invalid]="birthDateEN.invalid && birthDateEN.touched">
                             <mat-datepicker-toggle matSuffix [for]="pickerEN"></mat-datepicker-toggle>
                             <mat-datepicker touchUi #pickerEN startView="multi-year"></mat-datepicker>
                         </mat-form-field>
 
                         <div *ngIf="birthDateEN.invalid && birthDateEN.touched">
                             <small *ngIf="birthDateEN.errors?.required" class="text-danger small-warning">
-                Please enter Year / month / date of birth!
+                Please enter date of birth!
               </small>
                         </div><br>
 

@@ -1,9 +1,9 @@
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
@@ -16,14 +16,16 @@ import { NumberDirective } from './login/numbers-only.directive';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
-import { ɵROUTER_PROVIDERS } from '@angular/router';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { QuestionNaireMComponent } from './question-naire-m/question-naire-m.component';
 
-function getLocale() {
-  const locale = 'th';
-  return `${locale}-u-ca-gregory`;
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+// เปลี่ยนภาษา TH - EN
+export function HttpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
 }
 
 @NgModule({
@@ -38,9 +40,30 @@ function getLocale() {
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     HttpClientModule,
     FlexLayoutModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    //// เปลี่ยนภาษา TH - EN
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (HttpLoaderFactory),
+        deps: [HttpClient]
+      }
+    })
   ],
-  providers: [{ provide: LOCALE_ID, useValue: "th-TH" }, { provide: LocationStrategy, useClass: HashLocationStrategy }],
-  bootstrap: [AppComponent]
+  // { provide: LOCALE_ID, useValue: "th-TH" },
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { }
+export class AppModule {
+
+  //// เปลี่ยนภาษา TH - EN
+  constructor(private translate: TranslateService) {
+    translate.addLangs(["en", "th"]);
+    translate.setDefaultLang("th");
+    translate.use("th");
+  }
+
+}
+
+

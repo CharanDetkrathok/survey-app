@@ -6,6 +6,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
+import { DateAdapter } from '@angular/material/core';
+
+export enum Languages {
+  en = 'en',
+  th = 'th'
+}
 
 @Component({
   selector: 'app-login',
@@ -38,7 +45,9 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private formBuilder: FormBuilder,
     private router: Router,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    public translate: TranslateService,
+    private dateAdapter: DateAdapter<Date>) { }
 
 
   ngOnInit(): void {
@@ -57,9 +66,17 @@ export class LoginComponent implements OnInit {
 
   }
 
+  useLanguage(language: Languages): void {
+    this.translate.use(language);
+    this.dateAdapter.setLocale(language);
+  }
+
   onChange_TH_EN() {
 
     if (this.isTH_EN === true) {
+
+      // เปลี่ยนภาษาปฏิทิน
+      this.useLanguage(Languages.th);
 
       this.userLoginForm.controls['std_code'].setValue('');
       this.userLoginForm.controls['std_code'].setValidators([Validators.required, Validators.minLength(10)]);
@@ -81,6 +98,9 @@ export class LoginComponent implements OnInit {
       // this.isTH_EN = false;
 
     } else {
+
+      // เปลี่ยนภาษาปฏิทิน
+      this.useLanguage(Languages.en);
 
       this.userLoginForm.controls['std_code'].setValue('');
       this.userLoginForm.controls['std_code'].setValidators([]);
