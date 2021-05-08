@@ -1,0 +1,1580 @@
+<mat-card class="main-wrap" style="background-image: url(assets/imgs/bg-home-3.svg);" fxLayout="column" fxLayoutAlign="center center">
+    <div class="main-content" [style.display]="isOPEN_CLOSE_Hidden == 'open'? 'block': 'none'">
+        <mat-card style="margin-top: 10px !important; margin-bottom: 10px !important;">
+            <div fxLayout="row" fxLayoutAlign="end center">
+                <a (click)="logoutConfirmDialog()">Logout</a>
+            </div>
+            <div fxLayoutAlign="center center" fxLayout="column">
+                <img class="img-login-logo" src="assets/imgs/ic-father-01.png" alt="รูปพ่อขุน">
+
+                <h1 class="text-center">
+                    <mat-label>{{QUIZ_HEADER}}</mat-label>
+                </h1>
+            </div>
+        </mat-card>
+
+        <!-- <hr /> -->
+
+        <form [formGroup]="questionValueForm" (ngSubmit)="onSubmit()">
+
+            <mat-card style="margin-bottom: 10px !important;">
+                <div>
+                    <div>
+                        <div>
+                            <h2>
+                                <mat-label class="double-under-line-section">Part I :</mat-label> &nbsp;&nbsp;&nbsp;
+                                <mat-label>{{SECTION_NAME_ID_1}}</mat-label>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 1  ------->
+                                <mat-label>1. Name / Last name </mat-label> &nbsp;&nbsp;
+                                <div class="form-group name-content">
+                                    <div class="text-div-content">
+                                        <mat-label class="text-label-size">Name &nbsp;&nbsp; ( {{PRENAME_ENG}} )</mat-label>&nbsp;&nbsp;
+                                        <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                            <mat-form-field class="width-screen">
+                                                <input readonly matInput placeholder="Please enter your name" formControlName="FIRST_NAME_ENG" [class.is-invalid]="fbValidation.FIRST_NAME_ENG.invalid && fbValidation.FIRST_NAME_ENG.touched && fbValidation.FIRST_NAME_ENG.pristine">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-div-content">
+                                        <mat-label class="text-label-size">Last name </mat-label>&nbsp;&nbsp;
+                                        <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                            <mat-form-field class="width-screen">
+                                                <input readonly matInput placeholder="Please enter last name" formControlName="LAST_NAME_ENG" [class.is-invalid]="fbValidation.LAST_NAME_ENG.invalid && fbValidation.LAST_NAME_ENG.touched && fbValidation.LAST_NAME_ENG.pristine">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>2.1 &nbsp; {{QUESTION_DETAIL_ID_2}}</mat-label> &nbsp;
+                                <small *ngIf="questionValueForm.get('GENDER_NO').hasError('required') && questionValueForm.get('GENDER_NO').errors?.required" class="text-danger">***</small> <br>
+                                <div class="form-group gender-content">
+                                    <!------ ข้อย่อย 2.1  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="GENDER_NO">
+                                            <mat-radio-button class="" value="1"></mat-radio-button>
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_2_VALUE_1}}</mat-label> &nbsp; &nbsp; &nbsp; &nbsp;
+
+                                            <mat-radio-button class="" value="2"></mat-radio-button>
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_2_VALUE_2}}</mat-label> &nbsp; &nbsp; &nbsp; &nbsp;
+
+                                            <mat-radio-button class="" value="3"></mat-radio-button>
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_2_VALUE_3}}</mat-label>
+                                        </mat-radio-group>
+                                    </section>
+
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+
+                                <!------ ข้อย่อย 2.2  ------->
+                                <mat-label>2.2 &nbsp;&nbsp; Age </mat-label>
+                                <div class="form-group age-content">
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter age" formControlName="AGE" maxlength="3" numbersOnly [class.is-invalid]="fbValidation.AGE.invalid && fbValidation.AGE.touched && fbValidation.AGE.pristine">
+                                        </mat-form-field>
+                                        <mat-label> years &nbsp; <small *ngIf="questionValueForm.get('AGE').hasError('required') && questionValueForm.get('AGE').errors?.required" class="text-danger">***</small></mat-label>
+                                    </div>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 3  ------->
+                                <mat-label>3.&nbsp;&nbsp; Student ID number </mat-label>
+
+                                <div class="form-group std-code-content">
+
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input readonly matInput placeholder="
+                                            Please enter student ID." formControlName="STD_CODE" maxlength="10" numbersOnly [class.is-invalid]="fbValidation.STD_CODE.invalid && fbValidation.STD_CODE.touched && fbValidation.STD_CODE.pristine">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>4. &nbsp; {{QUESTION_DETAIL_ID_4}}</mat-label> &nbsp;
+                                <small *ngIf="questionValueForm.get('STD_TYPE').hasError('required') && questionValueForm.get('STD_TYPE').errors?.required" class="text-danger">***</small>
+                                <div class="form-group std-type-content">
+
+                                    <!------ ข้อย่อย 4  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="STD_TYPE" [class.is-invalid]="fbValidation.STD_TYPE.invalid && fbValidation.STD_TYPE.touched && fbValidation.STD_TYPE.pristine">
+
+                                            <mat-radio-button class="" value="1"></mat-radio-button>
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_4_VALUE_1}}</mat-label>
+
+                                            &nbsp;&nbsp;
+                                            <mat-radio-button class="" value="2"></mat-radio-button>
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_4_VALUE_2}}</mat-label>
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 5  ------->
+                                <mat-label>5. &nbsp; Faculty/Program that graduated </mat-label>
+
+                                <div class="form-group faculty-content">
+
+                                    <mat-label class="text-label-size">Faculty</mat-label>
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input readonly matInput placeholder="Please enter the faculty" value="{{FACULTY_NAME_ENG}}">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <mat-label [style.display]="isMAJOR_NAME_ENG == true? 'none': 'block'" class="text-label-size">Field of study</mat-label>
+                                    <div [style.display]="isMAJOR_NAME_ENG == true? 'none': 'block'" fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input readonly matInput placeholder="
+                                            Please fill out the field of study" value="{{MAJOR_NAME_ENG}}">
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 6  ------->
+                                <mat-label>6. &nbsp; {{QUESTION_DETAIL_ID_6}}</mat-label> &nbsp;
+                                <small *ngIf="questionValueForm.get('CAMPUS_NO').hasError('required') && questionValueForm.get('CAMPUS_NO').errors?.required" class="text-danger">***</small>
+
+                                <div class="form-group faculty-content">
+                                    <section class="">
+                                        <mat-radio-group formControlName="CAMPUS_NO">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_6_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_6_VALUE_2}}</mat-label>
+                                                &nbsp;
+                                                <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                                    <mat-form-field class="width-screen-regional">
+                                                        <mat-select formControlName="REGIONAL_NO" placeholder="Please fill out the regional campus">
+                                                            <mat-option *ngFor="let regional of CHOICE_OF_REGIONAL" [value]="regional.REGIONAL_NO" [class.is-invalid]="questionValueForm.get('REGIONAL_NO').hasError('required') || questionValueForm.get('REGIONAL_NO').errors?.required">
+                                                                {{regional.REGIONAL_NAME}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field> &nbsp; <small *ngIf="questionValueForm.get('REGIONAL_NO').hasError('required') || questionValueForm.get('REGIONAL_NO').errors?.required" class="text-danger">***</small><br>
+
+                                                </div>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 7  ------->
+                                <mat-label>7. &nbsp; {{QUESTION_DETAIL_ID_7}}</mat-label> &nbsp;
+                                <small *ngIf="questionValueForm.get('QN_PLAN_NO').hasError('required') && questionValueForm.get('QN_PLAN_NO').errors?.required" class="text-danger">***</small>
+
+                                <div class="form-group faculty-content">
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_PLAN_NO">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_7_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_7_VALUE_2}}</mat-label><br>
+                                            </div>
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 8  ------->
+                                <mat-label>8. &nbsp; {{QUESTION_DETAIL_ID_8}}</mat-label> &nbsp;
+                                <small *ngIf="questionValueForm.get('STD_STUDY_TIME').hasError('required') && questionValueForm.get('STD_STUDY_TIME').errors?.required" class="text-danger">***</small>
+
+                                <div class="form-group faculty-content">
+                                    <section class="">
+                                        <mat-radio-group formControlName="STD_STUDY_TIME">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_8_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_8_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_8_VALUE_3}}</mat-label><br>
+                                            </div>
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+
+            <!-- <hr /> -->
+
+            <mat-card style="margin-bottom: 10px !important;">
+                <div>
+                    <div>
+                        <div>
+                            <h2>
+                                <mat-label class="double-under-line-section">Part II :</mat-label> &nbsp;&nbsp;&nbsp;
+                                <mat-label> {{SECTION_NAME_ID_2}}</mat-label>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 9  ------->
+                                <mat-label>9. &nbsp; {{QUESTION_DETAIL_ID_9}}</mat-label> &nbsp;
+                                <small *ngIf="questionValueForm.get('BE_WORK_STATUS').hasError('required') && questionValueForm.get('BE_WORK_STATUS').errors?.required" class="text-danger">***</small>
+
+                                <div class="form-group faculty-content">
+                                    <section class="">
+                                        <mat-radio-group formControlName="BE_WORK_STATUS">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_9_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_9_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 10  ------->
+                                <mat-label>10. &nbsp; {{QUESTION_DETAIL_ID_10}}</mat-label>
+                                <p class="text-div-content">Choose only one answer, 10.1 or 10.2.&nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_WORK_STATUS').hasError('required') && questionValueForm.get('QN_WORK_STATUS').errors?.required" class="text-danger">***</small>
+                                </p>
+
+                                <div class="form-group faculty-content">
+
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_WORK_STATUS">
+
+                                            <!------ ข้อย่อย 10.1  ------->
+                                            <mat-label>10.1</mat-label>
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1.1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_1_1}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1.2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_1_2}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <!------ ข้อย่อย 10.2  ------->
+                                            <mat-label>10.2 ( If you choose answer 10.2, skip to 15 )</mat-label>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_2}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_3}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div [style.display]="isHidden == true? 'none': 'block'">
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 11  ------->
+                                <mat-label>11. &nbsp; {{QUESTION_DETAIL_ID_11}}</mat-label> &nbsp;
+                                <small *ngIf="questionValueForm.get('QN_OCCUP_TYPE').hasError('required') && questionValueForm.get('QN_OCCUP_TYPE').errors?.required" class="text-danger">***</small>
+
+                                <div class="form-group faculty-content">
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_OCCUP_TYPE">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_1}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_2}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_3}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_4}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_5}}</mat-label>
+                                                &nbsp;
+                                                <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                                    <mat-form-field class="width-screen">
+                                                        <input matInput placeholder="Please specify more" formControlName="QN_OCCUP_TYPE_TXT" [class.is-invalid]="questionValueForm.get('QN_OCCUP_TYPE_TXT').hasError('required') || questionValueForm.get('QN_OCCUP_TYPE_TXT').errors?.required">
+                                                    </mat-form-field> &nbsp; <small *ngIf="questionValueForm.get('QN_OCCUP_TYPE_TXT').hasError('required') || questionValueForm.get('QN_OCCUP_TYPE_TXT').errors?.required" class="text-danger">***</small>
+                                                </div>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div [style.display]="isHidden == true? 'none': 'block'">
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 12  ------->
+
+                                <mat-label>12. &nbsp; {{QUESTION_DETAIL_ID_12}}</mat-label> <br>
+                                <div class="form-group address-content">
+
+                                    <mat-label class="text-label-size">Current workplace's name </mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Current workplace's name" formControlName="QN_WORK_NAME" [class.is-invalid]="questionValueForm.get('QN_WORK_NAME').hasError('required') || questionValueForm.get('QN_WORK_NAME').errors?.required">
+                                        </mat-form-field>&nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_NAME').hasError('required') && questionValueForm.get('QN_WORK_NAME').errors?.required" class="text-danger">***</small>
+                                    </div>
+
+                                    <mat-label class="text-label-size">Located at :</mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Located at" formControlName="QN_WORK_NO" [class.is-invalid]="questionValueForm.get('QN_WORK_NO').hasError('required') || questionValueForm.get('QN_WORK_NO').errors?.required">
+                                        </mat-form-field>&nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_NO').hasError('required') && questionValueForm.get('QN_WORK_NO').errors?.required" class="text-danger ">***</small>
+                                    </div>
+
+                                    <mat-label class="text-label-size">Sub-district :</mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Sub-district" formControlName="QN_WORK_TAMBON" [class.is-invalid]="questionValueForm.get('QN_WORK_TAMBON').hasError('required') || questionValueForm.get('QN_WORK_TAMBON').errors?.required">
+                                        </mat-form-field>&nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required" class="text-danger ">***</small>
+
+                                    </div>
+
+                                    <mat-label class="text-label-size">District :</mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter District" formControlName="QN_WORK_AMPHUR" [class.is-invalid]="questionValueForm.get('QN_WORK_AMPHUR').hasError('required') || questionValueForm.get('QN_WORK_AMPHUR').errors?.required">
+                                        </mat-form-field>&nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_AMPHUR').hasError('required') && questionValueForm.get('QN_WORK_AMPHUR').errors?.required" class="text-danger ">***</small>
+                                    </div>
+
+                                    <mat-label class="text-label-size">Province :</mat-label> &nbsp;&nbsp;
+                                    <!-- formControlName="QN_WORK_PROVINCE_NO" -->
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Province" formControlName="QN_WORK_PROVINCE_NAME" [class.is-invalid]="questionValueForm.get('QN_WORK_PROVINCE_NAME').hasError('required') || questionValueForm.get('QN_WORK_PROVINCE_NAME').errors?.required">
+                                        </mat-form-field>&nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_PROVINCE_NAME').hasError('required') && questionValueForm.get('QN_WORK_PROVINCE_NAME').errors?.required" class="text-danger ">***</small>
+                                    </div>
+
+                                    <mat-label class="text-label-size">Zip code :</mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Zip code" formControlName="QN_WORK_ZIPCODE" [class.is-invalid]="questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') || questionValueForm.get('QN_WORK_ZIPCODE').errors?.required" numbersOnly maxlength="8">
+                                        </mat-form-field>&nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') && questionValueForm.get('QN_WORK_ZIPCODE').errors?.required" class="text-danger ">***</small>
+                                    </div>
+
+                                    <mat-label class="text-label-size">Tel :</mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Tel" formControlName="QN_WORK_TEL">
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+                            </h2>
+                        </div>
+                        <div [style.display]="isHidden == true? 'none': 'block'">
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 13  ------->
+                                <mat-label>13. &nbsp; {{QUESTION_DETAIL_ID_13}}</mat-label> &nbsp;
+                                <small *ngIf="questionValueForm.get('QN_MATCH_EDU').hasError('required') && questionValueForm.get('QN_MATCH_EDU').errors?.required" class="text-danger">***</small>
+
+                                <div class="form-group faculty-content">
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_MATCH_EDU">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_13_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_13_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_13_VALUE_3}}</mat-label><br>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div [style.display]="isHidden == true? 'none': 'block'">
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>14. &nbsp; {{QUESTION_DETAIL_ID_14}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_WORK_APPLY').hasError('required') && questionValueForm.get('QN_WORK_APPLY').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 14  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_WORK_APPLY">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>15. &nbsp; {{QUESTION_DETAIL_ID_15}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_AWARD').hasError('required') && questionValueForm.get('QN_AWARD').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+
+                                <div class="form-group award-content">
+                                    <!------ ข้อย่อย 15  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_AWARD">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_15_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_15_VALUE_2}}</mat-label>
+                                                &nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                                    <mat-form-field class="width-screen">
+                                                        <mat-label>Specify the award</mat-label>
+                                                        <input matInput placeholder="Please enter Specify the award" formControlName="QN_AWARD_TXT" [class.is-invalid]="questionValueForm.get('QN_AWARD_TXT').hasError('required') || questionValueForm.get('QN_AWARD_TXT').errors?.required">
+                                                    </mat-form-field> &nbsp;
+                                                    <small *ngIf="questionValueForm.get('QN_AWARD_TXT').hasError('required') && questionValueForm.get('QN_AWARD_TXT').errors?.required" class="text-danger small-award">***</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-label>Name of institute/organization/association</mat-label> &nbsp;&nbsp;
+                                                <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                                    <mat-form-field class="width-screen">
+                                                        <mat-label>Provide the name of the institution</mat-label>
+                                                        <input matInput placeholder="Please enter Provide the name of the institution" formControlName="QN_AWARD_INSTITUTE" [class.is-invalid]="questionValueForm.get('QN_AWARD_INSTITUTE').hasError('required') || questionValueForm.get('QN_AWARD_INSTITUTE').errors?.required">
+                                                    </mat-form-field> &nbsp;
+                                                    <small *ngIf="questionValueForm.get('QN_AWARD_INSTITUTE').hasError('required') && questionValueForm.get('QN_AWARD_INSTITUTE').errors?.required" class="text-danger small-award">***</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-label>Month/Year of the award</mat-label> &nbsp;&nbsp;
+                                                <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                                    <mat-form-field class="width-screen">
+                                                        <mat-label>Specify receiving month / day / year</mat-label>
+                                                        <input matInput placeholder="Please enter Specify receiving month / day / year" formControlName="QN_AWARD_MMYYYY" [class.is-invalid]="questionValueForm.get('QN_AWARD_MMYYYY').hasError('required') || questionValueForm.get('QN_AWARD_MMYYYY').errors?.required">
+                                                    </mat-form-field> &nbsp;
+                                                    <small *ngIf="questionValueForm.get('QN_AWARD_MMYYYY').hasError('required') && questionValueForm.get('QN_AWARD_MMYYYY').errors?.required" class="text-danger small-award">***</small>
+                                                </div>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+
+            <!-- <hr /> -->
+
+            <mat-card style="margin-bottom: 10px !important;">
+                <div>
+                    <div>
+                        <div>
+                            <h2>
+                                <mat-label class="double-under-line-section">Part III :</mat-label> &nbsp;&nbsp;&nbsp;
+                                <mat-label> {{SECTION_NAME_ID_3}}</mat-label>
+                            </h2>
+                        </div>
+                        <!-- <div [style.display]="isHidden == true? 'none': 'block'"></div> -->
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>16. &nbsp; {{QUESTION_DETAIL_ID_311}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_CURR_PROPER').hasError('required') && questionValueForm.get('QN_CURR_PROPER').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 16  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_CURR_PROPER">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_111_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_111_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_111_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_111_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_111_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+
+                        <!-- <div [style.display]="isHidden == true? 'none': 'block'"></div> -->
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>17. &nbsp; {{QUESTION_DETAIL_ID_312}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_CURR_MORAL').hasError('required') && questionValueForm.get('QN_CURR_MORAL').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 17  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_CURR_MORAL">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_112_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_112_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_112_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_112_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_112_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+
+                        <!-- <div [style.display]="isHidden == true? 'none': 'block'"></div> -->
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>18. &nbsp; {{QUESTION_DETAIL_ID_313}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_CURR_CO').hasError('required') && questionValueForm.get('QN_CURR_CO').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 18  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_CURR_CO">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_113_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_113_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_113_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_113_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_113_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+
+                        <!-- <div [style.display]="isHidden == true? 'none': 'block'"></div> -->
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>19. &nbsp; {{QUESTION_DETAIL_ID_314}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_CURR_INSPIRE').hasError('required') && questionValueForm.get('QN_CURR_INSPIRE').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 18  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_CURR_INSPIRE">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_114_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_114_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_114_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_114_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_114_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+
+                        <!-- <div [style.display]="isHidden == true? 'none': 'block'"></div> -->
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>20. &nbsp; {{QUESTION_DETAIL_ID_315}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_CURR_OUTSIDE').hasError('required') && questionValueForm.get('QN_CURR_OUTSIDE').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 20  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_CURR_OUTSIDE">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_115_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_115_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_115_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_115_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_115_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+
+                        <!-- <div [style.display]="isHidden == true? 'none': 'block'"></div> -->
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>21. &nbsp; {{QUESTION_DETAIL_ID_321}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_INS_CONTENT').hasError('required') && questionValueForm.get('QN_INS_CONTENT').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 21  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_INS_CONTENT">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_221_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_221_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_221_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_221_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_221_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>22. &nbsp; {{QUESTION_DETAIL_ID_322}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_INS_ONTIME').hasError('required') && questionValueForm.get('QN_INS_ONTIME').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 22  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_INS_ONTIME">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_222_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_222_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_222_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_222_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_222_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>23. &nbsp; {{QUESTION_DETAIL_ID_323}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_INS_KNOWLEDGE').hasError('required') && questionValueForm.get('QN_INS_KNOWLEDGE').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 23  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_INS_KNOWLEDGE">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_223_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_223_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_223_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_223_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_223_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>24. &nbsp; {{QUESTION_DETAIL_ID_324}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_INS_EXTENSIVE').hasError('required') && questionValueForm.get('QN_INS_EXTENSIVE').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 24  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_INS_EXTENSIVE">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_224_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_224_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_224_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_224_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_224_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>25. &nbsp; {{QUESTION_DETAIL_ID_325}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_INS_ETHICS').hasError('required') && questionValueForm.get('QN_INS_ETHICS').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 25  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_INS_ETHICS">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_225_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_225_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_225_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_225_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_225_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+
+                        <!-- <div [style.display]="isHidden == true? 'none': 'block'"></div> -->
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>26. &nbsp; {{QUESTION_DETAIL_ID_326}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_INS_LUCID').hasError('required') && questionValueForm.get('QN_INS_LUCID').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 26  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_INS_LUCID">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_226_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_226_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_226_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_226_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_226_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+
+                        <!-- <div [style.display]="isHidden == true? 'none': 'block'"></div> -->
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>27. &nbsp; {{QUESTION_DETAIL_ID_331}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_MEDIA_MODERN').hasError('required') && questionValueForm.get('QN_MEDIA_MODERN').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 27  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_MEDIA_MODERN">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_331_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_331_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_331_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_331_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_331_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>28. &nbsp; {{QUESTION_DETAIL_ID_332}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_MEDIA_ACC').hasError('required') && questionValueForm.get('QN_MEDIA_ACC').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 28  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_MEDIA_ACC">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_332_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_332_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_332_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_332_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_332_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>29. &nbsp; {{QUESTION_DETAIL_ID_333}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_MEDIA_NETWORK').hasError('required') && questionValueForm.get('QN_MEDIA_NETWORK').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 29  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_MEDIA_NETWORK">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_333_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_333_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_333_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_333_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_333_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>30. &nbsp; {{QUESTION_DETAIL_ID_334}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_MEDIA_DOC').hasError('required') && questionValueForm.get('QN_MEDIA_DOC').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 30  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_MEDIA_DOC">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_334_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_334_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_334_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_334_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_334_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>31. &nbsp; {{QUESTION_DETAIL_ID_335}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_MEDIA_FULLY').hasError('required') && questionValueForm.get('QN_MEDIA_FULLY').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 31  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_MEDIA_FULLY">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_335_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_335_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_335_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_335_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_335_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>32. &nbsp; {{QUESTION_DETAIL_ID_441}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_ROOM_OVERVIEW').hasError('required') && questionValueForm.get('QN_ROOM_OVERVIEW').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 32  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_ROOM_OVERVIEW">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_441_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_441_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_441_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_441_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_441_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>33. &nbsp; {{QUESTION_DETAIL_ID_442}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_ROOM_CLEAN').hasError('required') && questionValueForm.get('QN_ROOM_CLEAN').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 33  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_ROOM_CLEAN">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_442_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_442_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_442_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_442_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_442_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>34. &nbsp; {{QUESTION_DETAIL_ID_443}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_ROOM_SIZE').hasError('required') && questionValueForm.get('QN_ROOM_SIZE').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 34  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_ROOM_SIZE">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_443_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_443_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_443_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_443_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_443_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <!--  -->
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <!--  -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>35. &nbsp; {{QUESTION_DETAIL_ID_444}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_ROOM_LIBRARY').hasError('required') && questionValueForm.get('QN_ROOM_LIBRARY').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 35  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_ROOM_LIBRARY">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_444_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_444_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_444_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_444_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_444_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <!-- เปลี่ยนชื่อ formControlName="control" -->
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>36. &nbsp; {{QUESTION_DETAIL_ID_445}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_ROOM_SAFETY').hasError('required') && questionValueForm.get('QN_ROOM_SAFETY').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 36  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_ROOM_SAFETY">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_445_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_445_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_445_VALUE_3}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_445_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_445_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+
+                                <mat-label class="text-label-size">Suggestion</mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <mat-form-field class="width-screen">
+                                        <textarea class="comment-textarea" matInput placeholder="Please enter Suggestion" formControlName="QN_OFFER"></textarea>
+                                    </mat-form-field><br>
+
+                                </div>
+
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+
+            <!-- <hr /> -->
+
+            <mat-card>
+                <div class="form-group text-center" fxLayout="column" fxLayoutAlign="space-around center">
+                    <small *ngIf="!questionValueForm.valid" class="text-danger" style="padding-top: 15px !important;">Please check
+            the validity of the survey whether you have completed all information or not!</small>
+                    <button mat-raised-button [disabled]="!questionValueForm.valid" class="btn-submit" type="submit">SAVE</button>
+                    <!-- <button mat-raised-button class="btn-submit" type="submit">บันทึกแบบสำรวจ</button> -->
+                </div>
+            </mat-card>
+
+        </form>
+
+
+    </div>
+</mat-card>
+
+<div class="main-content-close" [style.display]="isOPEN_CLOSE_Hidden == 'close'? 'block': 'none'">
+    <mat-card class="main-wrap-close" style="background-image: url(assets/imgs/bg-home-3.svg);" fxLayoutAlign="center center">
+        <mat-card style="background-color: rgba(255, 255, 255, 0.7); width: 70vw;">
+            <div fxLayout="row" fxLayoutAlign="end center">
+                <a (click)="logoutConfirmDialog()">Logout</a>
+            </div>
+            <div fxLayoutAlign="center center" fxLayout="column">
+                <img class="img-login-logo" src="assets/imgs/ic-father-01.png" alt="รูปพ่อขุน">
+
+                <h1 class="text-center">
+                    <mat-label class="">
+                        Now the system is not open for filling out the survey.
+                    </mat-label>
+                    <br>
+                    <mat-label class="text-primary">
+                        You can follow date and time of the service to fill out the survey information from
+                    </mat-label>
+                    <br>
+                    <mat-label class="text-primary">
+                        https:// www.ru.ac.th/th/
+                    </mat-label>
+                </h1>
+            </div>
+        </mat-card>
+    </mat-card>
+</div>

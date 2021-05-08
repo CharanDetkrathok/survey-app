@@ -1,4 +1,5 @@
 <div class="main-wrap" style="background-image: url(assets/imgs/bg-home-3.svg);" fxLayoutAlign="center center">
+    <div class="bg-blur"></div>
 </div>
 
 <div class="main-content" fxLayout="column" fxFlexFill fxLayoutAlign="center center" fxLayoutGap="10px">
@@ -6,11 +7,12 @@
         <div class="" [style.display]="isTH_EN == true? 'block': 'none'">
 
             <mat-card fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+
                 <div fxLayout="row" fxFlexFill fxLayoutAlign="end center">
                     <mat-label> LANGUAGE </mat-label> &nbsp;&nbsp;
                     <mat-slide-toggle [(ngModel)]="isTH_EN" [ngModelOptions]="{standalone: true}" (change)="onChange_TH_EN()">
-                        <mat-label [style.display]="isTH_EN == true? 'block': 'none'">TH</mat-label>
-                        <mat-label [style.display]="isTH_EN == false? 'block': 'none'">EN</mat-label>
+                        <mat-label [style.display]="isTH_EN == true? 'block': 'none'">Thai</mat-label>
+                        <mat-label [style.display]="isTH_EN == false? 'block': 'none'">English</mat-label>
                     </mat-slide-toggle>
                 </div>
 
@@ -22,16 +24,16 @@
                 </div>
 
                 <div class="text-center">
-                    <p class="p-text-title-1">แบบสำรวจภาวะการมีงานทำของบัณฑิต มหาวิทยาลัยรามคำแหง</p>
-                    <p class="p-text-title-2">แบบสำรวจภาวะการมีงานทำของบัณฑิต</p>
-                    <p class="p-text-title-2">มหาวิทยาลัยรามคำแหง</p>
+                    <p class="p-text-title-1">แบบสำรวจภาวะการมีงานทำของบัณฑิตระดับปริญญาตรี <br> และระดับบัณฑิตศึกษา มหาวิทยาลัยรามคำแหง
+                    </p>
+                    <p class="p-text-title-2">แบบสำรวจภาวะการมีงานทำของบัณฑิตระดับ <br> ปริญญาตรี และระดับบัณฑิตศึกษา
+                        <br> มหาวิทยาลัยรามคำแหง
+                    </p>
                 </div>
-
-                <hr />
 
                 <form [formGroup]="userLoginForm" (ngSubmit)="onSubmit()">
 
-                    <div class="form-group" fxLayout="column">
+                    <div class="form-group input-field-std-birth-date" fxLayout="column">
 
                         <mat-form-field appearance="outline">
                             <mat-label>รหัสนักศึกษา</mat-label>
@@ -39,12 +41,12 @@
                         </mat-form-field>
 
                         <div *ngIf="stdCode.invalid && stdCode.touched">
-                            <small *ngIf="stdCode.errors?.required" class="text-danger small-warning">
-                กรุณากรอก หัสนักศึกษา!
+                            <small *ngIf="stdCode.errors?.required" class="text-danger small-warning"> กรุณากรอก
+                หัสนักศึกษา!
               </small>
-                            <small *ngIf="stdCode.errors?.minlength" class="text-danger small-warning">
-                รหัสนักศึกษา ต้องมีทั้งหมด 10 ตัวอักษร!
-              </small>
+                            <small *ngIf="stdCode.errors?.minlength" class="text-danger small-warning"> รหัสนักศึกษา
+                ต้องมีทั้งหมด
+                10 ตัวอักษร! </small>
                         </div><br>
 
                         <mat-form-field appearance="outline">
@@ -55,7 +57,8 @@
                         </mat-form-field>
 
                         <div *ngIf="birthDate.invalid && birthDate.touched">
-                            <small *ngIf="birthDate.errors?.required" class="text-danger small-warning">กรุณาเลือก วันเกิด!</small>
+                            <small *ngIf="birthDate.errors?.required" class="text-danger small-warning">กรุณาเลือก
+                วันเกิด!</small>
                         </div><br>
 
                     </div>
@@ -64,9 +67,6 @@
                         <button mat-raised-button class="btn-login" color="primary" type="submit" [disabled]="stdCode.invalid && stdCode.touched || stdCode.errors?.minlength || birthDate.invalid && birthDate.touched || stdCode.untouched || birthDate.untouched">Login</button>
                     </div>
                 </form>
-
-
-                <hr />
 
             </mat-card>
         </div>
@@ -78,8 +78,8 @@
                 <div fxLayout="row" fxFlexFill fxLayoutAlign="end center">
                     <mat-label> LANGUAGE </mat-label> &nbsp;&nbsp;
                     <mat-slide-toggle [(ngModel)]="isTH_EN" [ngModelOptions]="{standalone: true}" (change)="onChange_TH_EN()">
-                        <mat-label [style.display]="isTH_EN == true? 'block': 'none'">TH</mat-label>
-                        <mat-label [style.display]="isTH_EN == false? 'block': 'none'">EN</mat-label>
+                        <mat-label [style.display]="isTH_EN == true? 'block': 'none'">Thai</mat-label>
+                        <mat-label [style.display]="isTH_EN == false? 'block': 'none'">English</mat-label>
                     </mat-slide-toggle>
                 </div>
 
@@ -91,12 +91,12 @@
                 </div>
 
                 <div class="text-center">
-                    <p class="p-text-title-1" style="font-size: 1.2em;">the information about employment status of undergraduate and graduate students Ramkhamhaeng University</p>
-                    <p class="p-text-title-2">the information about employment status of undergraduate and graduate students</p>
-                    <p class="p-text-title-2">Ramkhamhaeng University</p>
+                    <p class="p-text-title-1">The information about employment status <br> of undergraduate and graduate students
+                        <br> Ramkhamhaeng University
+                    </p>
+                    <p class="p-text-title-2">The information about employment status of undergraduate and graduate studentsRamkhamhaeng University</p>
                 </div>
 
-                <hr />
 
                 <form [formGroup]="userLoginFormEN" (ngSubmit)="onSubmitEN()">
 
@@ -108,9 +108,11 @@
                         </mat-form-field>
 
                         <div *ngIf="stdCodeEN.invalid && stdCodeEN.touched">
-                            <small *ngIf="stdCodeEN.errors?.required" class="text-danger small-warning">Please enter student
+                            <small *ngIf="stdCodeEN.errors?.required" class="text-danger small-warning">Please enter
+                student
                 ID!</small>
-                            <small *ngIf="stdCodeEN.errors?.minlength" class="text-danger small-warning">Student ID must have a total
+                            <small *ngIf="stdCodeEN.errors?.minlength" class="text-danger small-warning">Student ID must
+                have a total
                 of
                 10 characters!</small>
                         </div><br>
@@ -135,8 +137,6 @@
                     </div>
                 </form>
 
-
-                <hr />
 
             </mat-card>
 

@@ -37,6 +37,10 @@ a:focus {
     width: 50%;
 }
 
+textarea.mat-input-element {
+    color: darkblue !important;
+}
+
 small {
     font-size: 1rem;
 }

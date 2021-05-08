@@ -4,6 +4,8 @@ import { AuthenticationGuardService } from './services/authentication-guard.serv
 import { LoginComponent } from "./login/login.component";
 import { QuestionNaireComponent } from './question-naire/question-naire.component';
 import { QuestionNaireMComponent } from './question-naire-m/question-naire-m.component';
+import { QuestionNaireEnComponent } from './question-naire-en/question-naire-en.component';
+import { QuestionNaireEnMComponent } from './question-naire-en-m/question-naire-en-m.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +25,16 @@ export const routes: Routes = [
   {
     path: 'question-naire-m',
     component: QuestionNaireMComponent,
+    canActivate: [AuthenticationGuardService]
+  },
+  {
+    path: 'question-naire-en',
+    component: QuestionNaireEnComponent,
+    canActivate: [AuthenticationGuardService]
+  },
+  {
+    path: 'question-naire-en-m',
+    component: QuestionNaireEnMComponent,
     canActivate: [AuthenticationGuardService]
   },
   {

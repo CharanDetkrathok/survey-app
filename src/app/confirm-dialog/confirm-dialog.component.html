@@ -1,4 +1,57 @@
-<div class="bg-blur">
+<div class="main-first" [style.display]="isHiddenDisabled == true? 'none': 'block'">
+    <div mat-dialog-title fxLayout="row" fxLayoutAlign="start center">
+        <img class="img-login-logo" src="assets/imgs/ic-father-01.png" alt="รูปพ่อขุน">
+        <h1>
+            {{title}}
+        </h1>
+    </div>
+    <hr />
+    <div mat-dialog-content>
+        <p class="p-text-insert-before text-success">{{message_insert}}</p>
+        <p class="p-text-message">{{message}}</p>
+        <p class="p-text-description">{{description}}</p>
+        <p class="p-text-descriptionDetail text-center">{{descriptionDetail}}</p>
+
+        <p class="p-text text-center"><b>{{message1}}</b></p>
+        <p class="p-text text-center"><b>{{message2}}</b></p>
+        <p class="p-text text-center"><b>{{message3}}</b></p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message4}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message5}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message6}}</p>
+        <p class="p-text text-center"><b>{{message7}}</b></p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message8}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message9}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message10}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message11}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message12}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message13}}</p>
+        <p class="p-text" style="text-indent: 1.5em;">{{message14}}</p>
+        <p class="p-text">
+            <!-- {{message15}} -->
+        </p>
+
+        <div fxLayout="row">
+            <section [style.display]="isHiddenDisabled == true? 'none': 'block'" style="width: 15px; padding: 0; margin: 0;">
+                <mat-checkbox [(ngModel)]="disabled">
+                </mat-checkbox>
+            </section> &nbsp;&nbsp;
+            <mat-label class="p-text" [style.display]="isHiddenDisabled == true? 'none': 'block'">
+                {{message15}}
+            </mat-label>
+        </div>
+
+    </div>
+    <hr />
+    <div mat-dialog-content class="btn-button" mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button class="btn-left" mat-raised-button [disabled]="btnLeftDisable" (click)="onDismiss()">{{txtBtnLeft}}</button>
+
+        <button class="btn-right" [style.display]="isHiddenDisabled == true? 'block': 'none'" mat-raised-button [disabled]="btnRightDisable" color="primary" (click)="onConfirm()">{{txtBtnRight}}</button>
+
+        <button [style.display]="isHiddenDisabled == true? 'none': 'block'" class="btn-right" color="primary" mat-raised-button [disabled]="!disabled" (click)="onConfirm()">{{txtBtnRight}}</button>
+    </div>
+</div>
+
+<div class="main-second" [style.display]="isHiddenDisabled == true? 'block': 'none'">
     <div fxLayout="row" fxLayoutAlign="start center">
         <img class="img-login-logo" src="assets/imgs/ic-father-01.png" alt="รูปพ่อขุน">
         <h1 mat-dialog-title>

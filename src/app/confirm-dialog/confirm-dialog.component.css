@@ -15,12 +15,31 @@
     -o-border-radius: 0 !important;
 }👈*/
 
+.mat-dialog-title {
+    margin: 0;
+}
+
 @media screen and (max-width: 959px) {
+    hr {
+        margin: 0.5rem 0;
+    }
+    .main-first {
+        height: 82vh;
+    }
+    .btn-button {
+        margin-top: -20px;
+    }
+    .mat-dialog-actions {
+        padding: 20px;
+    }
+    .main-second {
+        height: 100%;
+    }
     .img-login-logo {
         width: 13vw !important;
     }
     h1 {
-        font-size: 1.3em;
+        font-size: 20px;
         font-weight: bold;
         margin-bottom: 0;
     }
@@ -44,11 +63,20 @@
 }
 
 @media screen and (min-width: 960px) {
+    hr {
+        margin: 0.5rem 0;
+    }
+    .mat-dialog-actions {
+        padding: 20px;
+    }
+    .btn-button {
+        padding-top: 0;
+    }
     .img-login-logo {
         width: 5vw !important;
     }
     h1 {
-        font-size: 1.8em;
+        font-size: 1.3em;
         font-weight: bold;
         margin-bottom: 0;
     }

@@ -1,0 +1,925 @@
+<mat-card class="main-wrap" style="background-image: url(assets/imgs/bg-home-3.svg);" fxLayoutAlign="center center">
+    <div class="main-content" [style.display]="isOPEN_CLOSE_Hidden == 'open'? 'block': 'none'">
+        <mat-card style="margin-top: 10px !important;">
+            <div fxLayout="row" fxLayoutAlign="end center">
+                <a (click)="logoutConfirmDialog()">Logout</a>
+            </div>
+            <div fxLayoutAlign="center center" fxLayout="column">
+                <img class="img-login-logo" src="assets/imgs/ic-father-01.png" alt="รูปพ่อขุน">
+
+                <h1 class="text-center">
+                    <mat-label>{{QUIZ_HEADER}}</mat-label>
+                </h1>
+            </div>
+        </mat-card>
+
+        <!-- <hr /> -->
+
+        <form [formGroup]="questionValueForm" (ngSubmit)="onSubmit()">
+
+            <mat-card>
+                <div>
+                    <div>
+                        <div>
+                            <h2>
+                                <mat-label class="double-under-line-section">Part I :</mat-label> &nbsp;&nbsp;&nbsp;
+                                <mat-label>{{SECTION_NAME_ID_1}}</mat-label>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 1  ------->
+                                <mat-label>1. Name / Last name </mat-label> &nbsp;&nbsp;
+                                <div class="form-group name-content">
+                                    <div class="text-div-content">
+                                        <mat-label class="text-label-size">Name &nbsp;&nbsp; ( {{PRENAME_ENG}} )</mat-label>&nbsp;&nbsp;
+                                        <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                            <mat-form-field class="width-screen">
+                                                <input readonly matInput placeholder="Please enter your name" formControlName="FIRST_NAME_ENG" [class.is-invalid]="fbValidation.FIRST_NAME_ENG.invalid && fbValidation.FIRST_NAME_ENG.touched && fbValidation.FIRST_NAME_ENG.pristine">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-div-content">
+                                        <mat-label class="text-label-size">Last name </mat-label>&nbsp;&nbsp;
+                                        <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                            <mat-form-field class="width-screen">
+                                                <input readonly matInput placeholder="Please enter last name" formControlName="LAST_NAME_ENG" [class.is-invalid]="fbValidation.LAST_NAME_ENG.invalid && fbValidation.LAST_NAME_ENG.touched && fbValidation.LAST_NAME_ENG.pristine">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+
+                                <!------ ข้อย่อย 2  ------->
+                                <mat-label>2. &nbsp;&nbsp; Age </mat-label>
+                                <div class="form-group age-content">
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter age" formControlName="AGE" maxlength="3" numbersOnly [class.is-invalid]="fbValidation.AGE.invalid && fbValidation.AGE.touched && fbValidation.AGE.pristine">
+                                        </mat-form-field>
+                                        <mat-label> years &nbsp; <small *ngIf="questionValueForm.get('AGE').hasError('required') && questionValueForm.get('AGE').errors?.required" class="text-danger">***</small></mat-label>
+                                    </div>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>3. &nbsp; {{QUESTION_DETAIL_ID_3}}</mat-label> &nbsp;
+                                <small *ngIf="questionValueForm.get('GENDER_NO').hasError('required') && questionValueForm.get('GENDER_NO').errors?.required" class="text-danger">***</small><br>
+                                <div class="form-group gender-content">
+                                    <!------ ข้อย่อย 3  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="GENDER_NO">
+                                            <mat-radio-button class="" value="1"></mat-radio-button>
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_3_VALUE_1}}</mat-label> &nbsp; &nbsp; &nbsp; &nbsp;
+
+                                            <mat-radio-button class="" value="2"></mat-radio-button>
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_3_VALUE_2}}</mat-label> &nbsp; &nbsp; &nbsp; &nbsp;
+
+                                            <mat-radio-button class="" value="3"></mat-radio-button>
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_3_VALUE_3}}</mat-label>
+                                        </mat-radio-group>
+                                    </section>
+
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 4  ------->
+                                <mat-label>3.&nbsp;&nbsp; Student ID number </mat-label>
+
+                                <div class="form-group std-code-content">
+
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input readonly matInput placeholder="
+                                            Please enter student ID." formControlName="STD_CODE" maxlength="10" numbersOnly [class.is-invalid]="fbValidation.STD_CODE.invalid && fbValidation.STD_CODE.touched && fbValidation.STD_CODE.pristine">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 5  ------->
+                                <mat-label>5.</mat-label> &nbsp;&nbsp; Faculty/Program that graduated
+
+                                <div class="form-group faculty-content">
+
+                                    <mat-label class="text-label-size">Faculty</mat-label>
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input readonly matInput placeholder="Please enter the faculty" value="{{FACULTY_NAME_ENG}}">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <mat-label [style.display]="isMAJOR_NAME_ENG == true? 'none': 'block'" class="text-label-size">Field of study</mat-label>
+                                    <div [style.display]="isMAJOR_NAME_ENG == true? 'none': 'block'" fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input readonly matInput placeholder="
+                                            Please fill out the field of study" value="{{MAJOR_NAME_ENG}}">
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>6. &nbsp; {{QUESTION_DETAIL_ID_6}}</mat-label>
+                                <small *ngIf="questionValueForm.get('STD_TYPE').hasError('required') && questionValueForm.get('STD_TYPE').errors?.required" class="text-danger">***</small>
+                                <div class="form-group std-type-content">
+
+
+                                    <!------ ข้อย่อย 6  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="STD_TYPE" [class.is-invalid]="fbValidation.STD_TYPE.invalid && fbValidation.STD_TYPE.touched && fbValidation.STD_TYPE.pristine">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_6_VALUE_1}}</mat-label>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_6_VALUE_2}}</mat-label>
+                                            </div>
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>7. &nbsp; {{QUESTION_DETAIL_ID_7}} </mat-label>
+                                <small *ngIf="questionValueForm.get('STD_STUDY_TIME').hasError('required') && questionValueForm.get('STD_STUDY_TIME').errors?.required" class="text-danger">***</small>
+                                <div class="form-group std-study-time-content">
+
+                                    <!------ ข้อย่อย 7  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="STD_STUDY_TIME">
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_7_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_7_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_7_VALUE_3}}</mat-label>
+                                            </div>
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>8. &nbsp; {{QUESTION_DETAIL_ID_8}} </mat-label>
+                                <small *ngIf="questionValueForm.get('STD_FUND').hasError('required') && questionValueForm.get('STD_FUND').errors?.required" class="text-danger">***</small>
+
+                                <div class="form-group std-fund-content">
+
+                                    <!------ ข้อย่อย 8  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="STD_FUND">
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_8_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_8_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_8_VALUE_3}}</mat-label>
+                                            </div>
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>9. &nbsp; {{QUESTION_DETAIL_ID_9}}</mat-label>
+                                <div>
+                                    <p>Choose only one answer, 9.1 or 9.2 &nbsp;
+                                        <small *ngIf="questionValueForm.get('BE_WORK_STATUS').hasError('required') && questionValueForm.get('BE_WORK_STATUS').errors?.required" class="text-danger">***</small>
+                                    </p>
+                                </div>
+
+                                <div class="form-group be-work-status-content">
+
+                                    <!------ ข้อย่อย 9.1  ------->
+
+                                    <section class="">
+                                        <mat-radio-group formControlName="BE_WORK_STATUS">
+                                            <mat-label>9.1</mat-label>
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1.1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_9_VALUE_1_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1.2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_9_VALUE_1_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1.3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_9_VALUE_1_3}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1.4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_9_VALUE_1_4}}</mat-label>
+                                                &nbsp;
+                                                <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                                    <mat-form-field class="width-screen">
+                                                        <input matInput placeholder="Please specify more." formControlName="BE_WORK_STATUS_TXT" [class.is-invalid]="questionValueForm.get('BE_WORK_STATUS_TXT').hasError('required') || questionValueForm.get('BE_WORK_STATUS_TXT').errors?.required">
+                                                    </mat-form-field> &nbsp; <small *ngIf="questionValueForm.get('BE_WORK_STATUS_TXT').hasError('required') || questionValueForm.get('BE_WORK_STATUS_TXT').errors?.required" class="text-danger">***</small><br>
+                                                </div>
+                                            </div>
+
+                                            <!------ ข้อย่อย 9.2  ------->
+                                            <mat-label>9.2</mat-label><br>
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_9_VALUE_2}}</mat-label>
+                                            </div>
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+
+            <!-- <hr /> -->
+
+            <mat-card>
+                <div>
+                    <div>
+                        <div>
+                            <h2>
+                                <mat-label class="double-under-line-section">ตอนที่ 2</mat-label> &nbsp;&nbsp;&nbsp;
+                                <mat-label> {{SECTION_NAME_ID_2}}</mat-label>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>10. &nbsp; {{QUESTION_DETAIL_ID_10}}</mat-label>
+                                <div>
+                                    <p>Choose only one answer, 10.1 or 10.2 or 10.3 or 10.4 &nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_STATUS').hasError('required') && questionValueForm.get('QN_WORK_STATUS').errors?.required" class="text-danger">***</small>
+                                    </p>
+                                </div>
+
+                                <div class="form-group qn-work-status-content">
+
+                                    <!------ ข้อย่อย 10.1  ------->
+
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_WORK_STATUS">
+                                            <mat-label>10.1</mat-label>
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_1}}</mat-label><br>
+
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <!------ ข้อย่อย 10.2  ------->
+                                            <mat-label>10.2 ( If you choose answer 10.2, skip to 18 )</mat-label><br>
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_3}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <!------ ข้อย่อย 10.3  ------->
+                                            <mat-label>10.3 ( If you choose answer 10.3, skip to 18 )</mat-label><br>
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4.1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_4_1}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4.2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_4_2}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4.3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_4_3}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4.4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_4_4}}</mat-label>
+                                                &nbsp;
+
+                                                <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                                    <mat-form-field class="width-screen">
+                                                        <input matInput placeholder="Please specify more." formControlName="QN_WORK_STATUS_NO_TXT" [class.is-invalid]="questionValueForm.get('QN_WORK_STATUS_NO_TXT').hasError('required') || questionValueForm.get('QN_WORK_STATUS_NO_TXT').errors?.required">
+                                                    </mat-form-field> &nbsp; <small *ngIf="questionValueForm.get('QN_WORK_STATUS_NO_TXT').hasError('required') || questionValueForm.get('QN_WORK_STATUS_NO_TXT').errors?.required" class="text-danger">***</small>
+                                                </div>
+                                            </div>
+                                            <!------ ข้อย่อย 10.4  ------->
+                                            <mat-label>10.4 ( If you choose answer 10.4, skip to 18 )</mat-label><br>
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5.1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_5_1}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5.2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_5_2}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5.3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_5_3}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5.4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_5_4}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5.5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_5_5}}</mat-label>
+                                                &nbsp;
+                                                <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                                    <mat-form-field class="width-screen">
+                                                        <input matInput placeholder="Please specify more." formControlName="QN_WORK_STATUS_ED_TXT" [class.is-invalid]="questionValueForm.get('QN_WORK_STATUS_ED_TXT').hasError('required') || questionValueForm.get('QN_WORK_STATUS_ED_TXT').errors?.required">
+                                                    </mat-form-field> &nbsp; <small *ngIf="questionValueForm.get('QN_WORK_STATUS_ED_TXT').hasError('required') || questionValueForm.get('QN_WORK_STATUS_ED_TXT').errors?.required" class="text-danger">***</small>
+                                                </div>
+                                            </div>
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div [style.display]="isHidden == true? 'none': 'block'">
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>11. &nbsp; {{QUESTION_DETAIL_ID_11}}</mat-label>
+                                <div>
+                                    <p>Choose only one answer, 11.1 or 11.2 &nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_OCCUP_TYPE').hasError('required') && questionValueForm.get('QN_OCCUP_TYPE').errors?.required" class="text-danger">***</small>
+                                    </p>
+                                </div>
+
+                                <div class="form-group occup-type-content">
+
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_OCCUP_TYPE">
+                                            <!------ ข้อย่อย 11.1  ------->
+                                            <mat-label>11.1</mat-label><br>
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_10_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_3}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_5}}</mat-label><br>
+                                            </div>
+
+                                            <!------ ข้อย่อย 11.2  ------->
+                                            <mat-label>11.2</mat-label><br>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="6.1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_6_1}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="6.2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_6_2}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="6.3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_6_3}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="6.4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_6_4}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="6.5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_11_VALUE_6_5}}</mat-label>
+                                                &nbsp;
+
+                                                <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                                    <mat-form-field class="width-screen">
+                                                        <input matInput placeholder="Please specify more." formControlName="QN_OCCUP_TYPE_TXT" [class.is-invalid]="questionValueForm.get('QN_OCCUP_TYPE_TXT').hasError('required') || questionValueForm.get('QN_OCCUP_TYPE_TXT').errors?.required">
+                                                    </mat-form-field> &nbsp; <small *ngIf="questionValueForm.get('QN_OCCUP_TYPE_TXT').hasError('required') || questionValueForm.get('QN_OCCUP_TYPE_TXT').errors?.required" class="text-danger">***</small>
+                                                </div>
+                                            </div>
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div [style.display]="isHidden == true? 'none': 'block'">
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 12  ------->
+                                <mat-label>12. &nbsp; {{QUESTION_DETAIL_ID_12}}</mat-label> &nbsp;
+                                <div class="form-group salary-content">
+                                    <mat-label class="text-label-size">Monthly Salary/wages.</mat-label>
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Monthly Salary" numbersOnly formControlName="QN_SALARY" [class.is-invalid]="questionValueForm.get('QN_SALARY').hasError('required') || questionValueForm.get('QN_SALARY').errors?.required">
+                                        </mat-form-field>
+                                        <mat-label> Bath </mat-label> &nbsp; <small *ngIf="questionValueForm.get('QN_SALARY').hasError('required') || questionValueForm.get('QN_SALARY').errors?.required" class="text-danger">***</small>
+                                    </div>
+
+                                    <mat-label class="text-label-size">Extra income per month</mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <mat-label>Extra income per month</mat-label>
+                                            <input matInput placeholder="Please enter Extra income per month" numbersOnly formControlName="QN_WORK_SALARY">
+                                        </mat-form-field>
+                                        <mat-label> Bath</mat-label>
+                                    </div>
+                                </div>
+                            </h2>
+                        </div>
+                        <div [style.display]="isHidden == true? 'none': 'block'">
+                            <h2 class="h2-content-padding-left">
+                                <!------ ข้อย่อย 13  ------->
+
+                                <mat-label>13. &nbsp; {{QUESTION_DETAIL_ID_13}}</mat-label> <br>
+                                <div class="form-group address-content">
+
+                                    <mat-label class="text-label-size">Current workplace's name </mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Current workplace's name" formControlName="QN_WORK_NAME" [class.is-invalid]="questionValueForm.get('QN_WORK_NAME').hasError('required') || questionValueForm.get('QN_WORK_NAME').errors?.required">
+                                        </mat-form-field>&nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_NAME').hasError('required') && questionValueForm.get('QN_WORK_NAME').errors?.required" class="text-danger">***</small>
+                                    </div>
+
+                                    <mat-label class="text-label-size">Located at :</mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Located at" formControlName="QN_WORK_NO" [class.is-invalid]="questionValueForm.get('QN_WORK_NO').hasError('required') || questionValueForm.get('QN_WORK_NO').errors?.required">
+                                        </mat-form-field>&nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_NO').hasError('required') && questionValueForm.get('QN_WORK_NO').errors?.required" class="text-danger ">***</small>
+                                    </div>
+
+                                    <mat-label class="text-label-size">Sub-district :</mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Sub-district" formControlName="QN_WORK_TAMBON" [class.is-invalid]="questionValueForm.get('QN_WORK_TAMBON').hasError('required') || questionValueForm.get('QN_WORK_TAMBON').errors?.required">
+                                        </mat-form-field>&nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required" class="text-danger ">***</small>
+
+                                    </div>
+
+                                    <mat-label class="text-label-size">District :</mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter District" formControlName="QN_WORK_AMPHUR" [class.is-invalid]="questionValueForm.get('QN_WORK_AMPHUR').hasError('required') || questionValueForm.get('QN_WORK_AMPHUR').errors?.required">
+                                        </mat-form-field>&nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_AMPHUR').hasError('required') && questionValueForm.get('QN_WORK_AMPHUR').errors?.required" class="text-danger ">***</small>
+                                    </div>
+
+                                    <mat-label class="text-label-size">Province :</mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Province" formControlName="QN_WORK_PROVINCE_NAME" [class.is-invalid]="questionValueForm.get('QN_WORK_PROVINCE_NAME').hasError('required') || questionValueForm.get('QN_WORK_PROVINCE_NAME').errors?.required">
+                                        </mat-form-field>&nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_PROVINCE_NAME').hasError('required') && questionValueForm.get('QN_WORK_PROVINCE_NAME').errors?.required" class="text-danger ">***</small>
+                                    </div>
+
+                                    <mat-label class="text-label-size">Zip code :</mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Zip code" formControlName="QN_WORK_ZIPCODE" [class.is-invalid]="questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') || questionValueForm.get('QN_WORK_ZIPCODE').errors?.required" numbersOnly maxlength="8">
+                                        </mat-form-field>&nbsp;
+                                        <small *ngIf="questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') && questionValueForm.get('QN_WORK_ZIPCODE').errors?.required" class="text-danger ">***</small>
+                                    </div>
+
+                                    <mat-label class="text-label-size">Tel :</mat-label> &nbsp;&nbsp;
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                        <mat-form-field class="width-screen">
+                                            <input matInput placeholder="Please enter Tel" formControlName="QN_WORK_TEL">
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+                            </h2>
+                        </div>
+                        <div [style.display]="isHidden == true? 'none': 'block'">
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>14. &nbsp; {{QUESTION_DETAIL_ID_14}}</mat-label><br>
+                                <div>
+                                    <p>Choose only one answer, 14.1 or 14.2 &nbsp;
+                                        <small *ngIf="questionValueForm.get('AF_FIND_WORK').hasError('required') && questionValueForm.get('AF_FIND_WORK').errors?.required" class="text-danger">***</small>
+                                    </p>
+                                </div>
+                                <div class="form-group find-work-content">
+
+
+                                    <section class="">
+                                        <mat-radio-group formControlName="AF_FIND_WORK">
+                                            <!------ ข้อย่อย 14.1  ------->
+                                            <mat-label>14.1</mat-label>
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1.1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_1_1}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1.2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_1_2}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1.3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_1_3}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1.4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_1_4}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1.5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_1_5}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1.6"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_1_6}}</mat-label>
+                                                <br>
+                                            </div>
+                                            <!------ ข้อย่อย 14.2  ------->
+                                            <mat-label>14.2</mat-label><br>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2.1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_2_1}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2.2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_14_VALUE_2_2}}</mat-label>
+                                                <br>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div [style.display]="isHidden == true? 'none': 'block'">
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>15. &nbsp; {{QUESTION_DETAIL_ID_15}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_MATCH_EDU').hasError('required') && questionValueForm.get('QN_MATCH_EDU').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+
+                                <div class="form-group math-edu-content">
+
+                                    <!------ ข้อย่อย 15  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_MATCH_EDU">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_15_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_15_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_15_VALUE_3}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div [style.display]="isHidden == true? 'none': 'block'">
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>16. &nbsp; {{QUESTION_DETAIL_ID_16}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_WORK_APPLY').hasError('required') && questionValueForm.get('QN_WORK_APPLY').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+                                <div class="form-group work-applay-content">
+
+                                    <!------ ข้อย่อย 16  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_WORK_APPLY">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_16_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_16_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_16_VALUE_3}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div [style.display]="isHidden == true? 'none': 'block'">
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>17. &nbsp; {{QUESTION_DETAIL_ID_17}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_EMPLOYER').hasError('required') && questionValueForm.get('QN_EMPLOYER').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+
+                                <div class="form-group employer-content">
+                                    <!------ ข้อย่อย 17  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_EMPLOYER">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_17_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_17_VALUE_2}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="3"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_17_VALUE_3}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="4"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_17_VALUE_4}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="5"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_17_VALUE_5}}</mat-label>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>18. &nbsp; {{QUESTION_DETAIL_ID_18}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_AWARD').hasError('required') && questionValueForm.get('QN_AWARD').errors?.required" class="text-danger">***</small>
+                                </mat-label><br>
+
+                                <div class="form-group award-content">
+                                    <!------ ข้อย่อย 18  ------->
+                                    <section class="">
+                                        <mat-radio-group formControlName="QN_AWARD">
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="1"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_15_VALUE_1}}</mat-label><br>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-radio-button class="" value="2"></mat-radio-button>
+                                                <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_15_VALUE_2}}</mat-label>
+                                                &nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                                    <mat-form-field class="width-screen">
+                                                        <mat-label>Specify the award</mat-label>
+                                                        <input matInput placeholder="Please enter Specify the award" formControlName="QN_AWARD_TXT" [class.is-invalid]="questionValueForm.get('QN_AWARD_TXT').hasError('required') || questionValueForm.get('QN_AWARD_TXT').errors?.required">
+                                                    </mat-form-field> &nbsp;
+                                                    <small *ngIf="questionValueForm.get('QN_AWARD_TXT').hasError('required') && questionValueForm.get('QN_AWARD_TXT').errors?.required" class="text-danger small-award">***</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-label>Name of institute/organization/association</mat-label> &nbsp;&nbsp;
+                                                <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                                    <mat-form-field class="width-screen">
+                                                        <mat-label>Provide the name of the institution</mat-label>
+                                                        <input matInput placeholder="Please enter Provide the name of the institution" formControlName="QN_AWARD_INSTITUTE" [class.is-invalid]="questionValueForm.get('QN_AWARD_INSTITUTE').hasError('required') || questionValueForm.get('QN_AWARD_INSTITUTE').errors?.required">
+                                                    </mat-form-field> &nbsp;
+                                                    <small *ngIf="questionValueForm.get('QN_AWARD_INSTITUTE').hasError('required') && questionValueForm.get('QN_AWARD_INSTITUTE').errors?.required" class="text-danger small-award">***</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-div-content">
+                                                <mat-label>Month/Year of the award</mat-label> &nbsp;&nbsp;
+                                                <div fxLayout="row" fxLayoutAlign="start center" class="">
+                                                    <mat-form-field class="width-screen">
+                                                        <mat-label>Specify receiving month / day / year</mat-label>
+                                                        <input matInput placeholder="Please enter Specify receiving month / day / year" formControlName="QN_AWARD_MMYYYY" [class.is-invalid]="questionValueForm.get('QN_AWARD_MMYYYY').hasError('required') || questionValueForm.get('QN_AWARD_MMYYYY').errors?.required">
+                                                    </mat-form-field> &nbsp;
+                                                    <small *ngIf="questionValueForm.get('QN_AWARD_MMYYYY').hasError('required') && questionValueForm.get('QN_AWARD_MMYYYY').errors?.required" class="text-danger small-award">***</small>
+                                                </div>
+                                            </div>
+
+                                        </mat-radio-group>
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                        <div>
+                            <h2 class="h2-content-padding-left">
+                                <mat-label>19. &nbsp; {{QUESTION_DETAIL_ID_19}} &nbsp;
+                                    <small *ngIf="questionValueForm.get('QN_ADDPROGRAM1').hasError('required') && questionValueForm.get('QN_ADDPROGRAM1').errors?.required || questionValueForm.get('QN_ADDPROGRAM2').hasError('required') && questionValueForm.get('QN_ADDPROGRAM2').errors?.required || questionValueForm.get('QN_ADDPROGRAM3').hasError('required') && questionValueForm.get('QN_ADDPROGRAM3').errors?.required || questionValueForm.get('QN_ADDPROGRAM4').hasError('required') && questionValueForm.get('QN_ADDPROGRAM4').errors?.required || questionValueForm.get('QN_ADDPROGRAM5').hasError('required') && questionValueForm.get('QN_ADDPROGRAM5').errors?.required || questionValueForm.get('QN_ADDPROGRAM6').hasError('required') && questionValueForm.get('QN_ADDPROGRAM6').errors?.required"
+                                        class="text-danger">***</small>
+                                    <!-- <small *ngIf="name.hasError('required') && name.errors?.required" class="text-danger">***</small> -->
+                                </mat-label><br>
+                                <div class="form-group addprogram-content">
+                                    <!------ ข้อย่อย 19  ------->
+                                    <section class="">
+
+                                        <div class="text-div-content">
+                                            <mat-checkbox class="" [(ngModel)]="CHECKED_QN_ADDPROGRAM1" [ngModelOptions]="{standalone: true}" (change)="checkBoxvalueQN_ADDPROGRAM1($event)"></mat-checkbox>&nbsp;
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_19_VALUE_1}}</mat-label><br>
+                                        </div>
+
+                                        <div class="text-div-content">
+                                            <mat-checkbox class="" [(ngModel)]="CHECKED_QN_ADDPROGRAM2" [ngModelOptions]="{standalone: true}" (change)="checkBoxvalueQN_ADDPROGRAM2($event)"></mat-checkbox>&nbsp;
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_19_VALUE_2}}</mat-label><br>
+                                        </div>
+
+                                        <div class="text-div-content">
+                                            <mat-checkbox class="" [(ngModel)]="CHECKED_QN_ADDPROGRAM3" [ngModelOptions]="{standalone: true}" (change)="checkBoxvalueQN_ADDPROGRAM3($event)"></mat-checkbox>&nbsp;
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_19_VALUE_3}}</mat-label><br>
+                                        </div>
+
+                                        <div class="text-div-content">
+                                            <mat-checkbox class="" [(ngModel)]="CHECKED_QN_ADDPROGRAM4" [ngModelOptions]="{standalone: true}" (change)="checkBoxvalueQN_ADDPROGRAM4($event)"></mat-checkbox>&nbsp;
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_19_VALUE_4}}</mat-label><br>
+                                        </div>
+
+                                        <div class="text-div-content">
+                                            <mat-checkbox class="" [(ngModel)]="CHECKED_QN_ADDPROGRAM5" [ngModelOptions]="{standalone: true}" (change)="checkBoxvalueQN_ADDPROGRAM5($event)"></mat-checkbox>&nbsp;
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_19_VALUE_5}}</mat-label><br>
+                                        </div>
+
+                                        <div class="text-div-content">
+                                            <mat-checkbox class="" [(ngModel)]="CHECKED_QN_ADDPROGRAM6" [ngModelOptions]="{standalone: true}" (change)="checkBoxvalueQN_ADDPROGRAM6($event)"></mat-checkbox>&nbsp;
+                                            <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_19_VALUE_6}}</mat-label>
+                                        </div>
+
+                                    </section>
+                                </div>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+
+            <!-- <hr /> -->
+
+            <mat-card>
+                <div>
+                    <div>
+                        <div>
+                            <h2>
+                                <mat-label class="double-under-line-section">ตอนที่ 3</mat-label> &nbsp;&nbsp;&nbsp;
+                                <mat-label>{{SECTION_NAME_ID_3}}</mat-label>
+                            </h2>
+                            <h2 class="h2-content-padding-left">
+                                <div class="form-group comment-content">
+                                    <!------ ข้อย่อย ตอนที่ 3  ------->
+                                    <mat-label class="text-label-size">1. &nbsp; {{QUESTION_DETAIL_ID_31}}</mat-label><br>
+                                    <mat-form-field class="width-screen">
+                                        <textarea class="comment-textarea" matInput placeholder="Please enter {{QUESTION_DETAIL_ID_31}}" formControlName="QN_COMMENT_PROGRAM"></textarea>
+                                    </mat-form-field><br>
+                                    <mat-label class="text-label-size">2. &nbsp; {{QUESTION_DETAIL_ID_32}}</mat-label><br>
+                                    <mat-form-field class="width-screen">
+                                        <textarea class="comment-textarea" matInput placeholder="Please enter {{QUESTION_DETAIL_ID_32}}" formControlName="QN_COMMENT_LEARN"></textarea>
+                                    </mat-form-field><br>
+                                    <mat-label class="text-label-size">3. &nbsp; {{QUESTION_DETAIL_ID_33}}</mat-label><br>
+                                    <mat-form-field class="width-screen">
+                                        <textarea class="comment-textarea" matInput placeholder="Please enter {{QUESTION_DETAIL_ID_33}}" formControlName="QN_COMMENT_SOCIAL"></textarea>
+                                    </mat-form-field><br>
+                                    <mat-label class="text-label-size">4. &nbsp; {{QUESTION_DETAIL_ID_34}}</mat-label><br>
+                                    <mat-form-field class="width-screen">
+                                        <textarea class="comment-textarea" matInput placeholder="Please enter {{QUESTION_DETAIL_ID_34}}" formControlName="QN_COMMENT_ACTIVITY"></textarea>
+                                    </mat-form-field><br>
+                                    <mat-label class="text-label-size">5. &nbsp; {{QUESTION_DETAIL_ID_35}}</mat-label><br>
+                                    <mat-form-field class="width-screen">
+                                        <textarea class="comment-textarea" matInput placeholder="Please enter {{QUESTION_DETAIL_ID_35}}" formControlName="QN_COMMENT_LOCATION"></textarea>
+                                    </mat-form-field><br>
+                                </div>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+
+            <!-- <hr /> -->
+
+            <mat-card>
+                <div class="form-group text-center" fxLayout="column" fxLayoutAlign="space-around center">
+                    <small *ngIf="!questionValueForm.valid" class="text-danger" style="padding-top: 15px !important;">Please check
+            the validity of the survey whether you have completed all information or not!</small>
+                    <button mat-raised-button [disabled]="!questionValueForm.valid" class="btn-submit" type="submit">SAVE</button>
+                    <!-- <button mat-raised-button class="btn-submit" type="submit">บันทึกแบบสำรวจ</button> -->
+                </div>
+            </mat-card>
+
+        </form>
+    </div>
+</mat-card>
+
+
+<div class="main-content-close" [style.display]="isOPEN_CLOSE_Hidden == 'close'? 'block': 'none'">
+    <mat-card class="main-wrap-close" style="background-image: url(assets/imgs/bg-home-3.svg);" fxLayoutAlign="center center">
+        <mat-card style="background-color: rgba(255, 255, 255, 0.7); width: 70vw;">
+            <div fxLayout="row" fxLayoutAlign="end center">
+                <a (click)="logoutConfirmDialog()">Logout</a>
+            </div>
+            <div fxLayoutAlign="center center" fxLayout="column">
+                <img class="img-login-logo" src="assets/imgs/ic-father-01.png" alt="รูปพ่อขุน">
+
+                <h1 class="text-center">
+                    <mat-label class="">
+                        Now the system is not open for filling out the survey.
+                    </mat-label>
+                    <br>
+                    <mat-label class="text-primary">
+                        You can follow date and time of the service to fill out the survey information from
+                    </mat-label>
+                    <br>
+                    <mat-label class="text-primary">
+                        https:// www.ru.ac.th/th/
+                    </mat-label>
+                </h1>
+            </div>
+        </mat-card>
+    </mat-card>
+</div>

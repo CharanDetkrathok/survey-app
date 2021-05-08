@@ -21,19 +21,25 @@
     border-radius: 0px !important;
 }👈*/
 
-hr {
+
+/*👉hr {
     border: 0;
     clear: both;
     display: block;
-    width: 90%;
+    ➡ width: 30vw; ⬅
     background-color: rgba(0, 0, 0, 1);
     height: 1px;
     margin: 1.3em 0;
+}👈*/
+
+h1 {
+    margin: 0;
+    padding: 0;
 }
 
 @media screen and (max-width: 959px) and (orientation: landscape) {
     mat-form-field {
-        font-size: 20px;
+        font-size: 16px;
         width: 80vw;
         padding: 0 !important;
         margin: 0 !important;
@@ -63,11 +69,11 @@ hr {
         height: 790px;
     }
     .img-login-logo {
-        width: 25vw !important;
+        width: 20vw !important;
         padding: 0.1em;
     }
     .text-login {
-        font-size: 1.3em;
+        font-size: 1em;
     }
      ::ng-deep mat-card {
         margin-top: 1em;
@@ -84,14 +90,14 @@ hr {
         display: none;
     }
     .p-text-title-2 {
-        font-size: 1.3em;
+        font-size: 1em;
         line-height: 1.2;
     }
 }
 
 @media screen and (max-width: 959px) and (orientation: portrait) {
     mat-form-field {
-        font-size: 20px;
+        font-size: 16px;
         width: 80vw;
         padding: 0 !important;
         margin: 0 !important;
@@ -113,19 +119,21 @@ hr {
         font-size: 1.2em;
     }
     .main-wrap {
-        background-position: bottom;
+        background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
         position: absolute;
         width: 100vw;
         height: 100vh;
+        padding: 0;
+        margin: 0;
     }
     .img-login-logo {
-        width: 25vw !important;
+        width: 20vw !important;
         padding: 0.1em;
     }
     .text-login {
-        font-size: 1.3em;
+        font-size: 1em;
     }
      ::ng-deep mat-card {
         width: 95vw !important;
@@ -139,7 +147,7 @@ hr {
         display: none;
     }
     .p-text-title-2 {
-        font-size: 1.3em;
+        font-size: 1em;
         line-height: 1.2;
     }
 }
@@ -147,17 +155,18 @@ hr {
 @media screen and (min-width: 960px) {
     mat-form-field {
         font-size: 20px;
-        width: 40vw;
+        width: 30vw;
         padding: 0 !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
     }
      ::ng-deep .mat-form-field-wrapper {
         padding-bottom: 0;
     }
     .btn-login {
-        width: 40vw;
+        width: 30vw;
         padding: 0.5em;
         font-size: 1.5em;
+        margin: 0 auto !important;
     }
      ::ng-deep .mat-form-field.mat-warn .mat-input-element,
     .mat-form-field-invalid .mat-input-element {
@@ -176,27 +185,31 @@ hr {
         height: 100vh;
     }
     .img-login-logo {
-        width: 10vw !important;
+        width: 8vw !important;
         padding: 0.2em;
     }
     .text-login {
-        font-size: 1.5em;
+        font-size: 1.3em;
     }
-     ::ng-deep mat-card {
-        width: 60vw !important;
-        padding: 40px 20px!important;
+    mat-card {
+        width: 40vw;
+        padding: 20px 20px!important;
     }
      ::ng-deep .main-content {
         position: relative;
         padding: 0px 16px!important;
     }
     .p-text-title-1 {
-        font-size: 1.8em;
+        font-size: 1.5em;
         line-height: 1.2;
         margin: -10px 0 0 0;
         padding: 0;
     }
     .p-text-title-2 {
         display: none;
+    }
+    .input-field-std-birth-date {
+        width: 30vw !important;
+        margin: 0 auto;
     }
 }

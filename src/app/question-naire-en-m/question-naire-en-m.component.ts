@@ -1,34 +1,33 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { userResponseDataInterface } from '../login/user-response-data';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { districtAll_M_Interface, district_M_Interface, amphur_M_Interface, province_M_Interface, postcode_M_Interface, regional_M_Interface } from '../question-naire-m/question-response-m-data';
+import { userResponseDataEnInterface } from '../login/user-response-data';
+import { questionSetInterface_En_M_Data } from '../question-naire-m/question-set-interface-m-data';
 import { Validators, FormBuilder, FormControl } from '@angular/forms';
-import { questionSetInterface_M_Data } from './question-set-interface-m-data';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
 import { QuestionNaireService } from '../services/question-naire.service';
+import { CheckOpenCloseService } from '../services/check-open-close.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
-import { districtAll_M_Interface, district_M_Interface, amphur_M_Interface, province_M_Interface, postcode_M_Interface, regional_M_Interface } from './question-response-m-data';
 import { registerLocaleData, DatePipe } from '@angular/common';
 import localeTh from '@angular/common/locales/th';
-import { CheckOpenCloseService } from '../services/check-open-close.service';
 
 @Component({
-  selector: 'app-question-naire-m',
-  templateUrl: './question-naire-m.component.html',
-  styleUrls: ['./question-naire-m.component.css'],
+  selector: 'app-question-naire-en-m',
+  templateUrl: './question-naire-en-m.component.html',
+  styleUrls: ['./question-naire-en-m.component.css'],
   encapsulation: ViewEncapsulation.None
 })
+export class QuestionNaireEnMComponent implements OnInit {
 
-export class QuestionNaireMComponent implements OnInit {
-
-  preUserData: userResponseDataInterface;
-  postUserData: questionSetInterface_M_Data;
+  preUserData: userResponseDataEnInterface;
+  postUserData: questionSetInterface_En_M_Data;
 
   //-- prepared Data และทำการจัด Group เอาไว้สำหรับ Insert หรือ Update
   questionValueForm = this.formBuilder.group({
     STD_CODE: ['', [Validators.required, Validators.minLength(10)]],
     PRENAME_NO: [''],
-    FIRST_NAME_THAI: ['', Validators.required],
-    LAST_NAME_THAI: ['', Validators.required],
+    FIRST_NAME_ENG: ['', Validators.required],
+    LAST_NAME_ENG: ['', Validators.required],
     AGE: ['', Validators.required],
     GENDER_NO: ['', Validators.required],
     FACULTY_NO: [''],
@@ -51,7 +50,7 @@ export class QuestionNaireMComponent implements OnInit {
     QN_WORK_STREET: [''],
     QN_WORK_TAMBON: ['', Validators.required],
     QN_WORK_AMPHUR: ['', Validators.required],
-    QN_WORK_PROVINCE_NO: ['', Validators.required],
+    QN_WORK_PROVINCE_NAME: ['', Validators.required],
     QN_WORK_ZIPCODE: ['', Validators.required],
     QN_WORK_TEL: [''],
     QN_MATCH_EDU: ['', Validators.required],
@@ -88,9 +87,9 @@ export class QuestionNaireMComponent implements OnInit {
     UPDATE_STATUS: ['']
   });
 
-  MAJOR_NAME_THAI: string;
-  FACULTY_NAME_THAI: string;
-  PRENAME_THAI: string;
+  MAJOR_NAME_ENG: string;
+  FACULTY_NAME_ENG: string;
+  PRENAME_ENG: string;
 
   QUIZ_HEADER: string;
   SECTION_NAME_ID_1: string;
@@ -311,11 +310,14 @@ export class QuestionNaireMComponent implements OnInit {
   CHOICES_OF_DISTRICT: district_M_Interface;
   CHOICES_OF_AMPHUR: amphur_M_Interface;
   CHOICES_OF_PROVINCE: province_M_Interface;
-  QN_WORK_PROVINCE_NAME: string;
   CHOICES_OF_POSTCODE: postcode_M_Interface;
   CHOICE_OF_REGIONAL: regional_M_Interface;
 
   isOPEN_CLOSE_Hidden: string = '';
+
+  isMAJOR_NAME_ENG: boolean = false;
+
+  isHidden: boolean = false;
 
   //-- ส่วนของการ Binding Data ระหว่าง Template กับ Component แบบ Realtime
   //-- เอาไว้เรียกดูค่า Validators สำหรับจัดการ Required
@@ -445,11 +447,6 @@ export class QuestionNaireMComponent implements OnInit {
 
         this.isHidden = true;
 
-        this.TEMP_DISTRICT_NAME = '';
-        this.TEMP_AMPHUR_NAME = '';
-        this.TEMP_PROVINCE_NAME = '';
-        this.TEMP_POSTCODE = '';
-
         this.questionValueForm.controls['QN_OCCUP_TYPE'].setValue('');
         this.questionValueForm.controls['QN_OCCUP_TYPE_TXT'].setValue('');
         this.questionValueForm.controls['QN_WORK_NAME'].setValue('');
@@ -461,10 +458,9 @@ export class QuestionNaireMComponent implements OnInit {
         this.questionValueForm.controls['QN_WORK_STREET'].setValue('');
         this.questionValueForm.controls['QN_WORK_TAMBON'].setValue('');
         this.questionValueForm.controls['QN_WORK_AMPHUR'].setValue('');
-        // แสดง ชื่อ จังหวัด
-        this.QN_WORK_PROVINCE_NAME = '';
+
         // เอาไว้ insert to database ใน db เก็บเป็นตัวเลข
-        this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].setValue('');
+        this.questionValueForm.controls['QN_WORK_PROVINCE_NAME'].setValue('');
         this.questionValueForm.controls['QN_WORK_ZIPCODE'].setValue('');
         this.questionValueForm.controls['QN_WORK_TEL'].setValue('');
         this.questionValueForm.controls['QN_MATCH_EDU'].setValue('');
@@ -481,7 +477,7 @@ export class QuestionNaireMComponent implements OnInit {
         this.questionValueForm.controls['QN_WORK_STREET'].updateValueAndValidity();
         this.questionValueForm.controls['QN_WORK_TAMBON'].updateValueAndValidity();
         this.questionValueForm.controls['QN_WORK_AMPHUR'].updateValueAndValidity();
-        this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].updateValueAndValidity();
+        this.questionValueForm.controls['QN_WORK_PROVINCE_NAME'].updateValueAndValidity();
         this.questionValueForm.controls['QN_WORK_ZIPCODE'].updateValueAndValidity();
         this.questionValueForm.controls['QN_WORK_TEL'].updateValueAndValidity();
         this.questionValueForm.controls['QN_MATCH_EDU'].updateValueAndValidity();
@@ -498,7 +494,7 @@ export class QuestionNaireMComponent implements OnInit {
         this.questionValueForm.controls['QN_WORK_STREET'].disable();
         this.questionValueForm.controls['QN_WORK_TAMBON'].disable();
         this.questionValueForm.controls['QN_WORK_AMPHUR'].disable();
-        this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].disable();
+        this.questionValueForm.controls['QN_WORK_PROVINCE_NAME'].disable();
         this.questionValueForm.controls['QN_WORK_ZIPCODE'].disable();
         this.questionValueForm.controls['QN_WORK_TEL'].disable();
         this.questionValueForm.controls['QN_MATCH_EDU'].disable();
@@ -519,7 +515,7 @@ export class QuestionNaireMComponent implements OnInit {
         this.questionValueForm.controls['QN_WORK_STREET'].enable();
         this.questionValueForm.controls['QN_WORK_TAMBON'].enable();
         this.questionValueForm.controls['QN_WORK_AMPHUR'].enable();
-        this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].enable();
+        this.questionValueForm.controls['QN_WORK_PROVINCE_NAME'].enable();
         this.questionValueForm.controls['QN_WORK_ZIPCODE'].enable();
         this.questionValueForm.controls['QN_WORK_TEL'].enable();
         this.questionValueForm.controls['QN_MATCH_EDU'].enable();
@@ -529,11 +525,6 @@ export class QuestionNaireMComponent implements OnInit {
 
     });
 
-    //-- ต้องเลือก ตำบล/แขวง ก่อน จึงจะ enable
-    this.questionValueForm.controls['QN_WORK_AMPHUR'].disable();
-    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].disable();
-    this.questionValueForm.controls['QN_WORK_ZIPCODE'].disable();
-
   }
 
   //-- Call API เพื่อไป Query คำถามมาแสดงใน Template
@@ -542,15 +533,15 @@ export class QuestionNaireMComponent implements OnInit {
     //-- Get value and Assignment ให้ตัวแปลประเภท Interface class
     this.preUserData = JSON.parse(sessionStorage.getItem('userSessionStorage'));
 
-    await this.questionService.getHttpQuestionsM(this.preUserData.LEV_ID).subscribe(response => {
+    await this.questionService.getHttpQuestionsEnM(this.preUserData.LEV_ID).subscribe(response => {
 
       if (response.question_error_message_status == 1) {
 
         //-- Assignment values ที่ได้จากการ Login เตรียมไว้ก่อน
         this.questionValueForm.patchValue({
           PRENAME_NO: this.preUserData.PRENAME_NO,
-          FIRST_NAME_THAI: this.preUserData.FIRST_NAME_THAI,
-          LAST_NAME_THAI: this.preUserData.LAST_NAME_THAI,
+          FIRST_NAME_ENG: this.preUserData.FIRST_NAME_ENG,
+          LAST_NAME_ENG: this.preUserData.LAST_NAME_ENG,
           AGE: this.preUserData.AGE,
           STD_CODE: this.preUserData.STD_CODE,
           MAJOR_NO: this.preUserData.MAJOR_NO,
@@ -558,9 +549,16 @@ export class QuestionNaireMComponent implements OnInit {
           // INSERT_STATUS: 'true'
         });
 
-        this.PRENAME_THAI = this.preUserData.PRENAME_THAI;
-        this.MAJOR_NAME_THAI = this.preUserData.MAJOR_NAME_THAI;
-        this.FACULTY_NAME_THAI = this.preUserData.FACULTY_NAME_THAI;
+        this.PRENAME_ENG = this.preUserData.PRENAME_ENG;
+
+        this.MAJOR_NAME_ENG = this.preUserData.MAJOR_NAME_ENG;
+        if (this.MAJOR_NAME_ENG === undefined || this.MAJOR_NAME_ENG === null || this.MAJOR_NAME_ENG === '') {
+          this.isMAJOR_NAME_ENG = true;
+        } else {
+          this.isMAJOR_NAME_ENG = false;
+        }
+
+        this.FACULTY_NAME_ENG = this.preUserData.FACULTY_NAME_ENG;
 
         this.CHOICES_OF_ALL_DISTRICT = response.CHOICES_OF_ALL_DISTRICT;
         this.CHOICES_OF_DISTRICT = response.CHOICES_OF_DISTRICT;
@@ -790,21 +788,15 @@ export class QuestionNaireMComponent implements OnInit {
 
     });
 
-    await this.questionService.getHttpCheckInsertBeforeM(this.preUserData.STD_CODE).subscribe(responses => {
+    await this.questionService.getHttpCheckInsertBeforeEnM(this.preUserData.STD_CODE).subscribe(responses => {
 
       if (responses.UPDATE_STATUS == "true") {
-
-        this.TEMP_DISTRICT_NAME = responses.QN_WORK_TAMBON == 'null' ? '' : responses.QN_WORK_TAMBON;
-        this.TEMP_AMPHUR_NAME = responses.QN_WORK_AMPHUR == 'null' ? '' : responses.QN_WORK_AMPHUR;
-        this.QN_WORK_PROVINCE_NAME = responses.QN_WORK_PROVINCE_NAME == 'null' ? '' : responses.QN_WORK_PROVINCE_NAME;
-        this.TEMP_PROVINCE_NAME = responses.QN_WORK_PROVINCE_NO == 'null' ? '' : responses.QN_WORK_PROVINCE_NO;
-        this.TEMP_POSTCODE = responses.QN_WORK_ZIPCODE == 'null' ? '' : responses.QN_WORK_ZIPCODE;
 
         this.questionValueForm.setValue({
           STD_CODE: responses.STD_CODE == 'null' ? '' : responses.STD_CODE,
           PRENAME_NO: responses.PRENAME_NO == 'null' ? '' : responses.PRENAME_NO,
-          FIRST_NAME_THAI: responses.FIRST_NAME_THAI == 'null' ? '' : responses.FIRST_NAME_THAI,
-          LAST_NAME_THAI: responses.LAST_NAME_THAI == 'null' ? '' : responses.LAST_NAME_THAI,
+          FIRST_NAME_ENG: responses.FIRST_NAME_ENG == 'null' ? '' : responses.FIRST_NAME_ENG,
+          LAST_NAME_ENG: responses.LAST_NAME_ENG == 'null' ? '' : responses.LAST_NAME_ENG,
           AGE: responses.AGE == 'null' ? '' : responses.AGE,
           GENDER_NO: responses.GENDER_NO == 'null' ? '' : responses.GENDER_NO,
           FACULTY_NO: responses.FACULTY_NO == 'null' ? '' : responses.FACULTY_NO,
@@ -827,7 +819,7 @@ export class QuestionNaireMComponent implements OnInit {
           QN_WORK_STREET: responses.QN_WORK_STREET == 'null' ? '' : responses.QN_WORK_STREET,
           QN_WORK_TAMBON: responses.QN_WORK_TAMBON == 'null' ? '' : responses.QN_WORK_TAMBON,
           QN_WORK_AMPHUR: responses.QN_WORK_AMPHUR == 'null' ? '' : responses.QN_WORK_AMPHUR,
-          QN_WORK_PROVINCE_NO: responses.QN_WORK_PROVINCE_NO == 'null' ? '' : responses.QN_WORK_PROVINCE_NO,
+          QN_WORK_PROVINCE_NAME: responses.QN_WORK_PROVINCE_NAME == 'null' ? '' : responses.QN_WORK_PROVINCE_NAME,
           QN_WORK_ZIPCODE: responses.QN_WORK_ZIPCODE == 'null' ? '' : responses.QN_WORK_ZIPCODE,
           QN_WORK_TEL: responses.QN_WORK_TEL == 'null' ? '' : responses.QN_WORK_TEL,
           QN_MATCH_EDU: responses.QN_MATCH_EDU == 'null' ? '' : responses.QN_MATCH_EDU,
@@ -864,23 +856,22 @@ export class QuestionNaireMComponent implements OnInit {
           UPDATE_STATUS: responses.UPDATE_STATUS == null ? '' : responses.UPDATE_STATUS,
         });
 
-        this.PRENAME_THAI = this.preUserData.PRENAME_THAI;
 
-        registerLocaleData(localeTh, 'th');
-        let pipe = new DatePipe('th-TH');
-        let nowYear = (new Date()).getFullYear();
-        let fakeYearTH = (nowYear + 543);
-        let dateNewFormat = pipe.transform(this.questionValueForm.controls['QN_UPDATE_DATE'].value.toString(), 'dd MMM' + fakeYearTH, 'th').toString();
+        // registerLocaleData(localeTh, 'th');
+        let pipe = new DatePipe('en-EN');
+        // let nowYear = (new Date()).getFullYear();
+        // let fakeYearTH = (nowYear + 543);
+        let dateNewFormat = pipe.transform(this.questionValueForm.controls['QN_UPDATE_DATE'].value.toString(), 'MMM dd yyyy ', 'en').toString();
 
-        const title = 'ยืนยันการกรอกแบบสำรวจ';
-        const message_insert = `รหัสนักศึกษา : ${this.preUserData.STD_CODE}`;
-        const message = `ชื่อ-สกุล : ${this.preUserData.PRENAME_THAI} ${this.preUserData.FIRST_NAME_THAI} ${this.preUserData.LAST_NAME_THAI}`;
-        const description = `กรอกแบบสำรวจเมื่อ: ${dateNewFormat}`;
-        const descriptionDetail = `ท่านต้องการาดูรายละเอียด หรือแก้ไขแบบสำรวจหรือไม่?`;
+        const title = 'Confirm survey filling';
+        const message_insert = `Student ID : ${this.preUserData.STD_CODE}`;
+        const message = `Name-Surname : ${this.preUserData.PRENAME_ENG} ${this.preUserData.FIRST_NAME_ENG} ${this.preUserData.LAST_NAME_ENG}`;
+        const description = `Fill out a survey when : ${dateNewFormat}`;
+        const descriptionDetail = `Do you want to see details or edit a survey?`;
         const btnLeftDisable = false;
         const btnRightDisable = false;
-        const txtBtnLeft = 'ไม่';
-        const txtBtnRight = 'ใช่';
+        const txtBtnLeft = 'No';
+        const txtBtnRight = 'Yes';
         const message1 = '';
         const message2 = '';
         const message3 = '';
@@ -913,7 +904,6 @@ export class QuestionNaireMComponent implements OnInit {
 
         });
 
-
       } else {
 
         this.questionValueForm.patchValue({ INSERT_STATUS: responses.INSERT_STATUS });
@@ -928,126 +918,20 @@ export class QuestionNaireMComponent implements OnInit {
 
   }
 
-
-  //-------------------------------------------------------------------------------
-  //เริ่ม-- Autocomplete zone ------
-  searchTambon: string;
-
-  isHidden: boolean = false;
-
-  TEMP_DISTRICT_NAME: string;
-  TEMP_AMPHUR_NAME: string;
-  TEMP_PROVINCE_NAME: string;
-  TEMP_POSTCODE: string;
-
-  // เลือกข้อมูลใน Dropdownlist ไปแล้วหรือไม่
-  setLettersFag: boolean = false;
-
-  // จำนวนความยาวตัวอักษรที่เลือกไป
-  setLetters: number = 0;
-
-  // เปิด-ปิด Dropdownlist
-  isDisableDropdownlist = new FormControl(true);
-
-  //-- เป็นส่วนหนึ่งของคำสั่งในการเปิด dropdownlist แบบ Custom ให้ Auto เมื่อมีการพิมพ์ อักษรอย่างน้อย 1 ตัว
-  @ViewChild('dropdownlist', { static: true }) public dropdownlist: any;
-
-  searchTambonKeyup(value) {
-
-    if (value.length >= 2) {
-      // เปิด dropdownlist Auto
-      this.dropdownlist.toggle('true');
-      // ยกเลิกการ Disabl (ยกเลิกการ ปิด Dropdownlist)
-      this.isDisableDropdownlist.setValue(false);
-      this.isDisableDropdownlist.updateValueAndValidity();
-    } else {
-      // ปิด dropdownlist Auto
-      this.dropdownlist.toggle('false');
-      // ทำการปิดการมองเห็น Disabl (ปิด Dropdownlist)
-      this.isDisableDropdownlist.setValue(true);
-      this.isDisableDropdownlist.updateValueAndValidity();
-    }
-
-    // กรณีที่มีการเลือกข้อมูลไปแล้ว และทำการลบ หรือพิมพ์อักษร เพิ่ม จะทำการ คืนค่า ตำบล อำเภอ จังหวัด รหัสไปรษณีย์ เป็นค่าว่าง และปิดปุ่ม submit เพื่อกันข้อมูลไม่ครบถ้วน
-    if (value.length < 1) {
-
-      // คำสั่งเปิด-ปิด Dropdownlist
-      // this.isDisableDropdownlist.setValue(true);
-
-      this.TEMP_DISTRICT_NAME = '';
-      this.questionValueForm.controls['QN_WORK_TAMBON'].setValue('');
-      this.questionValueForm.controls['QN_WORK_TAMBON'].setValidators([Validators.required]);
-      this.questionValueForm.controls['QN_WORK_TAMBON'].updateValueAndValidity();
-
-
-      this.TEMP_AMPHUR_NAME = '';
-      this.questionValueForm.controls['QN_WORK_AMPHUR'].setValue('');
-      this.questionValueForm.controls['QN_WORK_AMPHUR'].setValidators([Validators.required]);
-      this.questionValueForm.controls['QN_WORK_AMPHUR'].updateValueAndValidity();
-
-      this.TEMP_PROVINCE_NAME = '';
-      this.QN_WORK_PROVINCE_NAME = '';
-      this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].setValue('');
-      this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].setValidators([Validators.required]);
-      this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].updateValueAndValidity();
-
-      this.TEMP_POSTCODE = '';
-      this.questionValueForm.controls['QN_WORK_ZIPCODE'].setValue('');
-      this.questionValueForm.controls['QN_WORK_ZIPCODE'].setValidators([Validators.required]);
-      this.questionValueForm.controls['QN_WORK_ZIPCODE'].updateValueAndValidity();
-
-      //-- ต้องเลือก ตำบล/แขวง ก่อน จึงจะ enable
-      this.questionValueForm.controls['QN_WORK_AMPHUR'].disable();
-      this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].disable();
-      this.questionValueForm.controls['QN_WORK_ZIPCODE'].disable();
-
-    }
-
-  }
-
-  selectedTambon(event) {
-
-    this.TEMP_DISTRICT_NAME = event.DISTRICT_NAME;
-
-    this.questionValueForm.controls['QN_WORK_TAMBON'].patchValue(this.TEMP_DISTRICT_NAME);
-
-    this.TEMP_AMPHUR_NAME = event.AMPHUR_NAME;
-    this.questionValueForm.controls['QN_WORK_AMPHUR'].patchValue(this.TEMP_AMPHUR_NAME);
-
-    //-- เก็บไว้ตอน onSubmit เพื่อ Insert to Database เพราะเก็บเป็น ID
-    this.TEMP_PROVINCE_NAME = event.PROVINCE_ID;
-    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].patchValue(this.TEMP_PROVINCE_NAME);
-    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].clearValidators();
-    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].updateValueAndValidity();
-    //-- เก็บไว้แสดง ชื่อจังหวัด/ประเทศ เป็น อักษร ที่หน้าเว็บ
-    this.QN_WORK_PROVINCE_NAME = event.PROVINCE_NAME;
-
-    this.TEMP_POSTCODE = event.POSTCODE;
-    this.questionValueForm.controls['QN_WORK_ZIPCODE'].patchValue(this.TEMP_POSTCODE);
-
-    //-- เลือก ตำบล/แขวง แล้วทำการ enable
-    this.questionValueForm.controls['QN_WORK_AMPHUR'].enable();
-    this.questionValueForm.controls['QN_WORK_PROVINCE_NO'].enable();
-    this.questionValueForm.controls['QN_WORK_ZIPCODE'].enable();
-
-  }
-  //จบ-- Autocomplete zone ------
-  //-------------------------------------------------------------------------------
-
   //-- ส่วนของการจัดการ Errors Handles ทั้งหมดใน Componemt
   public handlesErrors(_handle_error: any): void {
 
     if (_handle_error == 404) {
 
-      this.router.navigate(['/errors-handles/error-not-found']);
+      this.router.navigate(['/errors-handles/error-en-not-found']);
 
     } else if (_handle_error == 500) {
 
-      this.router.navigate(['/errors-handles/error-internal-server']);
+      this.router.navigate(['/errors-handles/error-en-internal-server']);
 
     } else {
 
-      this.router.navigate(['/errors-handles/error-another']);
+      this.router.navigate(['/errors-handles/error-en-another']);
 
     }
 
@@ -1062,8 +946,8 @@ export class QuestionNaireMComponent implements OnInit {
 
       STD_CODE: this.questionValueForm.get('STD_CODE').value,
       PRENAME_NO: this.questionValueForm.get('PRENAME_NO').value,
-      FIRST_NAME_THAI: this.questionValueForm.get('FIRST_NAME_THAI').value,
-      LAST_NAME_THAI: this.questionValueForm.get('LAST_NAME_THAI').value,
+      FIRST_NAME_ENG: this.questionValueForm.get('FIRST_NAME_ENG').value,
+      LAST_NAME_ENG: this.questionValueForm.get('LAST_NAME_ENG').value,
       AGE: this.questionValueForm.get('AGE').value,
       GENDER_NO: this.questionValueForm.get('GENDER_NO').value,
       FACULTY_NO: this.questionValueForm.get('FACULTY_NO').value,
@@ -1084,11 +968,10 @@ export class QuestionNaireMComponent implements OnInit {
       QN_WORK_FLOOR: this.questionValueForm.get('QN_WORK_FLOOR').value,
       QN_WORK_SOI: this.questionValueForm.get('QN_WORK_SOI').value,
       QN_WORK_STREET: this.questionValueForm.get('QN_WORK_STREET').value,
-      QN_WORK_TAMBON: this.TEMP_DISTRICT_NAME == undefined ? '' : this.TEMP_DISTRICT_NAME,
-      QN_WORK_AMPHUR: this.TEMP_AMPHUR_NAME == undefined ? '' : this.TEMP_AMPHUR_NAME,
-      QN_WORK_PROVINCE_NAME: this.TEMP_DISTRICT_NAME == undefined ? '' : this.TEMP_DISTRICT_NAME,
-      QN_WORK_PROVINCE_NO: this.TEMP_PROVINCE_NAME == undefined ? '' : this.TEMP_PROVINCE_NAME,
-      QN_WORK_ZIPCODE: this.TEMP_POSTCODE == undefined ? '' : this.TEMP_POSTCODE,
+      QN_WORK_TAMBON: this.questionValueForm.get('QN_WORK_TAMBON').value,
+      QN_WORK_AMPHUR: this.questionValueForm.get('QN_WORK_AMPHUR').value,
+      QN_WORK_PROVINCE_NAME: this.questionValueForm.get('QN_WORK_PROVINCE_NAME').value,
+      QN_WORK_ZIPCODE: this.questionValueForm.get('QN_WORK_ZIPCODE').value,
       QN_WORK_TEL: this.questionValueForm.get('QN_WORK_TEL').value,
       QN_MATCH_EDU: this.questionValueForm.get('QN_MATCH_EDU').value,
       QN_WORK_APPLY: this.questionValueForm.get('QN_WORK_APPLY').value,
@@ -1125,15 +1008,15 @@ export class QuestionNaireMComponent implements OnInit {
     };
 
     //-- ********** สำเร็จ แจ้งด้วย Dialog และจบการทำงาน Redirect to Login ******** --//
-    const title = 'ยืนยันการบันทึกแบบสำรวจ';
+    const title = 'Confirm survey recording';
     const message_insert = '';
-    const message = `ท่านต้องการบันทึก แบบสำรวจใช่หรือไม่`;
-    const description = 'หากท่านต้องการแก้ไข หรือต้องการดูรายละเอียดแบบสำรวจของท่าน สามารถทำได้ด้วยการ Login อีกครั้ง';
+    const message = `Do you want to save Survey?`;
+    const description = 'If you want to edit or view details of your survey, you can do this by logging in again.';
     const descriptionDetail = '';
     const btnLeftDisable = false;
     const btnRightDisable = false;
-    const txtBtnLeft = 'ไม่บันทึก';
-    const txtBtnRight = 'บันทึก';
+    const txtBtnLeft = 'Not save';
+    const txtBtnRight = 'Save';
     const message1 = '';
     const message2 = '';
     const message3 = '';
@@ -1161,21 +1044,21 @@ export class QuestionNaireMComponent implements OnInit {
       if (this.dialog_confirm_result) {
 
         //-- ส่งข้อมูลไปยัง Service เพื่อ Insert หรือ Update ข้อมูล
-        this.questionService.postHttpQuestionsM(this.postUserData).subscribe(responsePost => {
+        this.questionService.postHttpQuestionsEnM(this.postUserData).subscribe(responsePost => {
 
           //-- Successfully
           if (responsePost.error_question_insert_update_message_status == 1) {
 
             //-- ********** สำเร็จ แจ้งด้วย Dialog และจบการทำงาน Redirect to Login ******** --//
-            const title = 'บันทึกแบบสำรวจเรียบร้อย';
-            const message_insert = `ทำการบันทึก แบบสำรวจเรียบร้อยแล้วครับ`;
+            const title = 'The survey has been saved.';
+            const message_insert = `The survey has been saved already.`;
             const message = '';
-            const description = 'หากท่านต้องการแก้ไข หรือต้องการดูรายละเอียดแบบสำรวจของท่าน สามารถทำได้ด้วยการ Login อีกครั้ง';
+            const description = 'If you want to edit or view details of your survey, you can do this by logging in again.';
             const descriptionDetail = '';
             const btnLeftDisable = true;
             const btnRightDisable = false;
             const txtBtnLeft = '';
-            const txtBtnRight = 'ใช่';
+            const txtBtnRight = 'Yes';
             const message1 = '';
             const message2 = '';
             const message3 = '';
@@ -1238,13 +1121,13 @@ export class QuestionNaireMComponent implements OnInit {
 
     const title = `Logout`;
     const message_insert = '';
-    const message = `ท่านต้องการที่จะออกจากระบบใช่หรือไม่`;
-    const description = `หากท่านออกจากหน้าเพจการทำงานนี้ ข้อมูลที่ท่านทำการกรอกไว้จะไม่ถูกบันทึก !`;
+    const message = `Do you want to log out?`;
+    const description = `If you leave this page, the information you enter will not be saved!`;
     const descriptionDetail = '';
     const btnLeftDisable = false;
     const btnRightDisable = false;
-    const txtBtnLeft = 'ไม่';
-    const txtBtnRight = 'ใช่';
+    const txtBtnLeft = 'No';
+    const txtBtnRight = 'Yes';
     const message1 = '';
     const message2 = '';
     const message3 = '';
@@ -1278,6 +1161,5 @@ export class QuestionNaireMComponent implements OnInit {
     });
 
   }
-
 
 }

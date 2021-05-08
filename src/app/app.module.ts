@@ -22,6 +22,8 @@ import { QuestionNaireMComponent } from './question-naire-m/question-naire-m.com
 
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { QuestionNaireEnComponent } from './question-naire-en/question-naire-en.component';
+import { QuestionNaireEnMComponent } from './question-naire-en-m/question-naire-en-m.component';
 
 // เปลี่ยนภาษา TH - EN
 export function HttpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
@@ -29,7 +31,7 @@ export function HttpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, QuestionNaireComponent, NumberDirective, ConfirmDialogComponent, QuestionNaireMComponent],
+  declarations: [AppComponent, LoginComponent, QuestionNaireComponent, NumberDirective, ConfirmDialogComponent, QuestionNaireMComponent, QuestionNaireEnComponent, QuestionNaireEnMComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
