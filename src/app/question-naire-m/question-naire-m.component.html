@@ -456,8 +456,8 @@
                                         <mat-form-field class="width-screen">
                                             <input readonly matInput placeholder="กรุณากรอก อำเภอ/เขต" formControlName="QN_WORK_AMPHUR" [class.is-invalid]="questionValueForm.get('QN_WORK_AMPHUR').hasError('required') || questionValueForm.get('QN_WORK_AMPHUR').errors?.required">
                                         </mat-form-field>&nbsp;
-                                        <small style="width: 100vw;" *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required || questionValueForm.get('QN_WORK_AMPHUR').hasError('required') && questionValueForm.get('QN_WORK_AMPHUR').errors?.required"
-                                            class="text-danger ">*** กรุณาเลือก ตำบล/แขวง ก่อน</small>
+                                        <small *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required || questionValueForm.get('QN_WORK_AMPHUR').hasError('required') && questionValueForm.get('QN_WORK_AMPHUR').errors?.required"
+                                            class="text-danger ">***</small>
                                     </div>
 
                                     <mat-label class="text-label-size">จังหวัด/ประเทศ :</mat-label> &nbsp;&nbsp;
@@ -467,8 +467,8 @@
                                             <input readonly matInput placeholder="กรุณากรอก จังหวัด/ประเทศ" [class.is-invalid]="questionValueForm.get('QN_WORK_PROVINCE_NO').hasError('required') || questionValueForm.get('QN_WORK_PROVINCE_NO').errors?.required" [(ngModel)]="QN_WORK_PROVINCE_NAME"
                                                 [ngModelOptions]="{standalone: true}" [disabled]="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required">
                                         </mat-form-field>&nbsp;
-                                        <small style="width: 100vw;" *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required || questionValueForm.get('QN_WORK_PROVINCE_NO').hasError('required') && questionValueForm.get('QN_WORK_PROVINCE_NO').errors?.required"
-                                            class="text-danger ">*** กรุณาเลือก ตำบล/แขวง ก่อน</small>
+                                        <small *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required || questionValueForm.get('QN_WORK_PROVINCE_NO').hasError('required') && questionValueForm.get('QN_WORK_PROVINCE_NO').errors?.required"
+                                            class="text-danger ">***</small>
                                     </div>
 
                                     <mat-label class="text-label-size">รหัสไปรษณีย์ :</mat-label> &nbsp;&nbsp;
@@ -477,8 +477,8 @@
                                             <input readonly matInput placeholder="กรุณากรอก รหัสไปรษณีย์" formControlName="QN_WORK_ZIPCODE" [class.is-invalid]="questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') || questionValueForm.get('QN_WORK_ZIPCODE').errors?.required" numbersOnly
                                                 maxlength="5">
                                         </mat-form-field>&nbsp;
-                                        <small style="width: 100vw;" *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required || questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') && questionValueForm.get('QN_WORK_ZIPCODE').errors?.required"
-                                            class="text-danger ">*** กรุณาเลือก ตำบล/แขวง ก่อน</small>
+                                        <small *ngIf="questionValueForm.get('QN_WORK_TAMBON').hasError('required') && questionValueForm.get('QN_WORK_TAMBON').errors?.required || questionValueForm.get('QN_WORK_ZIPCODE').hasError('required') && questionValueForm.get('QN_WORK_ZIPCODE').errors?.required"
+                                            class="text-danger ">***</small>
                                     </div>
 
                                     <mat-label class="text-label-size">โทรศัพท์ ที่ทำงาน :</mat-label> &nbsp;&nbsp;
@@ -980,6 +980,7 @@
 
                                             <div class="text-div-content">
                                                 <mat-radio-button class="" value="3"></mat-radio-button>
+
                                                 <mat-label class="text-mat-label-content">{{CHOICES_OF_QUESTION_ID_223_VALUE_3}}</mat-label>
                                             </div>
 

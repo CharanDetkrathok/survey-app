@@ -139,9 +139,12 @@ h1 {
         width: 95vw !important;
         padding: 30px 20px!important;
     }
+    .mat-card {
+        padding: 16px !important;
+    }
      ::ng-deep .main-content {
         position: relative;
-        padding: 0px 16px!important;
+        padding: 0px 16px !important;
     }
     .p-text-title-1 {
         display: none;
